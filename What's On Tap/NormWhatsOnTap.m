@@ -10,19 +10,19 @@
 
 @implementation NormWhatsOnTap
 
--(void) fetchAvailableBeersAtLocation
+-(void) fetchAvailableMenuAtLocation
 {
-//    NSString *urlAsString = @"http://localhost:5000/beers";
-    NSString *urlAsString = @"http://whatisontap.herokuapp.com/beers";
+//    NSString *urlAsString = @"http://localhost:3000/menus/today";
+    NSString *urlAsString = @"http://whatisontap.herokuapp.com/menus/today";
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
 
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (error) {
-            [self.delegate fetchingBeersFailedWithError:error];
+            [self.delegate fetchingMenuFailedWithError:error];
         } else {
-            [self.delegate receivedBeersJSON:data];
+            [self.delegate receivedMenuJSON:data];
         }
     }];
 }

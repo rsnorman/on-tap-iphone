@@ -15,6 +15,6 @@
 
 @property (weak, nonatomic) id<NormWhatsOnTapDelegate> delegate;
 
-- (void)fetchAvailableBeersAtLocation;
+- (void)fetchAvailableMenuAtLocation;
 
 @end

@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "NormBeer.h"
+#import "NormImageCache.h"
 
 @interface NormBeerViewController : UIViewController
 
-@property (nonatomic, strong) NormBeer *beer;
+@property NormBeer *beer;
+@property NormImageCache *imageCache;
+
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
 @property (nonatomic, weak) IBOutlet UILabel *breweryLabel;
 @property (nonatomic, weak) IBOutlet UILabel *styleLabel;

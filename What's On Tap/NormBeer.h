@@ -20,10 +20,9 @@
 @property NSString *breweryLink;
 @property NSString *link;
 @property NSString *style;
+@property NSString *styleCategory;
 @property NSString *lastUpdatedAt;
 @property NSString *label;
 @property NSString *description;
-
-+ (NSArray *)beersFromJSON:(NSData *)objectNotation error:(NSError **)error;
 
 @end

@@ -27,43 +27,100 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
     }
+    
     return self;
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view.
     
+    _imageCache = [[NormImageCache alloc] init];
+    
+	// Do any additional setup after loading the view.
+    UIColor *backgroundColor = [UIColor colorWithRed:42.0/255.0 green:39.0/255.0 blue:46.0/255.0 alpha:1.0];
+    
+    [self.view setBackgroundColor:backgroundColor];
+    [self.descriptionText setBackgroundColor:backgroundColor];
     [self.nameLabel setText:self.beer.name];
     [self.breweryLabel setText:self.beer.breweryName];
     [self.styleLabel setText:self.beer.style];
-    [self.abvLabel setText:[NSString stringWithFormat:@"ABV: %g %%", self.beer.abv]];
+    [self.abvLabel setText:[NSString stringWithFormat:@"ABV: %g%%", self.beer.abv]];
     [self.descriptionText setText:self.beer.description];
     
     [self.nameLabel sizeToFit];
     [self.breweryLabel sizeToFit];
-    
-//    [self.descriptionText setScrollEnabled:YES];
+    [self.styleLabel sizeToFit];
     [self.descriptionText setText:self.beer.description];
-//    [self.descriptionText sizeToFit];
-//    [self.descriptionText setScrollEnabled:NO];
     
     CALayer *imageLayer = self.logoImage.layer;
     [imageLayer setCornerRadius:35];
-    [imageLayer setBorderWidth:1];
-    [imageLayer setBorderColor:[UIColor colorWithRed:201.0/255.0 green:201.0/255.0 blue:201.0/255.0 alpha:1.0].CGColor];
+    [imageLayer setBorderWidth:3];
+    [imageLayer setBorderColor:[UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0].CGColor];
     [imageLayer setMasksToBounds:YES];
     
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.beer.label]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        self.logoImage.image = [UIImage imageWithData:data];
-    }];
+//    if (self.beer.label.length != 0){
+//        [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.beer.label]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+//            self.logoImage.image = [UIImage imageWithData:data];
+//        }];
+//    } else {
+//        if ([self.beer.serveType  isEqual: @"On Tap"]) {
+//            [self.logoImage setImage:[UIImage imageNamed: @"tap-highlight.png"]];
+//        } else if ([self.beer.serveType  isEqual: @"Bottles"]) {
+//            [self.logoImage setImage:[UIImage imageNamed: @"bottle-highlight.png"]];
+//        } else {
+//            [self.logoImage setImage:[UIImage imageNamed: @"can-highlight.png"]];
+//        }
+//    }
     
-    self.title = self.beer.name; // TabBarItem.title inherits the viewController's self.title
-    self.navigationItem.title = self.beer.name;
+    if (_beer.label.length != 0){
+        
+        UIImage *image = [self.imageCache imageForKey:_beer.label];
+        
+        if (image)
+        {
+            NSLog(@"Grabbed from cache");
+            [self.logoImage setImage: image];
+        }
+        else {
+            NSLog(@"Couldn't find in cache");
+            if ([_beer.serveType  isEqual: @"On Tap"]) {
+                [self.logoImage setImage:[UIImage imageNamed: @"tap-highlight.png"]];
+            } else if ([_beer.serveType  isEqual: @"Bottles"]) {
+                [self.logoImage setImage:[UIImage imageNamed: @"bottle-highlight.png"]];
+            } else {
+                [self.logoImage setImage:[UIImage imageNamed: @"can-highlight.png"]];
+            }
+            
+            // get the UIImage
+            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_beer.label]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                UIImage *image = [UIImage imageWithData:data];
+                [self.logoImage setImage: image];
+                [self.imageCache setImage:image forKey:_beer.label];
+            }];
+        }
+    } else {
+        if ([_beer.serveType  isEqual: @"On Tap"]) {
+            [self.logoImage setImage:[UIImage imageNamed: @"tap-highlight.png"]];
+        } else if ([_beer.serveType  isEqual: @"Bottles"]) {
+            [self.logoImage setImage:[UIImage imageNamed: @"bottle-highlight.png"]];
+        } else {
+            [self.logoImage setImage:[UIImage imageNamed: @"can-highlight.png"]];
+        }
+    }
+    
+    self.title = @"Details"; //self.beer.name; // TabBarItem.title inherits the viewController's self.title
+    self.navigationItem.title = @"Details"; //self.beer.name;
     self.navigationItem.backBarButtonItem.title = @"list";
+    
+    NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
+    if ([[ver objectAtIndex:0] intValue] >= 7) {
+        self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+        self.navigationController.navigationBar.translucent = YES;
+    }else {
+        self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+    }
     
 }
 

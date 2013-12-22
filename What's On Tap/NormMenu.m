@@ -1,33 +1,36 @@
 //
-//  NormBeer.m
+//  NormMenu.m
 //  What's On Tap
 //
-//  Created by Ryan Norman on 11/28/13.
+//  Created by Ryan Norman on 12/16/13.
 //  Copyright (c) 2013 Ryan Norman. All rights reserved.
 //
 
-#import "NormBeer.h"
+#import "NormMenu.h"
 
-@implementation NormBeer
+@implementation NormMenu
 
-+ (NSArray *)beersFromJSON:(NSData *)objectNotation error:(NSError **)error
++ (NormMenu *)menuFromJSON:(NSData *)objectNotation error:(NSError **)error
 {
     NSError *localError = nil;
-    NSArray *results = [NSJSONSerialization JSONObjectWithData:objectNotation options:1 error:&localError];
+    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:objectNotation options:1 error:&localError];
     
     if (localError != nil) {
         *error = localError;
         return nil;
     }
     
-    NSMutableArray *beers = [[NSMutableArray alloc] init];
+    NormMenu *menu = [[NormMenu alloc] init];
     
-//    NSArray *results = [parsedObject valueForKey:@"results"];
-    NSLog(@"Count %d", results.count);
+    menu.beers = [[NSMutableArray alloc] init];
     
-    for (NSDictionary *beerDic in results) {
+    //    NSArray *results = [parsedObject valueForKey:@"results"];
+    NSArray *jsonBeers = [results objectForKey:@"beers"];
+    NSLog(@"Beer Count: %d unique beers", jsonBeers.count);
+    
+    for (NSDictionary *beerDic in jsonBeers) {
         NormBeer *beer = [[NormBeer alloc] init];
-
+        
         for (NSString *key in beerDic) {
             if ([beer respondsToSelector:NSSelectorFromString(key)]) {
                 [beer setValue:[beerDic valueForKey:key] forKey:key];
@@ -42,20 +45,10 @@
             beer.styleCategory = @"Special";
         }
         
-        [beers addObject:beer];
+        [menu.beers addObject:beer];
     }
     
-    return beers;
-}
-
-- (id)init
-{
-    self = [super init];
-    
-    if (self) {
-    }
-    
-    return self;
+    return menu;
 }
 
 @end

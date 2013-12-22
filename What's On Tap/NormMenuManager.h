@@ -7,18 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NormBeersManagerDelegate.h"
+#import "NormMenuManagerDelegate.h"
 #import "NormWhatsOnTapDelegate.h"
 
-//@interface NormBeersManager : NSObject
+//@interface NormMenuManager : NSObject
 
 @class NormWhatsOnTap;
 
-@interface NormBeersManager : NSObject<NormWhatsOnTapDelegate>
+@interface NormMenuManager : NSObject<NormWhatsOnTapDelegate>
 
 @property (strong, nonatomic) NormWhatsOnTap *communicator;
-@property (weak, nonatomic) id<NormBeersManagerDelegate> delegate;
+@property (weak, nonatomic) id<NormMenuManagerDelegate> delegate;
 
-- (void)fetchAvailableBeersAtLocation;
+- (void)fetchAvailableMenuAtLocation;
 
 @end

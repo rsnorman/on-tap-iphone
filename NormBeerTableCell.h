@@ -12,6 +12,7 @@
 @interface NormBeerTableCell : UITableViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel *nameLabel;
+@property (nonatomic, weak) IBOutlet UILabel *breweryLabel;
 @property (nonatomic, weak) IBOutlet UILabel *detailsLabel;
 @property (nonatomic, weak) IBOutlet UILabel *costLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *imageView;

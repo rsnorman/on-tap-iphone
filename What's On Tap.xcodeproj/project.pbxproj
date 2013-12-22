@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
+		94190C61185FE9F8002704F2 /* NormMenuManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5F185FE9F8002704F2 /* NormMenuManager.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
+		94A91D581856BF64006FEA65 /* bottle-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 94A91D541856BF64006FEA65 /* bottle-highlight.png */; };
+		94A91D5A1856BF64006FEA65 /* tap-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 94A91D561856BF64006FEA65 /* tap-highlight.png */; };
+		94A91D641856C2E1006FEA65 /* can-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 94A91D631856C2E1006FEA65 /* can-highlight.png */; };
+		94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A91D66185E5F90006FEA65 /* NormImageCache.m */; };
 		94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829D1847AC2100D60EDC /* Foundation.framework */; };
 		94BA82A01847AC2100D60EDC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829F1847AC2100D60EDC /* CoreGraphics.framework */; };
 		94BA82A21847AC2100D60EDC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA82A11847AC2100D60EDC /* UIKit.framework */; };
@@ -24,13 +30,16 @@
 		94BA82C71847AC2200D60EDC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94BA82C51847AC2200D60EDC /* InfoPlist.strings */; };
 		94BA82C91847AC2200D60EDC /* What_s_On_TapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82C81847AC2200D60EDC /* What_s_On_TapTests.m */; };
 		94BA82D31847B01200D60EDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BA82D21847B01200D60EDC /* Main.storyboard */; };
-		94BA82D61847E57A00D60EDC /* NormAddBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82D51847E57A00D60EDC /* NormAddBeerViewController.m */; };
 		94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82D81847E80D00D60EDC /* NormBeerListController.m */; };
 		94BA82DF18484C2B00D60EDC /* NormBeer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82DE18484C2B00D60EDC /* NormBeer.m */; };
 		94BA82E31848FDB800D60EDC /* BeerTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 94BA82E21848FDB800D60EDC /* BeerTableCell.xib */; };
 		94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */; };
 		94CD3AE21849135400C276A6 /* NormWhatsOnTap.m in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AE11849135400C276A6 /* NormWhatsOnTap.m */; };
-		94CD3AE6184916BB00C276A6 /* NormBeersManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 94CD3AE5184916BB00C276A6 /* NormBeersManager.m */; };
+		94DF090418665B7B005DDC51 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DF08FB18665B7B005DDC51 /* RECommonFunctions.m */; };
+		94DF090518665B7B005DDC51 /* REMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DF08FD18665B7B005DDC51 /* REMenu.m */; };
+		94DF090618665B7B005DDC51 /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DF08FF18665B7B005DDC51 /* REMenuContainerView.m */; };
+		94DF090718665B7B005DDC51 /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DF090118665B7B005DDC51 /* REMenuItem.m */; };
+		94DF090818665B7B005DDC51 /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94DF090318665B7B005DDC51 /* REMenuItemView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,8 +53,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBeerViewController.h; sourceTree = "<group>"; };
-		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBeerViewController.m; sourceTree = "<group>"; };
+		94190C5B185FE6F0002704F2 /* NormMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormMenu.h; sourceTree = "<group>"; };
+		94190C5C185FE6F0002704F2 /* NormMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormMenu.m; sourceTree = "<group>"; };
+		94190C5E185FE9F8002704F2 /* NormMenuManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormMenuManager.h; sourceTree = "<group>"; };
+		94190C5F185FE9F8002704F2 /* NormMenuManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormMenuManager.m; sourceTree = "<group>"; };
+		94190C60185FE9F8002704F2 /* NormMenuManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormMenuManagerDelegate.h; sourceTree = "<group>"; };
+		941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerViewController.h; path = ../NormBeerViewController.h; sourceTree = "<group>"; };
+		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerViewController.m; path = ../NormBeerViewController.m; sourceTree = "<group>"; };
+		94A91D541856BF64006FEA65 /* bottle-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottle-highlight.png"; path = "../../../Desktop/Whats On Tap Images/bottle-highlight.png"; sourceTree = "<group>"; };
+		94A91D561856BF64006FEA65 /* tap-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tap-highlight.png"; path = "../../../Desktop/Whats On Tap Images/tap-highlight.png"; sourceTree = "<group>"; };
+		94A91D631856C2E1006FEA65 /* can-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "can-highlight.png"; path = "../../../Desktop/Whats On Tap Images/can-highlight.png"; sourceTree = "<group>"; };
+		94A91D65185E5F90006FEA65 /* NormImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageCache.h; sourceTree = "<group>"; };
+		94A91D66185E5F90006FEA65 /* NormImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageCache.m; sourceTree = "<group>"; };
 		94BA829A1847AC2100D60EDC /* What's On Tap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "What's On Tap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94BA829D1847AC2100D60EDC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94BA829F1847AC2100D60EDC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -65,8 +84,6 @@
 		94BA82C61847AC2200D60EDC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94BA82C81847AC2200D60EDC /* What_s_On_TapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = What_s_On_TapTests.m; sourceTree = "<group>"; };
 		94BA82D21847B01200D60EDC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		94BA82D41847E57A00D60EDC /* NormAddBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormAddBeerViewController.h; path = ../NormAddBeerViewController.h; sourceTree = "<group>"; };
-		94BA82D51847E57A00D60EDC /* NormAddBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormAddBeerViewController.m; path = ../NormAddBeerViewController.m; sourceTree = "<group>"; };
 		94BA82D71847E80D00D60EDC /* NormBeerListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBeerListController.h; sourceTree = "<group>"; };
 		94BA82D81847E80D00D60EDC /* NormBeerListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBeerListController.m; sourceTree = "<group>"; };
 		94BA82DD18484C2B00D60EDC /* NormBeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBeer.h; sourceTree = "<group>"; };
@@ -77,9 +94,16 @@
 		94CD3ADF184912F100C276A6 /* NormWhatsOnTapDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormWhatsOnTapDelegate.h; sourceTree = "<group>"; };
 		94CD3AE01849135400C276A6 /* NormWhatsOnTap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormWhatsOnTap.h; sourceTree = "<group>"; };
 		94CD3AE11849135400C276A6 /* NormWhatsOnTap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormWhatsOnTap.m; sourceTree = "<group>"; };
-		94CD3AE31849164200C276A6 /* NormBeersManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormBeersManagerDelegate.h; sourceTree = "<group>"; };
-		94CD3AE4184916BB00C276A6 /* NormBeersManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBeersManager.h; sourceTree = "<group>"; };
-		94CD3AE5184916BB00C276A6 /* NormBeersManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBeersManager.m; sourceTree = "<group>"; };
+		94DF08FA18665B7B005DDC51 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		94DF08FB18665B7B005DDC51 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		94DF08FC18665B7B005DDC51 /* REMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenu.h; sourceTree = "<group>"; };
+		94DF08FD18665B7B005DDC51 /* REMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenu.m; sourceTree = "<group>"; };
+		94DF08FE18665B7B005DDC51 /* REMenuContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuContainerView.h; sourceTree = "<group>"; };
+		94DF08FF18665B7B005DDC51 /* REMenuContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuContainerView.m; sourceTree = "<group>"; };
+		94DF090018665B7B005DDC51 /* REMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItem.h; sourceTree = "<group>"; };
+		94DF090118665B7B005DDC51 /* REMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItem.m; sourceTree = "<group>"; };
+		94DF090218665B7B005DDC51 /* REMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItemView.h; sourceTree = "<group>"; };
+		94DF090318665B7B005DDC51 /* REMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItemView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,8 +135,7 @@
 		94BA82911847AC2100D60EDC = {
 			isa = PBXGroup;
 			children = (
-				941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */,
-				941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */,
+				94DF08F918665B7B005DDC51 /* REMenu */,
 				94BA82A51847AC2100D60EDC /* What's On Tap */,
 				94BA82C21847AC2200D60EDC /* What's On TapTests */,
 				94BA829C1847AC2100D60EDC /* Frameworks */,
@@ -144,11 +167,16 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				94190C5E185FE9F8002704F2 /* NormMenuManager.h */,
+				94190C5F185FE9F8002704F2 /* NormMenuManager.m */,
+				94190C60185FE9F8002704F2 /* NormMenuManagerDelegate.h */,
+				941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */,
+				941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */,
+				94190C5B185FE6F0002704F2 /* NormMenu.h */,
+				94190C5C185FE6F0002704F2 /* NormMenu.m */,
 				94BA82E21848FDB800D60EDC /* BeerTableCell.xib */,
 				94BA82E41848FF9800D60EDC /* NormBeerTableCell.h */,
 				94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */,
-				94BA82D41847E57A00D60EDC /* NormAddBeerViewController.h */,
-				94BA82D51847E57A00D60EDC /* NormAddBeerViewController.m */,
 				94BA82AE1847AC2100D60EDC /* NormAppDelegate.h */,
 				94BA82AF1847AC2100D60EDC /* NormAppDelegate.m */,
 				94BA82D21847B01200D60EDC /* Main.storyboard */,
@@ -157,12 +185,14 @@
 				94CD3AE11849135400C276A6 /* NormWhatsOnTap.m */,
 				94BA82D71847E80D00D60EDC /* NormBeerListController.h */,
 				94BA82D81847E80D00D60EDC /* NormBeerListController.m */,
+				94A91D65185E5F90006FEA65 /* NormImageCache.h */,
+				94A91D66185E5F90006FEA65 /* NormImageCache.m */,
 				94BA82DD18484C2B00D60EDC /* NormBeer.h */,
 				94BA82DE18484C2B00D60EDC /* NormBeer.m */,
-				94CD3AE31849164200C276A6 /* NormBeersManagerDelegate.h */,
-				94CD3AE4184916BB00C276A6 /* NormBeersManager.h */,
-				94CD3AE5184916BB00C276A6 /* NormBeersManager.m */,
 				94BA82B41847AC2200D60EDC /* Images.xcassets */,
+				94A91D541856BF64006FEA65 /* bottle-highlight.png */,
+				94A91D631856C2E1006FEA65 /* can-highlight.png */,
+				94A91D561856BF64006FEA65 /* tap-highlight.png */,
 				94BA82B11847AC2100D60EDC /* What_s_On_Tap.xcdatamodeld */,
 				94BA82A61847AC2100D60EDC /* Supporting Files */,
 			);
@@ -196,6 +226,24 @@
 				94BA82C51847AC2200D60EDC /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		94DF08F918665B7B005DDC51 /* REMenu */ = {
+			isa = PBXGroup;
+			children = (
+				94DF08FA18665B7B005DDC51 /* RECommonFunctions.h */,
+				94DF08FB18665B7B005DDC51 /* RECommonFunctions.m */,
+				94DF08FC18665B7B005DDC51 /* REMenu.h */,
+				94DF08FD18665B7B005DDC51 /* REMenu.m */,
+				94DF08FE18665B7B005DDC51 /* REMenuContainerView.h */,
+				94DF08FF18665B7B005DDC51 /* REMenuContainerView.m */,
+				94DF090018665B7B005DDC51 /* REMenuItem.h */,
+				94DF090118665B7B005DDC51 /* REMenuItem.m */,
+				94DF090218665B7B005DDC51 /* REMenuItemView.h */,
+				94DF090318665B7B005DDC51 /* REMenuItemView.m */,
+			);
+			name = REMenu;
+			path = ../REMenu/REMenu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -277,10 +325,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94A91D641856C2E1006FEA65 /* can-highlight.png in Resources */,
 				94BA82E31848FDB800D60EDC /* BeerTableCell.xib in Resources */,
 				94BA82D31847B01200D60EDC /* Main.storyboard in Resources */,
 				94BA82AA1847AC2100D60EDC /* InfoPlist.strings in Resources */,
 				94BA82B51847AC2200D60EDC /* Images.xcassets in Resources */,
+				94A91D581856BF64006FEA65 /* bottle-highlight.png in Resources */,
+				94A91D5A1856BF64006FEA65 /* tap-highlight.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,14 +351,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				94CD3AE21849135400C276A6 /* NormWhatsOnTap.m in Sources */,
+				94DF090818665B7B005DDC51 /* REMenuItemView.m in Sources */,
 				94BA82DF18484C2B00D60EDC /* NormBeer.m in Sources */,
-				94BA82D61847E57A00D60EDC /* NormAddBeerViewController.m in Sources */,
+				94DF090718665B7B005DDC51 /* REMenuItem.m in Sources */,
 				94BA82B31847AC2200D60EDC /* What_s_On_Tap.xcdatamodeld in Sources */,
 				94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */,
+				94190C61185FE9F8002704F2 /* NormMenuManager.m in Sources */,
+				94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */,
 				94BA82B01847AC2100D60EDC /* NormAppDelegate.m in Sources */,
+				94DF090418665B7B005DDC51 /* RECommonFunctions.m in Sources */,
+				94DF090618665B7B005DDC51 /* REMenuContainerView.m in Sources */,
 				941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */,
-				94CD3AE6184916BB00C276A6 /* NormBeersManager.m in Sources */,
+				94DF090518665B7B005DDC51 /* REMenu.m in Sources */,
 				94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */,
+				94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
