@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "94BA82991847AC2100D60EDC"
-               BuildableName = "What&apos;s On Tap.app"
-               BlueprintName = "What&apos;s On Tap"
-               ReferencedContainer = "container:What&apos;s On Tap.xcodeproj">
+               BuildableName = "On Tap.app"
+               BlueprintName = "On Tap"
+               ReferencedContainer = "container:On Tap.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "94BA82B91847AC2200D60EDC"
-               BuildableName = "What&apos;s On TapTests.xctest"
-               BlueprintName = "What&apos;s On TapTests"
-               ReferencedContainer = "container:What&apos;s On Tap.xcodeproj">
+               BuildableName = "On TapTests.xctest"
+               BlueprintName = "On TapTests"
+               ReferencedContainer = "container:On Tap.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -43,9 +43,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "94BA82991847AC2100D60EDC"
-            BuildableName = "What&apos;s On Tap.app"
-            BlueprintName = "What&apos;s On Tap"
-            ReferencedContainer = "container:What&apos;s On Tap.xcodeproj">
+            BuildableName = "On Tap.app"
+            BlueprintName = "On Tap"
+            ReferencedContainer = "container:On Tap.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "94BA82991847AC2100D60EDC"
-            BuildableName = "What&apos;s On Tap.app"
-            BlueprintName = "What&apos;s On Tap"
-            ReferencedContainer = "container:What&apos;s On Tap.xcodeproj">
+            BuildableName = "On Tap.app"
+            BlueprintName = "On Tap"
+            ReferencedContainer = "container:On Tap.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -80,9 +80,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "94BA82991847AC2100D60EDC"
-            BuildableName = "What&apos;s On Tap.app"
-            BlueprintName = "What&apos;s On Tap"
-            ReferencedContainer = "container:What&apos;s On Tap.xcodeproj">
+            BuildableName = "On Tap.app"
+            BlueprintName = "On Tap"
+            ReferencedContainer = "container:On Tap.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

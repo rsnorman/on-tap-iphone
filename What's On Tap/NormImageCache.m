@@ -63,7 +63,6 @@
     self = [super init];
     
     if (self) {
-        NSLog(@"Image cache initialized");
         _imageCache = [[NSCache alloc] init];
     }
     

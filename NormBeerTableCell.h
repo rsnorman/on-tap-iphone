@@ -8,14 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "NormBeer.h"
+#import "NormImageCache.h"
 
 @interface NormBeerTableCell : UITableViewCell
 
-@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic, weak) IBOutlet UILabel *breweryLabel;
-@property (nonatomic, weak) IBOutlet UILabel *detailsLabel;
-@property (nonatomic, weak) IBOutlet UILabel *costLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *imageView;
-@property (nonatomic, weak) NormBeer *beer;
+@property UILabel *nameLabel;
+@property UILabel *breweryLabel;
+@property UILabel *detailsLabel;
+@property UILabel *costLabel;
+@property UIImageView *imageView;
 
+//@property (nonatomic) NormBeer *beer;
+@property NormImageCache *imageCache;
+
+- (void)setBeer:(NormBeer *)beer;
+//- (void)setImageCache:(NormImageCache *)imageCache;
 @end

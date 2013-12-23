@@ -10,9 +10,12 @@
 		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
 		94190C61185FE9F8002704F2 /* NormMenuManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5F185FE9F8002704F2 /* NormMenuManager.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
-		94A91D581856BF64006FEA65 /* bottle-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 94A91D541856BF64006FEA65 /* bottle-highlight.png */; };
-		94A91D5A1856BF64006FEA65 /* tap-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 94A91D561856BF64006FEA65 /* tap-highlight.png */; };
-		94A91D641856C2E1006FEA65 /* can-highlight.png in Resources */ = {isa = PBXBuildFile; fileRef = 94A91D631856C2E1006FEA65 /* can-highlight.png */; };
+		9488C0AF18675FC60038ED51 /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 9488C0AE18675FC60038ED51 /* checkmark.png */; };
+		9488C0B41867B83B0038ED51 /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9488C0B31867B83B0038ED51 /* checkmark@2x.png */; };
+		9488C0B71867BC390038ED51 /* down-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 9488C0B51867BC390038ED51 /* down-arrow.png */; };
+		9488C0B81867BC390038ED51 /* down-arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9488C0B61867BC390038ED51 /* down-arrow@2x.png */; };
+		9488C0BF1867C3020038ED51 /* glass.png in Resources */ = {isa = PBXBuildFile; fileRef = 9488C0BD1867C3020038ED51 /* glass.png */; };
+		9488C0C01867C3020038ED51 /* glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9488C0BE1867C3020038ED51 /* glass@2x.png */; };
 		94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A91D66185E5F90006FEA65 /* NormImageCache.m */; };
 		94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829D1847AC2100D60EDC /* Foundation.framework */; };
 		94BA82A01847AC2100D60EDC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829F1847AC2100D60EDC /* CoreGraphics.framework */; };
@@ -60,27 +63,30 @@
 		94190C60185FE9F8002704F2 /* NormMenuManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormMenuManagerDelegate.h; sourceTree = "<group>"; };
 		941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerViewController.h; path = ../NormBeerViewController.h; sourceTree = "<group>"; };
 		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerViewController.m; path = ../NormBeerViewController.m; sourceTree = "<group>"; };
-		94A91D541856BF64006FEA65 /* bottle-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottle-highlight.png"; path = "../../../Desktop/Whats On Tap Images/bottle-highlight.png"; sourceTree = "<group>"; };
-		94A91D561856BF64006FEA65 /* tap-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tap-highlight.png"; path = "../../../Desktop/Whats On Tap Images/tap-highlight.png"; sourceTree = "<group>"; };
-		94A91D631856C2E1006FEA65 /* can-highlight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "can-highlight.png"; path = "../../../Desktop/Whats On Tap Images/can-highlight.png"; sourceTree = "<group>"; };
+		9488C0AE18675FC60038ED51 /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkmark.png; path = "../../../Desktop/Whats On Tap Images/checkmark.png"; sourceTree = "<group>"; };
+		9488C0B31867B83B0038ED51 /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkmark@2x.png"; path = "../../../Desktop/Whats On Tap Images/checkmark@2x.png"; sourceTree = "<group>"; };
+		9488C0B51867BC390038ED51 /* down-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "down-arrow.png"; path = "../../../Desktop/Whats On Tap Images/down-arrow.png"; sourceTree = "<group>"; };
+		9488C0B61867BC390038ED51 /* down-arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "down-arrow@2x.png"; path = "../../../Desktop/Whats On Tap Images/down-arrow@2x.png"; sourceTree = "<group>"; };
+		9488C0BD1867C3020038ED51 /* glass.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = glass.png; path = "../../../Desktop/Whats On Tap Images/glass.png"; sourceTree = "<group>"; };
+		9488C0BE1867C3020038ED51 /* glass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "glass@2x.png"; path = "../../../Desktop/Whats On Tap Images/glass@2x.png"; sourceTree = "<group>"; };
 		94A91D65185E5F90006FEA65 /* NormImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageCache.h; sourceTree = "<group>"; };
 		94A91D66185E5F90006FEA65 /* NormImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageCache.m; sourceTree = "<group>"; };
-		94BA829A1847AC2100D60EDC /* What's On Tap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "What's On Tap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94BA829A1847AC2100D60EDC /* On Tap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On Tap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94BA829D1847AC2100D60EDC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94BA829F1847AC2100D60EDC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		94BA82A11847AC2100D60EDC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		94BA82A31847AC2100D60EDC /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		94BA82A71847AC2100D60EDC /* What's On Tap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "What's On Tap-Info.plist"; sourceTree = "<group>"; };
+		94BA82A71847AC2100D60EDC /* On Tap-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "On Tap-Info.plist"; sourceTree = "<group>"; };
 		94BA82A91847AC2100D60EDC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94BA82AB1847AC2100D60EDC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		94BA82AD1847AC2100D60EDC /* What's On Tap-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "What's On Tap-Prefix.pch"; sourceTree = "<group>"; };
+		94BA82AD1847AC2100D60EDC /* On Tap-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "On Tap-Prefix.pch"; sourceTree = "<group>"; };
 		94BA82AE1847AC2100D60EDC /* NormAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormAppDelegate.h; sourceTree = "<group>"; };
 		94BA82AF1847AC2100D60EDC /* NormAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NormAppDelegate.m; sourceTree = "<group>"; };
 		94BA82B21847AC2100D60EDC /* What_s_On_Tap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = What_s_On_Tap.xcdatamodel; sourceTree = "<group>"; };
 		94BA82B41847AC2200D60EDC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		94BA82BA1847AC2200D60EDC /* What's On TapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "What's On TapTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		94BA82BA1847AC2200D60EDC /* On TapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On TapTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94BA82BB1847AC2200D60EDC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		94BA82C41847AC2200D60EDC /* What's On TapTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "What's On TapTests-Info.plist"; sourceTree = "<group>"; };
+		94BA82C41847AC2200D60EDC /* On TapTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "On TapTests-Info.plist"; sourceTree = "<group>"; };
 		94BA82C61847AC2200D60EDC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		94BA82C81847AC2200D60EDC /* What_s_On_TapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = What_s_On_TapTests.m; sourceTree = "<group>"; };
 		94BA82D21847B01200D60EDC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
@@ -132,6 +138,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9488C0AD18675FB70038ED51 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				9488C0BD1867C3020038ED51 /* glass.png */,
+				9488C0BE1867C3020038ED51 /* glass@2x.png */,
+				9488C0B51867BC390038ED51 /* down-arrow.png */,
+				9488C0B61867BC390038ED51 /* down-arrow@2x.png */,
+				9488C0B31867B83B0038ED51 /* checkmark@2x.png */,
+				9488C0AE18675FC60038ED51 /* checkmark.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		9488C0B01867ACA30038ED51 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				94A91D65185E5F90006FEA65 /* NormImageCache.h */,
+				94A91D66185E5F90006FEA65 /* NormImageCache.m */,
+				94BA82DD18484C2B00D60EDC /* NormBeer.h */,
+				94BA82DE18484C2B00D60EDC /* NormBeer.m */,
+				94190C5B185FE6F0002704F2 /* NormMenu.h */,
+				94190C5C185FE6F0002704F2 /* NormMenu.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		94BA82911847AC2100D60EDC = {
 			isa = PBXGroup;
 			children = (
@@ -146,8 +178,8 @@
 		94BA829B1847AC2100D60EDC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				94BA829A1847AC2100D60EDC /* What's On Tap.app */,
-				94BA82BA1847AC2200D60EDC /* What's On TapTests.xctest */,
+				94BA829A1847AC2100D60EDC /* On Tap.app */,
+				94BA82BA1847AC2200D60EDC /* On TapTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -167,13 +199,13 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				9488C0B01867ACA30038ED51 /* Models */,
+				9488C0AD18675FB70038ED51 /* Images */,
 				94190C5E185FE9F8002704F2 /* NormMenuManager.h */,
 				94190C5F185FE9F8002704F2 /* NormMenuManager.m */,
 				94190C60185FE9F8002704F2 /* NormMenuManagerDelegate.h */,
 				941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */,
 				941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */,
-				94190C5B185FE6F0002704F2 /* NormMenu.h */,
-				94190C5C185FE6F0002704F2 /* NormMenu.m */,
 				94BA82E21848FDB800D60EDC /* BeerTableCell.xib */,
 				94BA82E41848FF9800D60EDC /* NormBeerTableCell.h */,
 				94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */,
@@ -185,14 +217,7 @@
 				94CD3AE11849135400C276A6 /* NormWhatsOnTap.m */,
 				94BA82D71847E80D00D60EDC /* NormBeerListController.h */,
 				94BA82D81847E80D00D60EDC /* NormBeerListController.m */,
-				94A91D65185E5F90006FEA65 /* NormImageCache.h */,
-				94A91D66185E5F90006FEA65 /* NormImageCache.m */,
-				94BA82DD18484C2B00D60EDC /* NormBeer.h */,
-				94BA82DE18484C2B00D60EDC /* NormBeer.m */,
 				94BA82B41847AC2200D60EDC /* Images.xcassets */,
-				94A91D541856BF64006FEA65 /* bottle-highlight.png */,
-				94A91D631856C2E1006FEA65 /* can-highlight.png */,
-				94A91D561856BF64006FEA65 /* tap-highlight.png */,
 				94BA82B11847AC2100D60EDC /* What_s_On_Tap.xcdatamodeld */,
 				94BA82A61847AC2100D60EDC /* Supporting Files */,
 			);
@@ -202,10 +227,10 @@
 		94BA82A61847AC2100D60EDC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				94BA82A71847AC2100D60EDC /* What's On Tap-Info.plist */,
+				94BA82A71847AC2100D60EDC /* On Tap-Info.plist */,
 				94BA82A81847AC2100D60EDC /* InfoPlist.strings */,
 				94BA82AB1847AC2100D60EDC /* main.m */,
-				94BA82AD1847AC2100D60EDC /* What's On Tap-Prefix.pch */,
+				94BA82AD1847AC2100D60EDC /* On Tap-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -222,7 +247,7 @@
 		94BA82C31847AC2200D60EDC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				94BA82C41847AC2200D60EDC /* What's On TapTests-Info.plist */,
+				94BA82C41847AC2200D60EDC /* On TapTests-Info.plist */,
 				94BA82C51847AC2200D60EDC /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -249,9 +274,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		94BA82991847AC2100D60EDC /* What's On Tap */ = {
+		94BA82991847AC2100D60EDC /* On Tap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 94BA82CC1847AC2200D60EDC /* Build configuration list for PBXNativeTarget "What's On Tap" */;
+			buildConfigurationList = 94BA82CC1847AC2200D60EDC /* Build configuration list for PBXNativeTarget "On Tap" */;
 			buildPhases = (
 				94BA82961847AC2100D60EDC /* Sources */,
 				94BA82971847AC2100D60EDC /* Frameworks */,
@@ -261,14 +286,14 @@
 			);
 			dependencies = (
 			);
-			name = "What's On Tap";
+			name = "On Tap";
 			productName = "What's On Tap";
-			productReference = 94BA829A1847AC2100D60EDC /* What's On Tap.app */;
+			productReference = 94BA829A1847AC2100D60EDC /* On Tap.app */;
 			productType = "com.apple.product-type.application";
 		};
-		94BA82B91847AC2200D60EDC /* What's On TapTests */ = {
+		94BA82B91847AC2200D60EDC /* On TapTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 94BA82CF1847AC2200D60EDC /* Build configuration list for PBXNativeTarget "What's On TapTests" */;
+			buildConfigurationList = 94BA82CF1847AC2200D60EDC /* Build configuration list for PBXNativeTarget "On TapTests" */;
 			buildPhases = (
 				94BA82B61847AC2200D60EDC /* Sources */,
 				94BA82B71847AC2200D60EDC /* Frameworks */,
@@ -279,9 +304,9 @@
 			dependencies = (
 				94BA82C11847AC2200D60EDC /* PBXTargetDependency */,
 			);
-			name = "What's On TapTests";
+			name = "On TapTests";
 			productName = "What's On TapTests";
-			productReference = 94BA82BA1847AC2200D60EDC /* What's On TapTests.xctest */;
+			productReference = 94BA82BA1847AC2200D60EDC /* On TapTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -302,7 +327,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 94BA82951847AC2100D60EDC /* Build configuration list for PBXProject "What's On Tap" */;
+			buildConfigurationList = 94BA82951847AC2100D60EDC /* Build configuration list for PBXProject "On Tap" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -314,8 +339,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				94BA82991847AC2100D60EDC /* What's On Tap */,
-				94BA82B91847AC2200D60EDC /* What's On TapTests */,
+				94BA82991847AC2100D60EDC /* On Tap */,
+				94BA82B91847AC2200D60EDC /* On TapTests */,
 			);
 		};
 /* End PBXProject section */
@@ -325,13 +350,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94A91D641856C2E1006FEA65 /* can-highlight.png in Resources */,
+				9488C0B81867BC390038ED51 /* down-arrow@2x.png in Resources */,
 				94BA82E31848FDB800D60EDC /* BeerTableCell.xib in Resources */,
 				94BA82D31847B01200D60EDC /* Main.storyboard in Resources */,
+				9488C0BF1867C3020038ED51 /* glass.png in Resources */,
+				9488C0B41867B83B0038ED51 /* checkmark@2x.png in Resources */,
 				94BA82AA1847AC2100D60EDC /* InfoPlist.strings in Resources */,
+				9488C0B71867BC390038ED51 /* down-arrow.png in Resources */,
+				9488C0C01867C3020038ED51 /* glass@2x.png in Resources */,
 				94BA82B51847AC2200D60EDC /* Images.xcassets in Resources */,
-				94A91D581856BF64006FEA65 /* bottle-highlight.png in Resources */,
-				94A91D5A1856BF64006FEA65 /* tap-highlight.png in Resources */,
+				9488C0AF18675FC60038ED51 /* checkmark.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,7 +410,7 @@
 /* Begin PBXTargetDependency section */
 		94BA82C11847AC2200D60EDC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 94BA82991847AC2100D60EDC /* What's On Tap */;
+			target = 94BA82991847AC2100D60EDC /* On Tap */;
 			targetProxy = 94BA82C01847AC2200D60EDC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -487,10 +515,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "What's On Tap/What's On Tap-Prefix.pch";
-				INFOPLIST_FILE = "What's On Tap/What's On Tap-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
+				INFOPLIST_FILE = "What's On Tap/On Tap-Info.plist";
+				PRODUCT_NAME = "On Tap";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -503,10 +532,11 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "What's On Tap/What's On Tap-Prefix.pch";
-				INFOPLIST_FILE = "What's On Tap/What's On Tap-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
+				INFOPLIST_FILE = "What's On Tap/On Tap-Info.plist";
+				PRODUCT_NAME = "On Tap";
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -515,7 +545,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/What's On Tap.app/What's On Tap";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/On Tap.app/On Tap";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -527,8 +557,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "What's On TapTests/What's On TapTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "What's On TapTests/On TapTests-Info.plist";
+				PRODUCT_NAME = "On TapTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -538,7 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
-				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/What's On Tap.app/What's On Tap";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/On Tap.app/On Tap";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -546,8 +576,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/What's On Tap-Prefix.pch";
-				INFOPLIST_FILE = "What's On TapTests/What's On TapTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "What's On TapTests/On TapTests-Info.plist";
+				PRODUCT_NAME = "On TapTests";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -556,7 +586,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		94BA82951847AC2100D60EDC /* Build configuration list for PBXProject "What's On Tap" */ = {
+		94BA82951847AC2100D60EDC /* Build configuration list for PBXProject "On Tap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94BA82CA1847AC2200D60EDC /* Debug */,
@@ -565,7 +595,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		94BA82CC1847AC2200D60EDC /* Build configuration list for PBXNativeTarget "What's On Tap" */ = {
+		94BA82CC1847AC2200D60EDC /* Build configuration list for PBXNativeTarget "On Tap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94BA82CD1847AC2200D60EDC /* Debug */,
@@ -574,7 +604,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		94BA82CF1847AC2200D60EDC /* Build configuration list for PBXNativeTarget "What's On TapTests" */ = {
+		94BA82CF1847AC2200D60EDC /* Build configuration list for PBXNativeTarget "On TapTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				94BA82D01847AC2200D60EDC /* Debug */,

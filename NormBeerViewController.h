@@ -12,14 +12,16 @@
 
 @interface NormBeerViewController : UIViewController
 
-@property NormBeer *beer;
-@property NormImageCache *imageCache;
 
-@property (nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property (nonatomic, weak) IBOutlet UILabel *breweryLabel;
-@property (nonatomic, weak) IBOutlet UILabel *styleLabel;
-@property (nonatomic, weak) IBOutlet UILabel *abvLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *logoImage;
-@property (nonatomic, weak) IBOutlet UITextView *descriptionText;
+@property UILabel *nameLabel;
+@property UILabel *breweryLabel;
+@property UILabel *styleLabel;
+@property UILabel *abvLabel;
+@property UIImageView *logoImage;
+@property UITextView *descriptionText;
+@property UILabel *servedInLabel;
+@property UILabel *costLabel;
+
+-(void)setBeer:(NormBeer *)beer;
 
 @end
