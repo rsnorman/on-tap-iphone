@@ -22,9 +22,6 @@
     
     NSMutableArray *beers = [[NSMutableArray alloc] init];
     
-//    NSArray *results = [parsedObject valueForKey:@"results"];
-    NSLog(@"Count %d", results.count);
-    
     for (NSDictionary *beerDic in results) {
         NormBeer *beer = [[NormBeer alloc] init];
 

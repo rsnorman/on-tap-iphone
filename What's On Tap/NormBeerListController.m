@@ -7,37 +7,13 @@
 //
 
 #import "NormBeerListController.h"
-#import "NormBeer.h"
-#import "NormBeerViewController.h"
-#import "NormBeerTableCell.h"
-#import "NormMenuManager.h"
-#import "NormWhatsOnTap.h"
-#import "NormImageCache.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface NormBeerListController () <NormMenuManagerDelegate, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
-@property NSArray *allBeers;
-@property NSString *currentServeType;
-@property NSMutableDictionary *serveTypes;
-@property NSMutableArray *serveTypeKeys;
-@property NSMutableDictionary *styles;
-@property NSArray *styleKeys;
-@property NormMenuManager *menuManager;
-@property (nonatomic, weak) IBOutlet UITableView *tableView;
-@property (nonatomic, weak) IBOutlet UIActivityIndicatorView *spinner;
-@property (nonatomic, weak) IBOutlet UITabBar *tabBar;
-@property (nonatomic, weak) IBOutlet UITabBarItem *tapItem;
-@property UIRefreshControl *refreshControl;
-@property (nonatomic, strong) NSOperationQueue *queue;
-@property NormImageCache *imageCache;
-
-@property UISearchBar *beerSearchBar;
-@property UISearchDisplayController *beerSearchDisplayController;
-@property NSMutableDictionary *beerSearchData;
-@property (strong, readwrite, nonatomic) REMenu *menu;
 @end
 
 @implementation NormBeerListController
+
 
 
 - (void)startFetchingAvailableMenu
@@ -53,6 +29,21 @@
     self.tableView.hidden = NO;
     [self.refreshControl endRefreshing];
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+    
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+         usingSpringWithDamping:0.6
+          initialSpringVelocity:4.0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+         self.tableView.frame = CGRectMake(0,     self.navigationController.navigationBar.frame.size.height + self.navigationController.navigationBar.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y);
+     }
+                     completion:^(BOOL finished)
+     {
+         //         self.isAnimating = NO;
+     }];
 }
 
 - (void)groupBeers:(NSString *)searchString
@@ -81,13 +72,14 @@
     
     [self groupBeers:@""];
     
-    self.currentServeType = [self.serveTypeKeys objectAtIndex:0];
+    if (self.currentServeType == nil){
+        self.currentServeType = [self.serveTypeKeys objectAtIndex:0];
+    }
+    
     [self groupBeerStylesInServeType:self.currentServeType containsStyle:nil];
     
     
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh Menu"];
-    
-//    [self.refreshControl performSelectorOnMainThread:@selector(setAttributedTitle) withObject:[[NSAttributedString alloc] initWithString:@"Updating Menu..."] waitUntilDone:NO];
 
     [self performSelectorOnMainThread:@selector(createFilterMenu) withObject:nil waitUntilDone:NO];
     
@@ -128,7 +120,7 @@
 {
     self = [self initWithStyle:style];
     if (self) {
-        // Custom initialization
+
     }
     return self;
 }
@@ -144,45 +136,40 @@
     self.menuManager.communicator.delegate = self.menuManager;
     self.menuManager.delegate = self;
     
-    
-    
     // Navigation Controller
-    NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    if ([[ver objectAtIndex:0] intValue] >= 7) {
-        self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
-//        self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0];
-        
-        self.navigationController.navigationBar.translucent = YES;
-    }else {
-        self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.7];
-    }
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0];
+    self.navigationController.navigationBar.translucent = YES;
+    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0]}];
+    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]} forState:UIControlStateNormal];
+    
+    [[self.navigationController.navigationBar.subviews lastObject] setTintColor:[UIColor whiteColor]];
     
     
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0]} forState:UIControlStateNormal];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]
+                                   initWithImage:[UIImage imageNamed:@"glass-button"]
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(toggleMenu)];
     
-    [[self.navigationController.navigationBar.subviews lastObject] setTintColor:[UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0]];
     
-    UIView * container = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 95, 20)];
-    UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 80, 20)];
+    self.navigationItem.leftBarButtonItem = menuButton;
+        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    
+    UIView * container = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 90, 20)];
+    UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 90, 20)];
     [button addTarget:self action:@selector(toggleMenu) forControlEvents:UIControlEventTouchUpInside];
     [button setTitle:@"On Tap" forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont boldSystemFontOfSize:20.0]];
+    [[button titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28]];
     [container addSubview:button];
     
-    UIButton * imageButton = [[UIButton alloc]initWithFrame:CGRectMake(80, 6, 14, 9)];
-    [imageButton addTarget:self action:@selector(toggleMenu) forControlEvents:UIControlEventTouchUpInside];
-    [imageButton setImage:[UIImage imageNamed:@"down-arrow.png"] forState:UIControlStateNormal];
-    [container addSubview:imageButton];
+
     
-    [button setTitleColor:[UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0] forState:UIControlStateNormal];
-//    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.navigationItem.titleView = container;
 
     
-    //Table View
     UITableViewController *tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
     [self addChildViewController:tableViewController];
     
@@ -193,11 +180,13 @@
     tableViewController.refreshControl = self.refreshControl;
     [tableViewController.refreshControl addTarget:self action:@selector(startFetchingAvailableMenu) forControlEvents:UIControlEventValueChanged];
     
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, 320, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y) style:UITableViewStylePlain];
+    self.tableView.dataSource = self;
     self.tableView.hidden = YES;
     self.tableView.delegate = self;
     
     tableViewController.tableView = self.tableView;
-    
+    [self.view addSubview:self.tableView];
     
     
     
@@ -219,11 +208,12 @@
     self.tableView.tableHeaderView = _beerSearchBar;
     
     
-    
-    // Image Cache
-    self.imageCache = [[NormImageCache alloc] init];
-    
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 10);
+    [self.spinner setBackgroundColor:[UIColor whiteColor]];
     [self.spinner startAnimating];
+    [self.view addSubview:self.spinner];
+    
     // Fetch beers from server
     [self startFetchingAvailableMenu];
 }
@@ -237,20 +227,47 @@
     
     for (NSString* serveType in self.serveTypeKeys)
     {
+        UIImage * menuItemImage = nil;
+        
+        if ([serveType isEqual:@"On Tap"] || [serveType isEqual:@"Featured"] || [serveType isEqual:@"House"]) {
+            menuItemImage = [UIImage imageNamed: @"glass-menu-item"];
+        } else if([serveType isEqual:@"Bottles"]){
+            menuItemImage = [UIImage imageNamed:@"bottle-menu-item"];
+        }  else if([serveType isEqual:@"Cans"]){
+            menuItemImage = [UIImage imageNamed:@"can-menu-item"];
+        } else {
+            menuItemImage = [UIImage imageNamed: @"glass-menu-item"];
+        }
+        
+        
         REMenuItem *menuItem = [[REMenuItem alloc] initWithTitle:serveType
-                                                              image:nil
-                                                   highlightedImage:[UIImage imageNamed:@"checkmark.png"]
+                                                              image:menuItemImage
+                                                   highlightedImage:nil
                                                              action:^(REMenuItem *item) {
-                                                                 for(REMenuItem * _item in weakSelf.menu.items){
-                                                                     if ([_item.title isEqual:item.title]){
-                                                                        [_item setImage:[UIImage imageNamed:@"checkmark.png"]];
-                                                                        [_item setHiglightedImage:[UIImage imageNamed:@"checkmark.png"]];
-                                                                     } else {
-                                                                         [_item setImage:nil];
-                                                                     }
-                                                                 }
-                                                
                                                                  weakSelf.currentServeType = item.title;
+                                                                 
+                                                                 UIImage * menuButtonImage = nil;
+                                                                 
+                                                                 if ([item.title isEqual:@"On Tap"] || [item.title isEqual:@"Featured"] || [item.title isEqual:@"House"]) {
+                                                                     menuButtonImage = [UIImage imageNamed: @"glass-button"];
+                                                                 } else if([item.title isEqual:@"Bottles"]){
+                                                                     menuButtonImage = [UIImage imageNamed:@"bottle-button"];
+                                                                 }  else if([item.title isEqual:@"Cans"]){
+                                                                     menuButtonImage = [UIImage imageNamed:@"can-button"];
+                                                                 } else {
+                                                                     menuButtonImage = [UIImage imageNamed: @"glass-button"];
+                                                                 }
+                                                                 
+                                                                 UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]
+                                                                                                  initWithImage:menuButtonImage
+                                                                                                  style:UIBarButtonItemStylePlain
+                                                                                                  target:self
+                                                                                                  action:@selector(toggleMenu)];
+                                                                 
+                                                                 
+                                                                 self.navigationItem.leftBarButtonItem = menuButton;
+                                                                 self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+                                                                 
                                                                  [weakSelf groupBeerStylesInServeType: weakSelf.currentServeType containsStyle:nil];
                                                                  [weakSelf.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
                                                                  [weakSelf loadBeersIntoTableView];
@@ -258,19 +275,19 @@
         
         
         NSArray *beers = [self.serveTypes objectForKey:serveType];
-        [menuItem setSubtitle:[NSString stringWithFormat:@"%d Available Beers", beers.count]];
+        [menuItem setBadge:[NSString stringWithFormat:@"%lu", (unsigned long)beers.count]];
 
         [menuItems addObject:menuItem];
     }
     
-    [[menuItems objectAtIndex:0] setImage:[UIImage imageNamed:@"checkmark.png"]];
     
     self.menu = [[REMenu alloc] initWithItems:menuItems];
     
     self.menu.appearsBehindNavigationBar = NO; // Affects only iOS 7
     self.menu.backgroundColor = [UIColor colorWithRed:42.0/255.0 green:39.0/255.0 blue:46.0/255.0 alpha:1.0];
-    self.menu.font = [UIFont fontWithName:@"HelveticaNeue-Light" size:16];
-    self.menu.textColor = [UIColor whiteColor];
+    self.menu.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22];
+    self.menu.subtitleFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:14];
+    self.menu.textColor = [UIColor lightGrayColor];
     self.menu.separatorColor = [UIColor darkGrayColor];
     
     if (!REUIKitIsFlatMode()) {
@@ -281,14 +298,14 @@
         self.menu.shadowOpacity = 1;
     }
     
-    self.menu.imageOffset = CGSizeMake(5, -1);
+    self.menu.imageOffset = CGSizeMake(8, -1);
     self.menu.waitUntilAnimationIsComplete = NO;
     self.menu.badgeLabelConfigurationBlock = ^(UILabel *badgeLabel, REMenuItem *item) {
-        badgeLabel.backgroundColor = [UIColor whiteColor];
-        badgeLabel.layer.borderColor = [UIColor darkGrayColor].CGColor;
-        badgeLabel.textColor = [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0];
+        badgeLabel.backgroundColor = [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0];
+        badgeLabel.layer.borderWidth = 0.0;
+        badgeLabel.textColor = [UIColor whiteColor];
         badgeLabel.layer.cornerRadius = 10.0;
-        badgeLabel.layer.frame = CGRectMake(8.0, 10.0, 20.0, 20.0);
+        badgeLabel.layer.frame = CGRectMake(25.0, 10.0, 20.0, 20.0);
     };
 }
 
@@ -359,14 +376,13 @@
     tableView.rowHeight = 75.0f; // or some other height
 }
 
-- (void)tableView:(UITableView *)tableView
-didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NormBeer *beer = [[self.styles objectForKey: [self.styleKeys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     
     NormBeerViewController *nbvc = [[NormBeerViewController alloc] init];
     [nbvc setBeer:beer];
-    NSLog(@"Navigation Controller: %@", self.navigationController);
+
     [self.navigationController pushViewController:nbvc animated:YES];
     
 }
@@ -400,19 +416,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     bottomBorder.layer.borderColor = [UIColor lightGrayColor].CGColor;
     bottomBorder.layer.borderWidth = 1.0f;
     
-//    [customView addSubview:topBorder];
+    [customView addSubview:topBorder];
     [customView addSubview:bottomBorder];
     
     return customView;
-}
-
-- (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item
-{
-    self.currentServeType = item.title;
-    [self groupBeerStylesInServeType: self.currentServeType containsStyle:nil];
-    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-    [self loadBeersIntoTableView];
-//    [self createFilterMenu];
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -425,7 +432,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     [self.serveTypes removeAllObjects];
     [self.serveTypeKeys removeAllObjects];
     [self groupBeers:searchString];
-    [self groupBeerStylesInServeType:self.currentServeType];
+    [self groupBeerStylesInServeType:self.currentServeType containsStyle:nil];
     
     return YES;
 }
@@ -434,7 +441,25 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     [self.serveTypes removeAllObjects];
     [self.serveTypeKeys removeAllObjects];
     [self groupBeers:@""];
-    [self groupBeerStylesInServeType:self.currentServeType];
+    [self groupBeerStylesInServeType:self.currentServeType containsStyle:nil];
 }
 
+- (void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
+    
+    [UIView animateWithDuration:0.7
+                          delay:0.2
+         usingSpringWithDamping:0.6
+          initialSpringVelocity:4.0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+         self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+     }
+                     completion:^(BOOL finished)
+     {
+         //         self.isAnimating = NO;
+     }];
+}
 @end

@@ -8,15 +8,36 @@
 
 #import <UIKit/UIKit.h>
 #import "REMenu.h"
+#import "NormBeer.h"
+#import "NormBeerViewController.h"
+#import "NormBeerTableCell.h"
+#import "NormMenuManager.h"
+#import "NormWhatsOnTap.h"
 
 @interface NormBeerListController : UIViewController
 
-- (void)loadBeersIntoTableView;
-- (void)groupBeerStylesInServeType:(NSString *)serveType;
-- (void)groupBeers:(NSString *)seachString containsStyle:(NSString *)style;
-@property (nonatomic, weak) IBOutlet UITabBarItem *onTapItem;
-@property (strong, readonly, nonatomic) REMenu *menu;
+@property NSArray *allBeers;
 
+@property NSString *currentServeType;
+@property NSMutableDictionary *serveTypes;
+@property NSMutableArray *serveTypeKeys;
+@property NSMutableDictionary *styles;
+@property NSArray *styleKeys;
+@property NormMenuManager *menuManager;
+
+@property (nonatomic) UITableView *tableView;
+@property (nonatomic) UIActivityIndicatorView *spinner;
+@property UIRefreshControl *refreshControl;
+
+@property UISearchBar *beerSearchBar;
+@property UISearchDisplayController *beerSearchDisplayController;
+@property NSMutableDictionary *beerSearchData;
+@property (strong, readwrite, nonatomic) REMenu *menu;
+
+
+- (void)loadBeersIntoTableView;
+- (void)groupBeerStylesInServeType:(NSString *)serveType containsStyle:(NSString *)style;
+- (void)groupBeers:(NSString *)seachString;
 - (void)toggleMenu;
 - (void)createFilterMenu;
 - (void)filterBeerStyle:(NSString *)style;

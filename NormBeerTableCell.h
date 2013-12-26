@@ -8,19 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "NormBeer.h"
+#import "NormPriceLabel.h"
 #import "NormImageCache.h"
 
 @interface NormBeerTableCell : UITableViewCell
 
-@property UILabel *nameLabel;
-@property UILabel *breweryLabel;
-@property UILabel *detailsLabel;
-@property UILabel *costLabel;
-@property UIImageView *imageView;
-
-//@property (nonatomic) NormBeer *beer;
-@property NormImageCache *imageCache;
+@property (nonatomic) UILabel *nameLabel;
+@property (nonatomic) UILabel *breweryLabel;
+@property (nonatomic) UILabel *detailsLabel;
+@property (nonatomic) NormPriceLabel *costLabel;
+@property (nonatomic) UIImageView *imageView;
+@property (nonatomic) NormImageCache *imageCache;
 
 - (void)setBeer:(NormBeer *)beer;
-//- (void)setImageCache:(NormImageCache *)imageCache;
+
 @end

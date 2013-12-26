@@ -33,37 +33,11 @@
                     <view key="view" contentMode="scaleToFill" id="H2d-xo-FoD">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="CAb-3I-xuD">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <inset key="separatorInset" minX="75" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="F9F-zb-DQe" id="sAy-Vi-phW"/>
-                                    <outlet property="delegate" destination="F9F-zb-DQe" id="EdH-5z-Ljd"/>
-                                </connections>
-                            </tableView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="IxY-ed-fv1">
-                                <rect key="frame" x="150" y="274" width="20" height="20"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="CAb-3I-xuD" firstAttribute="centerX" secondItem="IxY-ed-fv1" secondAttribute="centerX" id="4pE-is-IsE"/>
-                            <constraint firstAttribute="bottom" secondItem="CAb-3I-xuD" secondAttribute="bottom" id="DW9-R1-uxp"/>
-                            <constraint firstAttribute="trailing" secondItem="CAb-3I-xuD" secondAttribute="trailing" id="EGC-oz-lHA"/>
-                            <constraint firstItem="CAb-3I-xuD" firstAttribute="leading" secondItem="H2d-xo-FoD" secondAttribute="leading" id="LdT-Ar-cRR"/>
-                            <constraint firstItem="CAb-3I-xuD" firstAttribute="top" secondItem="H2d-xo-FoD" secondAttribute="top" id="pHO-1C-X7H"/>
-                            <constraint firstItem="CAb-3I-xuD" firstAttribute="centerY" secondItem="IxY-ed-fv1" secondAttribute="centerY" id="pMQ-hU-qfB"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="On Tap" id="ogg-Az-8Hl"/>
                     <connections>
                         <outlet property="searchDisplayController" destination="F17-9x-JN7" id="fzE-zL-32U"/>
-                        <outlet property="spinner" destination="IxY-ed-fv1" id="B5b-B7-chm"/>
-                        <outlet property="tableView" destination="CAb-3I-xuD" id="hY0-ht-HF0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dTv-Iy-tHw" userLabel="First Responder" sceneMemberID="firstResponder"/>

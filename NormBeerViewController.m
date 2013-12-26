@@ -50,6 +50,8 @@
         
         self.logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(5.0, topPadding, imageWidth, imageHeight)];
         self.logoImage.backgroundColor = [UIColor whiteColor];
+
+        [self.logoImage setOpaque:YES];
         CALayer *imageLayer = self.logoImage.layer;
         [imageLayer setCornerRadius:45];
         [imageLayer setBorderWidth:2];
@@ -132,10 +134,7 @@
 {
     [super viewWillAppear:animated];
     
-    NSLog(@"Beer: %@", self.beer);
-    
     NormImageCache *imageCache = [[NormImageCache alloc] init];
-    
     
     [self.nameLabel setText:self.beer.name];
     [self.breweryLabel setText:self.beer.breweryName];
@@ -164,22 +163,36 @@
         if (image)
         {
             [self.logoImage setImage: image];
+            
+            if (image.size.height / image.size.width > 1.5) {
+                [self.logoImage setContentMode:UIViewContentModeScaleAspectFit];
+            } else{
+                [self.logoImage setContentMode:UIViewContentModeScaleToFill];
+            }
         }
         else {
             if ([_beer.serveType  isEqual: @"On Tap"]) {
                 [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
             } else if ([_beer.serveType  isEqual: @"Bottles"]) {
-                [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
-//                [self.logoImage setImage:[UIImage imageNamed: @"bottle-highlight.png"]];
+                [self.logoImage setImage:[UIImage imageNamed: @"bottle"]];
+            } else if ([_beer.serveType isEqual:@"Cans"]) {
+                [self.logoImage setImage:[UIImage imageNamed: @"can"]];
             } else {
                 [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
-//                [self.logoImage setImage:[UIImage imageNamed: @"can-highlight.png"]];
             }
             
             // get the UIImage
             [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_beer.label]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                 UIImage *image = [UIImage imageWithData:data];
+                
                 [self.logoImage setImage: image];
+            
+                if (image.size.height / image.size.width > 1.5) {
+                    [self.logoImage setContentMode:UIViewContentModeScaleAspectFit];
+                } else{
+                    [self.logoImage setContentMode:UIViewContentModeScaleToFill];
+                }
+                
                 [imageCache setImage:image forKey:_beer.label];
             }];
         }
@@ -187,9 +200,11 @@
         if ([_beer.serveType  isEqual: @"On Tap"]) {
             [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
         } else if ([_beer.serveType  isEqual: @"Bottles"]) {
-            [self.logoImage setImage:[UIImage imageNamed: @"bottle-highlight.png"]];
+            [self.logoImage setImage:[UIImage imageNamed: @"bottle"]];
+        } else if ([_beer.serveType isEqual:@"Cans"]) {
+            [self.logoImage setImage:[UIImage imageNamed: @"can"]];
         } else {
-            [self.logoImage setImage:[UIImage imageNamed: @"can-highlight.png"]];
+            [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
         }
     }
 
