@@ -38,7 +38,7 @@
                         options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                      animations:^
      {
-         self.tableView.frame = CGRectMake(0,     self.navigationController.navigationBar.frame.size.height + self.navigationController.navigationBar.frame.origin.y, self.view.frame.size.width, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y);
+         self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
      }
                      completion:^(BOOL finished)
      {
@@ -138,7 +138,7 @@
     
     // Navigation Controller
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0];
-    self.navigationController.navigationBar.translucent = YES;
+    self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
     
@@ -244,33 +244,36 @@
                                                               image:menuItemImage
                                                    highlightedImage:nil
                                                              action:^(REMenuItem *item) {
-                                                                 weakSelf.currentServeType = item.title;
                                                                  
-                                                                 UIImage * menuButtonImage = nil;
-                                                                 
-                                                                 if ([item.title isEqual:@"On Tap"] || [item.title isEqual:@"Featured"] || [item.title isEqual:@"House"]) {
-                                                                     menuButtonImage = [UIImage imageNamed: @"glass-button"];
-                                                                 } else if([item.title isEqual:@"Bottles"]){
-                                                                     menuButtonImage = [UIImage imageNamed:@"bottle-button"];
-                                                                 }  else if([item.title isEqual:@"Cans"]){
-                                                                     menuButtonImage = [UIImage imageNamed:@"can-button"];
-                                                                 } else {
-                                                                     menuButtonImage = [UIImage imageNamed: @"glass-button"];
+                                                                 if (![weakSelf.currentServeType isEqualToString:item.title]){
+                                                                     weakSelf.currentServeType = item.title;
+                                                                     
+                                                                     UIImage * menuButtonImage = nil;
+                                                                     
+                                                                     if ([item.title isEqual:@"On Tap"] || [item.title isEqual:@"Featured"] || [item.title isEqual:@"House"]) {
+                                                                         menuButtonImage = [UIImage imageNamed: @"glass-button"];
+                                                                     } else if([item.title isEqual:@"Bottles"]){
+                                                                         menuButtonImage = [UIImage imageNamed:@"bottle-button"];
+                                                                     }  else if([item.title isEqual:@"Cans"]){
+                                                                         menuButtonImage = [UIImage imageNamed:@"can-button"];
+                                                                     } else {
+                                                                         menuButtonImage = [UIImage imageNamed: @"glass-button"];
+                                                                     }
+                                                                     
+                                                                     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]
+                                                                                                    initWithImage:menuButtonImage
+                                                                                                    style:UIBarButtonItemStylePlain
+                                                                                                    target:self
+                                                                                                    action:@selector(toggleMenu)];
+                                                                     
+                                                                     
+                                                                     self.navigationItem.leftBarButtonItem = menuButton;
+                                                                     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+                                                                     
+                                                                     [weakSelf groupBeerStylesInServeType: weakSelf.currentServeType containsStyle:nil];
+                                                                     [weakSelf.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
+                                                                     [weakSelf loadBeersIntoTableView];
                                                                  }
-                                                                 
-                                                                 UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]
-                                                                                                  initWithImage:menuButtonImage
-                                                                                                  style:UIBarButtonItemStylePlain
-                                                                                                  target:self
-                                                                                                  action:@selector(toggleMenu)];
-                                                                 
-                                                                 
-                                                                 self.navigationItem.leftBarButtonItem = menuButton;
-                                                                 self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
-                                                                 
-                                                                 [weakSelf groupBeerStylesInServeType: weakSelf.currentServeType containsStyle:nil];
-                                                                 [weakSelf.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
-                                                                 [weakSelf loadBeersIntoTableView];
                                                              }];
         
         

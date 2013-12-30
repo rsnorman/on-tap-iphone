@@ -7,6 +7,7 @@
         <!--Navigation Controller-->
         <scene sceneID="Swv-ig-oM2">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2Ur-4T-mxx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ZIf-yd-RQs" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0lz-RS-3pw">
@@ -18,7 +19,6 @@
                         <segue destination="F9F-zb-DQe" kind="relationship" relationship="rootViewController" id="Dqn-r9-jYJ"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2Ur-4T-mxx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-381" y="-477"/>
         </scene>

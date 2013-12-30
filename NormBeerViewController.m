@@ -48,15 +48,9 @@
         scrollView.showsHorizontalScrollIndicator = YES;
         [self.view addSubview:scrollView];
         
-        self.logoImage = [[UIImageView alloc] initWithFrame:CGRectMake(5.0, topPadding, imageWidth, imageHeight)];
-        self.logoImage.backgroundColor = [UIColor whiteColor];
-
-        [self.logoImage setOpaque:YES];
-        CALayer *imageLayer = self.logoImage.layer;
-        [imageLayer setCornerRadius:45];
-        [imageLayer setBorderWidth:2];
-        [imageLayer setBorderColor:[UIColor whiteColor].CGColor];
-        [imageLayer setMasksToBounds:YES];
+        self.logoImage = [[NormImageView alloc] initWithFrame:CGRectMake(5.0, topPadding, imageWidth, imageHeight)];
+        [self.logoImage setBorderWidth:2];
+        [self.logoImage setBorderColor:[UIColor whiteColor]];
         [scrollView addSubview:self.logoImage];
         
         
@@ -134,8 +128,6 @@
 {
     [super viewWillAppear:animated];
     
-    NormImageCache *imageCache = [[NormImageCache alloc] init];
-    
     [self.nameLabel setText:self.beer.name];
     [self.breweryLabel setText:self.beer.breweryName];
     [self.styleLabel setText:self.beer.style];
@@ -156,57 +148,7 @@
     UIScrollView * scrollView = [self.view.subviews objectAtIndex:0];
     scrollView.contentSize = CGSizeMake(self.view.frame.size.width, descriptionSize.height + 190);
     
-    if (_beer.label.length != 0){
-        
-        UIImage *image = [imageCache imageForKey:self.beer.label];
-        
-        if (image)
-        {
-            [self.logoImage setImage: image];
-            
-            if (image.size.height / image.size.width > 1.5) {
-                [self.logoImage setContentMode:UIViewContentModeScaleAspectFit];
-            } else{
-                [self.logoImage setContentMode:UIViewContentModeScaleToFill];
-            }
-        }
-        else {
-            if ([_beer.serveType  isEqual: @"On Tap"]) {
-                [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
-            } else if ([_beer.serveType  isEqual: @"Bottles"]) {
-                [self.logoImage setImage:[UIImage imageNamed: @"bottle"]];
-            } else if ([_beer.serveType isEqual:@"Cans"]) {
-                [self.logoImage setImage:[UIImage imageNamed: @"can"]];
-            } else {
-                [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
-            }
-            
-            // get the UIImage
-            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_beer.label]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                UIImage *image = [UIImage imageWithData:data];
-                
-                [self.logoImage setImage: image];
-            
-                if (image.size.height / image.size.width > 1.5) {
-                    [self.logoImage setContentMode:UIViewContentModeScaleAspectFit];
-                } else{
-                    [self.logoImage setContentMode:UIViewContentModeScaleToFill];
-                }
-                
-                [imageCache setImage:image forKey:_beer.label];
-            }];
-        }
-    } else {
-        if ([_beer.serveType  isEqual: @"On Tap"]) {
-            [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
-        } else if ([_beer.serveType  isEqual: @"Bottles"]) {
-            [self.logoImage setImage:[UIImage imageNamed: @"bottle"]];
-        } else if ([_beer.serveType isEqual:@"Cans"]) {
-            [self.logoImage setImage:[UIImage imageNamed: @"can"]];
-        } else {
-            [self.logoImage setImage:[UIImage imageNamed: @"glass.png"]];
-        }
-    }
+    [self.logoImage setURLForImage:self.beer.label defaultImage: [UIImage imageNamed: [self.beer.serveType isEqual: @"Bottles"] ? @"bottles.png" : [self.beer.serveType isEqual: @"Bottles"] ? @"cans.png" : @"glass.png"]];
 
 }
 
@@ -219,24 +161,12 @@
     
     [self.view setBackgroundColor:backgroundColor];
 
-    
-//    [self.nameLabel sizeToFit];
-//    [self.breweryLabel sizeToFit];
-//    [self.styleLabel sizeToFit];
-//    [self.descriptionText setText:self.beer.description];
-    
-    self.title = @"Details"; //self.beer.name; // TabBarItem.title inherits the viewController's self.title
-    self.navigationItem.title = @"Details"; //self.beer.name;
+    self.title = @"Details";
+    self.navigationItem.title = @"Details";
     self.navigationItem.backBarButtonItem.title = @"list";
-
     
-    NSArray *ver = [[UIDevice currentDevice].systemVersion componentsSeparatedByString:@"."];
-    if ([[ver objectAtIndex:0] intValue] >= 7) {
-        self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
-        self.navigationController.navigationBar.translucent = YES;
-    }else {
-        self.navigationController.navigationBar.tintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
-    }
+    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning

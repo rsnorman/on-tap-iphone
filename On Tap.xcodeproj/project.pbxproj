@@ -11,6 +11,7 @@
 		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
 		94190C61185FE9F8002704F2 /* NormMenuManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5F185FE9F8002704F2 /* NormMenuManager.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
+		94851F64186DD81D00668E77 /* NormImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F63186DD81D00668E77 /* NormImageView.m */; };
 		9488C0C01867C3020038ED51 /* glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9488C0BE1867C3020038ED51 /* glass@2x.png */; };
 		94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A91D66185E5F90006FEA65 /* NormImageCache.m */; };
 		94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829D1847AC2100D60EDC /* Foundation.framework */; };
@@ -68,6 +69,8 @@
 		94190C60185FE9F8002704F2 /* NormMenuManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormMenuManagerDelegate.h; sourceTree = "<group>"; };
 		941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerViewController.h; path = ../NormBeerViewController.h; sourceTree = "<group>"; };
 		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerViewController.m; path = ../NormBeerViewController.m; sourceTree = "<group>"; };
+		94851F62186DD81D00668E77 /* NormImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageView.h; sourceTree = "<group>"; };
+		94851F63186DD81D00668E77 /* NormImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageView.m; sourceTree = "<group>"; };
 		9488C0BE1867C3020038ED51 /* glass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "glass@2x.png"; path = "../../../Desktop/Whats On Tap Images/glass@2x.png"; sourceTree = "<group>"; };
 		94A91D65185E5F90006FEA65 /* NormImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageCache.h; sourceTree = "<group>"; };
 		94A91D66185E5F90006FEA65 /* NormImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageCache.m; sourceTree = "<group>"; };
@@ -152,6 +155,8 @@
 				94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */,
 				941102A3186B4B0500B61F57 /* NormPriceLabel.h */,
 				941102A4186B4B0500B61F57 /* NormPriceLabel.m */,
+				94851F62186DD81D00668E77 /* NormImageView.h */,
+				94851F63186DD81D00668E77 /* NormImageView.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -413,6 +418,7 @@
 				941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */,
 				94DF090518665B7B005DDC51 /* REMenu.m in Sources */,
 				94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */,
+				94851F64186DD81D00668E77 /* NormImageView.m in Sources */,
 				941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */,
 				94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,

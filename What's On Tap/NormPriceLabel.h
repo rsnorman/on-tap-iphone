@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+// Label for displaying a price
 @interface NormPriceLabel : UILabel
+
+// Sets the price that will be displayed in the label
 - (void) setPrice:(float)price;
 @end

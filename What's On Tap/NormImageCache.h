@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
+// Caches JPG and PNG images in a local folder for easy retrieval at a later time
 @interface NormImageCache : NSObject
 
 @property NSCache *imageCache;

@@ -27,10 +27,11 @@
     return self;
 }
 
-- (void)setPrice:(float)price
+- (void)setPrice:(CGFloat)price
 {
     [self setText:[NSString stringWithFormat:@"$%g", price]];
 }
+
 
 - (void)setPersistentBackgroundColor:(UIColor*)color {
     super.backgroundColor = color;

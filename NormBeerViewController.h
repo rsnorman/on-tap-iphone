@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "NormBeer.h"
-#import "NormImageCache.h"
+#import "NormImageView.h"
 
 @interface NormBeerViewController : UIViewController
 
@@ -17,7 +17,7 @@
 @property UILabel *breweryLabel;
 @property UILabel *styleLabel;
 @property UILabel *abvLabel;
-@property UIImageView *logoImage;
+@property NormImageView *logoImage;
 @property UITextView *descriptionText;
 @property UILabel *servedInLabel;
 @property UILabel *costLabel;
