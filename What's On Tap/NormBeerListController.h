@@ -12,16 +12,12 @@
 #import "NormMenu.h"
 #import "NormBeerViewController.h"
 #import "NormBeerTableCell.h"
-#import "NormMenuManager.h"
-#import "NormWhatsOnTap.h"
 
 @interface NormBeerListController : UIViewController
 
 @property NormMenu *beerMenu;
 @property NSString *currentServeType;
 @property NSString *filterString;
-
-@property NormMenuManager *menuManager;
 
 @property (nonatomic) UITableView *tableView;
 @property (nonatomic) UIActivityIndicatorView *spinner;

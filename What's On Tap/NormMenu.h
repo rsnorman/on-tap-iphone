@@ -21,7 +21,7 @@
 @property NSString *filter;
 
 // Parses the menu from JSON
-+ (void)fetch:(void (^)(NormMenu *menu))action;
++ (void)fetch:(void (^)(NormMenu *menu))action failedWithError:(void (^)(NSError *))errorAction;
 + (NormMenu *)menuFromJSON:(NSData *)objectNotation;
 - (NSDictionary *)getBeersGroupedByStyleForServeType:(NSString *)serveType;
 - (NSArray *)getBeerStylesForServeType:(NSString *)serveType;

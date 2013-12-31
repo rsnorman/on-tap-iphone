@@ -77,6 +77,8 @@
         }
         
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
+    } failedWithError:^(NSError *error) {
+        NSLog([NSString stringWithFormat: @"There was an error: %@",error]);
     }];
 }
 

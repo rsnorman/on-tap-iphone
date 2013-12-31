@@ -10,7 +10,7 @@
 
 @implementation NormMenu
 
-+ (void)fetch:(void (^)(NormMenu *))action
++ (void)fetch:(void (^)(NormMenu *))action failedWithError:(void (^)(NSError *))errorAction
 {
     NSString *urlAsString = @"http://whatisontap.herokuapp.com/menus/today";
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
@@ -19,16 +19,10 @@
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (error) {
-            
+            errorAction(error);
         } else {
             action([self menuFromJSON:data]);
         }
-        
-//        if (error) {
-//            [self.delegate fetchingMenuFailedWithError:error];
-//        } else {
-//            [self.delegate receivedMenuJSON:data];
-//        }
     }];
 }
 
