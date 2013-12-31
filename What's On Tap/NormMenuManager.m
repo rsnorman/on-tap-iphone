@@ -20,13 +20,13 @@
 - (void)receivedMenuJSON:(NSData *)objectNotation
 {
     NSError *error = nil;
-    NormMenu *menu = [NormMenu menuFromJSON:objectNotation error:&error];
+//    NormMenu *menu = [NormMenu menuFromJSON:objectNotation error:&error];
     
     if (error != nil) {
         [self.delegate fetchingMenuFailedWithError:error];
         
     } else {
-        [self.delegate didReceiveMenu:menu];
+//        [self.delegate didReceiveMenu:menu];
     }
 }
 

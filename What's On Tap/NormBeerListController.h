@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "REMenu.h"
 #import "NormBeer.h"
+#import "NormMenu.h"
 #import "NormBeerViewController.h"
 #import "NormBeerTableCell.h"
 #import "NormMenuManager.h"
@@ -16,13 +17,10 @@
 
 @interface NormBeerListController : UIViewController
 
-@property NSArray *allBeers;
-
+@property NormMenu *beerMenu;
 @property NSString *currentServeType;
-@property NSMutableDictionary *serveTypes;
-@property NSMutableArray *serveTypeKeys;
-@property NSMutableDictionary *styles;
-@property NSArray *styleKeys;
+@property NSString *filterString;
+
 @property NormMenuManager *menuManager;
 
 @property (nonatomic) UITableView *tableView;

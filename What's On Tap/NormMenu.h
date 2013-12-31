@@ -13,9 +13,18 @@
 @interface NormMenu : NSObject
 
 // All the beers in the menu
-@property NSMutableArray *beers;
+@property NSArray *beers;
+@property NSMutableDictionary *styles;
+@property NSArray *styleKeys;
+@property NSMutableDictionary *serveTypes;
+@property NSMutableArray *serveTypeKeys;
+@property NSString *filter;
 
 // Parses the menu from JSON
-+ (NormMenu *)menuFromJSON:(NSData *)objectNotation error:(NSError **)error;
-
++ (void)fetch:(void (^)(NormMenu *menu))action;
++ (NormMenu *)menuFromJSON:(NSData *)objectNotation;
+- (NSDictionary *)getBeersGroupedByStyleForServeType:(NSString *)serveType;
+- (NSArray *)getBeerStylesForServeType:(NSString *)serveType;
+- (void)applyFilter:(NSString *)filter;
+- (void)removeFilter;
 @end

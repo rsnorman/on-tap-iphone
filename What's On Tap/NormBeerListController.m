@@ -9,17 +9,75 @@
 #import "NormBeerListController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface NormBeerListController () <NormMenuManagerDelegate, UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
+@interface NormBeerListController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 @end
 
 @implementation NormBeerListController
 
+- (id)initWithStyle:(UITableViewStyle)style
+{
+    self = [self initWithStyle:style];
+    if (self) {
+        
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    [self createNavigationController];
+    
+    [self createTableViewController];
+    
+    [self createSpinner];
+    
+    [self startFetchingAvailableMenu];
+}
+
+- (void)viewDidAppear:(BOOL)animated{
+    
+    [super viewDidAppear:animated];
+    
+    [UIView animateWithDuration:0.7
+                          delay:0.2
+         usingSpringWithDamping:0.6
+          initialSpringVelocity:4.0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+         self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+     }
+                     completion:^(BOOL finished)
+     {
+         //         self.isAnimating = NO;
+     }];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 
 - (void)startFetchingAvailableMenu
 {
     NSLog(@"Start updating menu");
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating Menu..."];
-    [self.menuManager fetchAvailableMenuAtLocation];
+    
+    // Fetch beers from server
+    [NormMenu fetch: ^(NormMenu *beerMenu) {
+        self.beerMenu = beerMenu;
+        
+        if (self.currentServeType == nil){
+            self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
+        }
+        
+        [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
+    }];
 }
 
 - (void)loadBeersIntoTableView
@@ -46,40 +104,6 @@
      }];
 }
 
-- (void)groupBeers:(NSString *)searchString
-{
-    for (NormBeer* beer in self.allBeers)
-    {
-        if (searchString.length == 0 || [beer.name rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound){
-            if ([self.serveTypes objectForKey:beer.serveType] == nil){
-                [self.serveTypes setObject:[[NSMutableArray alloc] init] forKey:beer.serveType];
-                [self.serveTypeKeys addObject: beer.serveType];
-            }
-            
-            
-            [[self.serveTypes objectForKey:beer.serveType] addObject:beer];
-        }
-    }
-}
-
-- (void)didReceiveMenu:(NormMenu *)menu
-{
-    self.allBeers = [[NSArray alloc] init];
-    self.serveTypes = [[NSMutableDictionary alloc] init];
-    self.serveTypeKeys = [[NSMutableArray alloc] init];
-
-    self.allBeers = menu.beers;
-    
-    [self groupBeers:@""];
-    
-    if (self.currentServeType == nil){
-        self.currentServeType = [self.serveTypeKeys objectAtIndex:0];
-    }
-    
-    [self groupBeerStylesInServeType:self.currentServeType containsStyle:nil];
-    
-    [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
-}
 
 - (void) didFinishReceivingMenu
 {
@@ -88,44 +112,6 @@
     [self loadBeersIntoTableView];
 }
 
-- (void)groupBeerStylesInServeType:(NSString *)serveType containsStyle:(NSString *)style
-{
-    self.styles = [[NSMutableDictionary alloc] init];
-    
-    NSMutableArray * unOrderedStyleKeys = [[NSMutableArray alloc] init];
-    NSArray *serveTypeBeers = [self.serveTypes objectForKey:serveType];
-    
-    for (NormBeer* beer in serveTypeBeers)
-    {
-        if ([beer.styleCategory isEqual:style] || style == nil) {
-            
-            if ([self.styles objectForKey:beer.styleCategory] == nil){
-                [self.styles setObject:[[NSMutableArray alloc] init] forKey:beer.styleCategory];
-                [unOrderedStyleKeys addObject:beer.styleCategory];
-            }
-            
-            [[self.styles objectForKey:beer.styleCategory] addObject:beer];
-        }
-    }
-    
-    self.styleKeys = [unOrderedStyleKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-}
-
-
-- (void)fetchingMenuFailedWithError:(NSError *)error
-{
-    NSLog(@"Error %@; %@", error, [error localizedDescription]);
-}
-
-
-- (id)initWithStyle:(UITableViewStyle)style
-{
-    self = [self initWithStyle:style];
-    if (self) {
-
-    }
-    return self;
-}
 
 - (void)createNavigationController
 {
@@ -211,27 +197,6 @@
     [self.view addSubview:self.spinner];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    
-    // Set up delegates for grabbing beers from server
-    self.menuManager = [[NormMenuManager alloc] init];
-    self.menuManager.communicator = [[NormWhatsOnTap alloc] init];
-    self.menuManager.communicator.delegate = self.menuManager;
-    self.menuManager.delegate = self;
-
-    [self createNavigationController];
-    
-    [self createTableViewController];
-    
-    [self createSpinner];
-    
-    // Fetch beers from server
-    [self startFetchingAvailableMenu];
-}
 
 - (void)createFilterMenu
 {
@@ -240,7 +205,7 @@
     NSMutableArray *menuItems = [[NSMutableArray alloc] init];
 
     
-    for (NSString* serveType in self.serveTypeKeys)
+    for (NSString* serveType in self.beerMenu.serveTypeKeys)
     {
         UIImage * menuItemImage = nil;
         
@@ -285,14 +250,13 @@
                                                                      self.navigationItem.leftBarButtonItem = menuButton;
                                                                      self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
                                                                      
-                                                                     [weakSelf groupBeerStylesInServeType: weakSelf.currentServeType containsStyle:nil];
                                                                      [weakSelf.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
                                                                      [weakSelf loadBeersIntoTableView];
                                                                  }
                                                              }];
         
         
-        NSArray *beers = [self.serveTypes objectForKey:serveType];
+        NSArray *beers = [self.beerMenu.serveTypes objectForKey:serveType];
         [menuItem setBadge:[NSString stringWithFormat:@"%lu", (unsigned long)beers.count]];
 
         [menuItems addObject:menuItem];
@@ -335,36 +299,19 @@
     [self.menu showFromNavigationController:self.navigationController];
 }
 
-- (void)filterBeerStyle:(NSString *)style
-{
-    [self groupBeerStylesInServeType:self.currentServeType containsStyle:style];
-    
-    [self.tableView reloadData];
-}
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
-#pragma mark - Table view data source
+// Table View Delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-        return self.styleKeys.count;
+    return [self.beerMenu getBeerStylesForServeType:self.currentServeType].count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[self.styles valueForKey:[self.styleKeys objectAtIndex:section]] count];
-}
-
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return [self.styleKeys objectAtIndex:section];
+    return [[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] valueForKey:[[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:section]] count];
 }
 
 
@@ -378,7 +325,7 @@
         cell = [[NormBeerTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:normTableCellIdentifier];
     }
     
-    [cell setBeer:[[self.styles objectForKey: [self.styleKeys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
+    [cell setBeer:[[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: [[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
     
     return cell;
 }
@@ -389,14 +336,9 @@
     return 75;
 }
 
-- (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
-{
-    tableView.rowHeight = 75.0f; // or some other height
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NormBeer *beer = [[self.styles objectForKey: [self.styleKeys objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    NormBeer *beer = [[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: [[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     
     NormBeerViewController *nbvc = [[NormBeerViewController alloc] init];
     [nbvc setBeer:beer];
@@ -423,7 +365,7 @@
     headerLabel.frame = CGRectMake(5.0, 0.0, 300.0, 35.0);
 
     
-    headerLabel.text = [self.styleKeys objectAtIndex:section];
+    headerLabel.text = [[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:section];
     [customView addSubview:headerLabel];
     
     UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 0.5)];
@@ -445,39 +387,22 @@
     return 35.0;
 }
 
+
+// Search Delegate
+
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    [self.serveTypes removeAllObjects];
-    [self.serveTypeKeys removeAllObjects];
-    [self groupBeers:searchString];
-    [self groupBeerStylesInServeType:self.currentServeType containsStyle:nil];
-    
+    [self.beerMenu applyFilter:searchString];
     return YES;
 }
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
-    [self.serveTypes removeAllObjects];
-    [self.serveTypeKeys removeAllObjects];
-    [self groupBeers:@""];
-    [self groupBeerStylesInServeType:self.currentServeType containsStyle:nil];
+    [self.beerMenu removeFilter];
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    
-    [super viewDidAppear:animated];
-    
-    [UIView animateWithDuration:0.7
-                          delay:0.2
-         usingSpringWithDamping:0.6
-          initialSpringVelocity:4.0
-                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
-                     animations:^
-     {
-         self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
-     }
-                     completion:^(BOOL finished)
-     {
-         //         self.isAnimating = NO;
-     }];
+- (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
+{
+    tableView.rowHeight = 75.0f; // or some other height
 }
+
 @end
