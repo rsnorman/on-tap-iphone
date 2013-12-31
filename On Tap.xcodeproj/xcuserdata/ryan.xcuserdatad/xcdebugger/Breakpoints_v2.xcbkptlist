@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "What&apos;s On Tap/NormBeerListController.m"
-            timestampString = "409850978.748629"
+            timestampString = "410151750.909311"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "480"
-            endingLineNumber = "480">
+            startingLineNumber = "495"
+            endingLineNumber = "495">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

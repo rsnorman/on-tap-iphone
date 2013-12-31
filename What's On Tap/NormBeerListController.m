@@ -15,9 +15,9 @@
 @implementation NormBeerListController
 
 
-
 - (void)startFetchingAvailableMenu
 {
+    NSLog(@"Start updating menu");
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating Menu..."];
     [self.menuManager fetchAvailableMenuAtLocation];
 }
@@ -78,12 +78,14 @@
     
     [self groupBeerStylesInServeType:self.currentServeType containsStyle:nil];
     
-    
-    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh Menu"];
+    [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
+}
 
-    [self performSelectorOnMainThread:@selector(createFilterMenu) withObject:nil waitUntilDone:NO];
-    
-    [self performSelectorOnMainThread:@selector(loadBeersIntoTableView) withObject:nil waitUntilDone:NO];
+- (void) didFinishReceivingMenu
+{
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh Menu"];
+    [self createFilterMenu];
+    [self loadBeersIntoTableView];
 }
 
 - (void)groupBeerStylesInServeType:(NSString *)serveType containsStyle:(NSString *)style
@@ -125,17 +127,8 @@
     return self;
 }
 
-
-- (void)viewDidLoad
+- (void)createNavigationController
 {
-    [super viewDidLoad];
-    
-    // Set up delegates for grabbing beers from server
-    self.menuManager = [[NormMenuManager alloc] init];
-    self.menuManager.communicator = [[NormWhatsOnTap alloc] init];
-    self.menuManager.communicator.delegate = self.menuManager;
-    self.menuManager.delegate = self;
-    
     // Navigation Controller
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0];
     self.navigationController.navigationBar.translucent = NO;
@@ -155,7 +148,7 @@
     
     
     self.navigationItem.leftBarButtonItem = menuButton;
-        self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
     
     UIView * container = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 90, 20)];
     UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 90, 20)];
@@ -164,12 +157,13 @@
     [[button titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28]];
     [container addSubview:button];
     
-
     
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     self.navigationItem.titleView = container;
+}
 
-    
+- (void)createTableViewController
+{
     UITableViewController *tableViewController = [[UITableViewController alloc]initWithStyle:UITableViewStylePlain];
     [self addChildViewController:tableViewController];
     
@@ -185,14 +179,17 @@
     self.tableView.hidden = YES;
     self.tableView.delegate = self;
     
+    
     tableViewController.tableView = self.tableView;
     [self.view addSubview:self.tableView];
-    
     
     
     // Search Bar
     _beerSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     _beerSearchBar.placeholder = @"Search Beers";
+    
+    self.tableView.tableHeaderView = _beerSearchBar;
+    
     /*the search bar widht must be > 1, the height must be at least 44
      (the real size of the search bar)*/
     
@@ -203,16 +200,34 @@
     _beerSearchDisplayController.delegate = self;
     _beerSearchDisplayController.searchResultsDataSource = self;
     _beerSearchDisplayController.searchResultsDelegate = self;
-    //set the delegate = self. Previously declared in ViewController.h
-    
-    self.tableView.tableHeaderView = _beerSearchBar;
-    
-    
+}
+
+- (void)createSpinner
+{
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 10);
     [self.spinner setBackgroundColor:[UIColor whiteColor]];
     [self.spinner startAnimating];
     [self.view addSubview:self.spinner];
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.edgesForExtendedLayout = UIRectEdgeNone;
+    
+    // Set up delegates for grabbing beers from server
+    self.menuManager = [[NormMenuManager alloc] init];
+    self.menuManager.communicator = [[NormWhatsOnTap alloc] init];
+    self.menuManager.communicator.delegate = self.menuManager;
+    self.menuManager.delegate = self;
+
+    [self createNavigationController];
+    
+    [self createTableViewController];
+    
+    [self createSpinner];
     
     // Fetch beers from server
     [self startFetchingAvailableMenu];

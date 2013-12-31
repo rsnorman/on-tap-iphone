@@ -163,7 +163,6 @@
 
     self.title = @"Details";
     self.navigationItem.title = @"Details";
-    self.navigationItem.backBarButtonItem.title = @"list";
     
     self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
     self.navigationController.navigationBar.translucent = NO;
