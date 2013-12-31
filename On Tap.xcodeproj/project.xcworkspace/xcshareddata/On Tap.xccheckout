@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>8BE4CDFC-0385-4015-B119-5B0F66335008</string>
+	<key>IDESourceControlProjectName</key>
+	<string>On Tap</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>0B6BDDA5-2853-4651-9336-A4BEA5F0D456</key>
+		<string>https://github.com/romaonthego/REMenu.git</string>
+		<key>9201DE9B-3CCA-43F0-ADC0-A0A8CBB34E14</key>
+		<string>file:///Users/rsnorman15/Dropbox/git/ontap.git/</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>On Tap.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>0B6BDDA5-2853-4651-9336-A4BEA5F0D456</key>
+		<string>../../REMenu</string>
+		<key>9201DE9B-3CCA-43F0-ADC0-A0A8CBB34E14</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>file:///Users/rsnorman15/Dropbox/git/ontap.git/</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9201DE9B-3CCA-43F0-ADC0-A0A8CBB34E14</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9201DE9B-3CCA-43F0-ADC0-A0A8CBB34E14</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ontap</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>0B6BDDA5-2853-4651-9336-A4BEA5F0D456</string>
+			<key>IDESourceControlWCCName</key>
+			<string>REMenu</string>
+		</dict>
+	</array>
+</dict>
+</plist>
