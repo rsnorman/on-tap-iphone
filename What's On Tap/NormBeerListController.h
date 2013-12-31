@@ -34,11 +34,4 @@
 @property NSMutableDictionary *beerSearchData;
 @property (strong, readwrite, nonatomic) REMenu *menu;
 
-
-- (void)loadBeersIntoTableView;
-- (void)groupBeerStylesInServeType:(NSString *)serveType containsStyle:(NSString *)style;
-- (void)groupBeers:(NSString *)seachString;
-- (void)toggleMenu;
-- (void)createFilterMenu;
-- (void)filterBeerStyle:(NSString *)style;
 @end
