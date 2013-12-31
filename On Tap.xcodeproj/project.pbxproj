@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		591FA9541872349B0086A54A /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 591FA91F1872349B0086A54A /* RECommonFunctions.m */; };
-		591FA9551872349B0086A54A /* REMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 591FA9211872349B0086A54A /* REMenu.m */; };
-		591FA9561872349B0086A54A /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 591FA9231872349B0086A54A /* REMenuContainerView.m */; };
-		591FA9571872349B0086A54A /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 591FA9251872349B0086A54A /* REMenuItem.m */; };
-		591FA9581872349B0086A54A /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 591FA9271872349B0086A54A /* REMenuItemView.m */; };
 		941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 941102A4186B4B0500B61F57 /* NormPriceLabel.m */; };
 		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
@@ -26,6 +21,11 @@
 		94851F761872578000668E77 /* glass-menu-item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6C1872578000668E77 /* glass-menu-item@2x.png */; };
 		94851F771872578000668E77 /* glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6D1872578000668E77 /* glass@2x.png */; };
 		94851F781872578000668E77 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6E1872578000668E77 /* icon@2x.png */; };
+		94851F8418736CCF00668E77 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F7B18736CCF00668E77 /* RECommonFunctions.m */; };
+		94851F8518736CCF00668E77 /* REMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F7D18736CCF00668E77 /* REMenu.m */; };
+		94851F8618736CCF00668E77 /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F7F18736CCF00668E77 /* REMenuContainerView.m */; };
+		94851F8718736CCF00668E77 /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F8118736CCF00668E77 /* REMenuItem.m */; };
+		94851F8818736CCF00668E77 /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F8318736CCF00668E77 /* REMenuItemView.m */; };
 		94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A91D66185E5F90006FEA65 /* NormImageCache.m */; };
 		94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829D1847AC2100D60EDC /* Foundation.framework */; };
 		94BA82A01847AC2100D60EDC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829F1847AC2100D60EDC /* CoreGraphics.framework */; };
@@ -59,16 +59,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		591FA91E1872349B0086A54A /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
-		591FA91F1872349B0086A54A /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
-		591FA9201872349B0086A54A /* REMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenu.h; sourceTree = "<group>"; };
-		591FA9211872349B0086A54A /* REMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenu.m; sourceTree = "<group>"; };
-		591FA9221872349B0086A54A /* REMenuContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuContainerView.h; sourceTree = "<group>"; };
-		591FA9231872349B0086A54A /* REMenuContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuContainerView.m; sourceTree = "<group>"; };
-		591FA9241872349B0086A54A /* REMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItem.h; sourceTree = "<group>"; };
-		591FA9251872349B0086A54A /* REMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItem.m; sourceTree = "<group>"; };
-		591FA9261872349B0086A54A /* REMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItemView.h; sourceTree = "<group>"; };
-		591FA9271872349B0086A54A /* REMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItemView.m; sourceTree = "<group>"; };
 		941102A3186B4B0500B61F57 /* NormPriceLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormPriceLabel.h; sourceTree = "<group>"; };
 		941102A4186B4B0500B61F57 /* NormPriceLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormPriceLabel.m; sourceTree = "<group>"; };
 		94190C5B185FE6F0002704F2 /* NormMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormMenu.h; sourceTree = "<group>"; };
@@ -87,6 +77,16 @@
 		94851F6C1872578000668E77 /* glass-menu-item@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "glass-menu-item@2x.png"; path = "../Images/glass-menu-item@2x.png"; sourceTree = "<group>"; };
 		94851F6D1872578000668E77 /* glass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "glass@2x.png"; path = "../Images/glass@2x.png"; sourceTree = "<group>"; };
 		94851F6E1872578000668E77 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../Images/icon@2x.png"; sourceTree = "<group>"; };
+		94851F7A18736CCF00668E77 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RECommonFunctions.h; path = REMenu/RECommonFunctions.h; sourceTree = "<group>"; };
+		94851F7B18736CCF00668E77 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RECommonFunctions.m; path = REMenu/RECommonFunctions.m; sourceTree = "<group>"; };
+		94851F7C18736CCF00668E77 /* REMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REMenu.h; path = REMenu/REMenu.h; sourceTree = "<group>"; };
+		94851F7D18736CCF00668E77 /* REMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REMenu.m; path = REMenu/REMenu.m; sourceTree = "<group>"; };
+		94851F7E18736CCF00668E77 /* REMenuContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REMenuContainerView.h; path = REMenu/REMenuContainerView.h; sourceTree = "<group>"; };
+		94851F7F18736CCF00668E77 /* REMenuContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REMenuContainerView.m; path = REMenu/REMenuContainerView.m; sourceTree = "<group>"; };
+		94851F8018736CCF00668E77 /* REMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REMenuItem.h; path = REMenu/REMenuItem.h; sourceTree = "<group>"; };
+		94851F8118736CCF00668E77 /* REMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REMenuItem.m; path = REMenu/REMenuItem.m; sourceTree = "<group>"; };
+		94851F8218736CCF00668E77 /* REMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REMenuItemView.h; path = REMenu/REMenuItemView.h; sourceTree = "<group>"; };
+		94851F8318736CCF00668E77 /* REMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REMenuItemView.m; path = REMenu/REMenuItemView.m; sourceTree = "<group>"; };
 		94A91D65185E5F90006FEA65 /* NormImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageCache.h; sourceTree = "<group>"; };
 		94A91D66185E5F90006FEA65 /* NormImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageCache.m; sourceTree = "<group>"; };
 		94BA829A1847AC2100D60EDC /* On Tap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On Tap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -142,24 +142,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		591FA91D1872349B0086A54A /* REMenu */ = {
-			isa = PBXGroup;
-			children = (
-				591FA91E1872349B0086A54A /* RECommonFunctions.h */,
-				591FA91F1872349B0086A54A /* RECommonFunctions.m */,
-				591FA9201872349B0086A54A /* REMenu.h */,
-				591FA9211872349B0086A54A /* REMenu.m */,
-				591FA9221872349B0086A54A /* REMenuContainerView.h */,
-				591FA9231872349B0086A54A /* REMenuContainerView.m */,
-				591FA9241872349B0086A54A /* REMenuItem.h */,
-				591FA9251872349B0086A54A /* REMenuItem.m */,
-				591FA9261872349B0086A54A /* REMenuItemView.h */,
-				591FA9271872349B0086A54A /* REMenuItemView.m */,
-			);
-			name = REMenu;
-			path = REMenu/REMenu;
-			sourceTree = "<group>";
-		};
 		941102A6186B4B1500B61F57 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +153,34 @@
 				94851F63186DD81D00668E77 /* NormImageView.m */,
 			);
 			name = Interface;
+			sourceTree = "<group>";
+		};
+		94851F7918736CBF00668E77 /* REMenu */ = {
+			isa = PBXGroup;
+			children = (
+				94851F7A18736CCF00668E77 /* RECommonFunctions.h */,
+				94851F7B18736CCF00668E77 /* RECommonFunctions.m */,
+				94851F7C18736CCF00668E77 /* REMenu.h */,
+				94851F7D18736CCF00668E77 /* REMenu.m */,
+				94851F7E18736CCF00668E77 /* REMenuContainerView.h */,
+				94851F7F18736CCF00668E77 /* REMenuContainerView.m */,
+				94851F8018736CCF00668E77 /* REMenuItem.h */,
+				94851F8118736CCF00668E77 /* REMenuItem.m */,
+				94851F8218736CCF00668E77 /* REMenuItemView.h */,
+				94851F8318736CCF00668E77 /* REMenuItemView.m */,
+			);
+			name = REMenu;
+			sourceTree = "<group>";
+		};
+		94851F891873711000668E77 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */,
+				941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */,
+				94BA82D71847E80D00D60EDC /* NormBeerListController.h */,
+				94BA82D81847E80D00D60EDC /* NormBeerListController.m */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		9488C0AD18675FB70038ED51 /* Images */ = {
@@ -206,7 +216,7 @@
 		94BA82911847AC2100D60EDC = {
 			isa = PBXGroup;
 			children = (
-				591FA91D1872349B0086A54A /* REMenu */,
+				94851F7918736CBF00668E77 /* REMenu */,
 				94BA82A51847AC2100D60EDC /* What's On Tap */,
 				94BA82C21847AC2200D60EDC /* What's On TapTests */,
 				94BA829C1847AC2100D60EDC /* Frameworks */,
@@ -238,16 +248,13 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				94851F891873711000668E77 /* Controllers */,
 				941102A6186B4B1500B61F57 /* Interface */,
 				9488C0B01867ACA30038ED51 /* Models */,
 				9488C0AD18675FB70038ED51 /* Images */,
-				941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */,
-				941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */,
 				94BA82AE1847AC2100D60EDC /* NormAppDelegate.h */,
 				94BA82AF1847AC2100D60EDC /* NormAppDelegate.m */,
 				94BA82D21847B01200D60EDC /* Main.storyboard */,
-				94BA82D71847E80D00D60EDC /* NormBeerListController.h */,
-				94BA82D81847E80D00D60EDC /* NormBeerListController.m */,
 				94BA82B41847AC2200D60EDC /* Images.xcassets */,
 				94BA82B11847AC2100D60EDC /* What_s_On_Tap.xcdatamodeld */,
 				94BA82A61847AC2100D60EDC /* Supporting Files */,
@@ -395,21 +402,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				94BA82DF18484C2B00D60EDC /* NormBeer.m in Sources */,
+				94851F8818736CCF00668E77 /* REMenuItemView.m in Sources */,
 				94BA82B31847AC2200D60EDC /* What_s_On_Tap.xcdatamodeld in Sources */,
+				94851F8718736CCF00668E77 /* REMenuItem.m in Sources */,
 				94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */,
-				591FA9581872349B0086A54A /* REMenuItemView.m in Sources */,
 				94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */,
 				94BA82B01847AC2100D60EDC /* NormAppDelegate.m in Sources */,
-				591FA9571872349B0086A54A /* REMenuItem.m in Sources */,
-				591FA9551872349B0086A54A /* REMenu.m in Sources */,
 				941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */,
 				94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */,
-				591FA9561872349B0086A54A /* REMenuContainerView.m in Sources */,
+				94851F8418736CCF00668E77 /* RECommonFunctions.m in Sources */,
+				94851F8618736CCF00668E77 /* REMenuContainerView.m in Sources */,
 				94851F64186DD81D00668E77 /* NormImageView.m in Sources */,
+				94851F8518736CCF00668E77 /* REMenu.m in Sources */,
 				941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */,
 				94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,
-				591FA9541872349B0086A54A /* RECommonFunctions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

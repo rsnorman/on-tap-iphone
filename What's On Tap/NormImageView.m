@@ -33,10 +33,9 @@
 
 - (void)setURLForImage:(NSString *)URL defaultImage:(UIImage *)defaultImage
 {
-    NormImageCache *imageCache = [[NormImageCache alloc] init];
     if (URL.length != 0){
         
-        UIImage *image = [imageCache imageForKey:URL];
+        UIImage *image = [NormImageCache imageForKey:URL];
         
         if (image) {
             self.image = image;
@@ -61,7 +60,7 @@
                     [self setContentMode:UIViewContentModeScaleToFill];
                 }
                 
-                [imageCache setImage:self.image forKey:URL];
+                [NormImageCache setImage:self.image forKey:URL];
             }];
         }
     } else {
@@ -79,6 +78,7 @@
     [self.layer setBorderWidth:width];
 }
 
+// Override background color so selected cell doesn't change color
 - (void)setBackgroundColor:(UIColor *)backgroundColor{
     // Do Nothing
 }

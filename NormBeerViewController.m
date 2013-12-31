@@ -115,6 +115,7 @@
     return self;
 }
 
+// Creates a label meant for the grid
 - (void)addCellLabel:(UILabel *)label frame:(CGRect)frame
 {
     label.frame = frame;

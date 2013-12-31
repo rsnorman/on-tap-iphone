@@ -10,41 +10,6 @@
 
 @implementation NormBeer
 
-+ (NSArray *)beersFromJSON:(NSData *)objectNotation error:(NSError **)error
-{
-    NSError *localError = nil;
-    NSArray *results = [NSJSONSerialization JSONObjectWithData:objectNotation options:1 error:&localError];
-    
-    if (localError != nil) {
-        *error = localError;
-        return nil;
-    }
-    
-    NSMutableArray *beers = [[NSMutableArray alloc] init];
-    
-    for (NSDictionary *beerDic in results) {
-        NormBeer *beer = [[NormBeer alloc] init];
-
-        for (NSString *key in beerDic) {
-            if ([beer respondsToSelector:NSSelectorFromString(key)]) {
-                [beer setValue:[beerDic valueForKey:key] forKey:key];
-            }
-        }
-        
-        if (beer.style.length == 0) {
-            beer.style = @"Special";
-        }
-        
-        if (beer.styleCategory.length == 0) {
-            beer.styleCategory = @"Special";
-        }
-        
-        [beers addObject:beer];
-    }
-    
-    return beers;
-}
-
 - (id)init
 {
     self = [super init];

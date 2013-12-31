@@ -392,19 +392,22 @@
 
 // Search Delegate
 
+// Applies a filter to the menu and reloads the table
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     [self.beerMenu applyFilter:searchString];
     return YES;
 }
 
+//  Removes the filter from the menu
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
     [self.beerMenu removeFilter];
 }
 
+// Sets the cell height for the search results
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
-    tableView.rowHeight = 75.0f; // or some other height
+    self.tableView.rowHeight = 75.0f; // or some other height
 }
 
 @end

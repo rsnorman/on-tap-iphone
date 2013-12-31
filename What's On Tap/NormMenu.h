@@ -14,17 +14,33 @@
 
 // All the beers in the menu
 @property NSArray *beers;
-@property NSMutableDictionary *styles;
-@property NSArray *styleKeys;
-@property NSMutableDictionary *serveTypes;
-@property NSMutableArray *serveTypeKeys;
+
+ // Filter string for searching menu
 @property NSString *filter;
 
-// Parses the menu from JSON
+// Holds all the beers grouped by serve types
+@property NSMutableDictionary *serveTypes;
+
+// Holds all the serve types
+@property NSMutableArray *serveTypeKeys;
+
+// Fetches menu from server
 + (void)fetch:(void (^)(NormMenu *menu))action failedWithError:(void (^)(NSError *))errorAction;
+
+// Parses the menu from JSON
 + (NormMenu *)menuFromJSON:(NSData *)objectNotation;
+
+// Gets all beers grouped in their beer style category for a serve type
 - (NSDictionary *)getBeersGroupedByStyleForServeType:(NSString *)serveType;
+
+// Gets all the style categories of beer for serve type
 - (NSArray *)getBeerStylesForServeType:(NSString *)serveType;
+
+// Adds a filter to the menu
 - (void)applyFilter:(NSString *)filter;
+
+// Removes the filter from the menu
 - (void)removeFilter;
+
+
 @end

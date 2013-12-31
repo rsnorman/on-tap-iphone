@@ -8,15 +8,24 @@
 
 #import "NormImageCache.h"
 
+// Cache to store images in memory
+static NSCache *imageCache;
+
 @implementation NormImageCache
 
-- (void)setImage:(UIImage *)image forKey:(NSString *)key
++(void) initialize
 {
-    [_imageCache setObject:image forKey:key];
+    if (! imageCache)
+    	imageCache = [[NSCache alloc] init];
+}
+
++ (void)setImage:(UIImage *)image forKey:(NSString *)key
+{
+    [imageCache setObject:image forKey:key];
     [self saveImage:image forURL:key];
 }
      
- -(void) saveImage:(UIImage *)image forURL:(NSString *)url {
++ (void) saveImage:(UIImage *)image forURL:(NSString *)url {
      NSString * extension = [url componentsSeparatedByString:@"."].lastObject;
      NSString * directoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
      NSString * imageName = [url componentsSeparatedByString:@"/"].lastObject;
@@ -30,7 +39,7 @@
      }
  }
 
--(UIImage *) retrieveImageForURL:(NSString *)url
++ (UIImage *) retrieveImageForURL:(NSString *)url
 {
     NSString * directoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString * imageName = [url componentsSeparatedByString:@"/"].lastObject;
@@ -41,9 +50,9 @@
     return image;
 }
 
-- (UIImage *)imageForKey:(NSString *)key
++ (UIImage *)imageForKey:(NSString *)key
 {
-    UIImage *image = [self.imageCache objectForKey:key];
+    UIImage *image = [imageCache objectForKey:key];
     
     if (image) {
         return image;
@@ -58,15 +67,15 @@
     }
 }
 
-- (id)init
-{
-    self = [super init];
-    
-    if (self) {
-        _imageCache = [[NSCache alloc] init];
-    }
-    
-    return self;
-}
+//- (id)init
+//{
+//    self = [super init];
+//    
+//    if (self) {
+//        _imageCache = [[NSCache alloc] init];
+//    }
+//    
+//    return self;
+//}
 
 @end

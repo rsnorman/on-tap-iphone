@@ -11,16 +11,13 @@
 // Caches JPG and PNG images in a local folder for easy retrieval at a later time
 @interface NormImageCache : NSObject
 
-// Cache to store images in memory
-@property NSCache *imageCache;
-
 // Sets an image for a key
-- (void)setImage:(UIImage *)image forKey:(NSString *)key;
++ (void)setImage:(UIImage *)image forKey:(NSString *)key;
 
 // Retrieves an image matching a key
-- (UIImage *)imageForKey:(NSString *)key;
++ (UIImage *)imageForKey:(NSString *)key;
 
 // Saves an image from a URL
-- (void)saveImage:(UIImage *)image forURL:(NSString *)url;
++ (void)saveImage:(UIImage *)image forURL:(NSString *)url;
 
 @end

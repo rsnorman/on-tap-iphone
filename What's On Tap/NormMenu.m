@@ -10,6 +10,7 @@
 
 @implementation NormMenu
 
+
 + (void)fetch:(void (^)(NormMenu *))action failedWithError:(void (^)(NSError *))errorAction
 {
     NSString *urlAsString = @"http://whatisontap.herokuapp.com/menus/today";
@@ -49,10 +50,12 @@
             }
         }
         
+        // Add special style if none found
         if (beer.style.length == 0) {
             beer.style = @"Special";
         }
         
+        // Add special category is none found
         if (beer.styleCategory.length == 0) {
             beer.styleCategory = @"Special";
         }
