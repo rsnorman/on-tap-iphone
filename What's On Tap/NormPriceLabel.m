@@ -17,7 +17,7 @@
         [self setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:13.0]];
         [self setTextColor:[UIColor whiteColor]];
         [self setTextAlignment:NSTextAlignmentCenter];
-        [self setPersistentBackgroundColor:[UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0]];
+        [self setPersistentBackgroundColor:_MAIN_COLOR];
         
         CALayer *priceLayer = self.layer;
         [priceLayer setCornerRadius:MAX(frame.size.width, frame.size.height)/2];

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "NormBeer.h"
 #import "NormImageView.h"
+#import "NormDraggableImageView.h"
+#import "constants.h"
 
 // View controller for deatils of an individual beer
 @interface NormBeerViewController : UIViewController
@@ -36,6 +38,8 @@
 
 // Label for the cost of the beer
 @property UILabel *costLabel;
+
+@property UIView *overlay;
 
 // Sets the active beer for the controller
 -(void)setBeer:(NormBeer *)beer;

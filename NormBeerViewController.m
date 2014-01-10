@@ -7,7 +7,12 @@
 //
 
 #import "NormBeerViewController.h"
+#import "NormImageCache.h"
+#import "NormDraggableImageViewDelegate.h"
+#import "NormTransitionDelegate.h"
+#import "NormImageModalControllerViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <CoreImage/CoreImage.h>
 
 @interface NormBeerViewController ()
 @property NormBeer *beer;
@@ -23,15 +28,6 @@
 @synthesize logoImage = _logoImage;
 @synthesize descriptionText = _descriptionText;
 @synthesize beer = _beer;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-    }
-    
-    return self;
-}
 
 
 - (id)init{
@@ -51,6 +47,12 @@
         self.logoImage = [[NormImageView alloc] initWithFrame:CGRectMake(5.0, topPadding, imageWidth, imageHeight)];
         [self.logoImage setBorderWidth:2];
         [self.logoImage setBorderColor:[UIColor whiteColor]];
+        
+        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected)];
+        singleTap.numberOfTapsRequired = 1;
+        self.logoImage.userInteractionEnabled = YES;
+        [self.logoImage addGestureRecognizer:singleTap];
+        
         [scrollView addSubview:self.logoImage];
         
         
@@ -110,10 +112,32 @@
         [self.descriptionText setEditable:NO];
 
         [scrollView addSubview:self.descriptionText];
+        
+
+        
     }
     
     return self;
 }
+
+
+-(void)tapDetected{
+    NSLog(@"single Tap on imageview");
+    
+    UIImage *beerLabel = [NormImageCache imageForKey:self.beer.label];
+    
+    NormImageModalControllerViewController *imageModalController = [[NormImageModalControllerViewController alloc] init];
+
+    [imageModalController setDraggableImage: beerLabel];
+    
+    
+    NormTransitionDelegate *transitionController = [[NormTransitionDelegate alloc] init];
+    [imageModalController setTransitioningDelegate:transitionController];
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    [self presentViewController:imageModalController animated:YES completion:nil];
+}
+
+
 
 // Creates a label meant for the grid
 - (void)addCellLabel:(UILabel *)label frame:(CGRect)frame
@@ -158,14 +182,12 @@
     [super viewDidLoad];
     
 	// Do any additional setup after loading the view.
-    UIColor *backgroundColor = [UIColor colorWithRed:42.0/255.0 green:39.0/255.0 blue:46.0/255.0 alpha:1.0];
-    
-    [self.view setBackgroundColor:backgroundColor];
+    [self.view setBackgroundColor:_DARK_COLOR];
 
     self.title = @"Details";
     self.navigationItem.title = @"Details";
     
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
     self.navigationController.navigationBar.translucent = NO;
 }
 

@@ -12,6 +12,7 @@
 #import "NormMenu.h"
 #import "NormBeerViewController.h"
 #import "NormBeerTableCell.h"
+#import "constants.h"
 
 // Controller for view the list of all beers on a menu
 @interface NormBeerListController : UIViewController

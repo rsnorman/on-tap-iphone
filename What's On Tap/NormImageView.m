@@ -21,6 +21,7 @@
         [self setScaleToFillAspectRatioMax: 1.5];
         [self setOpaque:YES];
         
+        
         CALayer *imageLayer = self.layer;
         [imageLayer setCornerRadius:MAX(frame.size.height, frame.size.width) / 2];
         [imageLayer setBorderWidth:1];

@@ -78,7 +78,7 @@
         
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
     } failedWithError:^(NSError *error) {
-        NSLog([NSString stringWithFormat: @"There was an error: %@",error]);
+        NSLog([NSString stringWithFormat: @"There was an error: %@", error]);
     }];
 }
 
@@ -118,7 +118,7 @@
 - (void)createNavigationController
 {
     // Navigation Controller
-    self.navigationController.navigationBar.barTintColor = [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0];
+    self.navigationController.navigationBar.barTintColor = _MAIN_COLOR;
     self.navigationController.navigationBar.translucent = NO;
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor]}];
     
@@ -268,7 +268,7 @@
     self.menu = [[REMenu alloc] initWithItems:menuItems];
     
     self.menu.appearsBehindNavigationBar = NO; // Affects only iOS 7
-    self.menu.backgroundColor = [UIColor colorWithRed:42.0/255.0 green:39.0/255.0 blue:46.0/255.0 alpha:1.0];
+    self.menu.backgroundColor = _DARK_COLOR;
     self.menu.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22];
     self.menu.subtitleFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:14];
     self.menu.textColor = [UIColor lightGrayColor];
@@ -285,7 +285,7 @@
     self.menu.imageOffset = CGSizeMake(8, -1);
     self.menu.waitUntilAnimationIsComplete = NO;
     self.menu.badgeLabelConfigurationBlock = ^(UILabel *badgeLabel, REMenuItem *item) {
-        badgeLabel.backgroundColor = [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0];
+        badgeLabel.backgroundColor = _MAIN_COLOR;
         badgeLabel.layer.borderWidth = 0.0;
         badgeLabel.textColor = [UIColor whiteColor];
         badgeLabel.layer.cornerRadius = 10.0;
@@ -352,7 +352,7 @@
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIColor *bgHeaderColor = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:0.9];
-    UIColor *textColor = [UIColor colorWithRed:42.0/255.0 green:39.0/255.0 blue:46.0/255.0 alpha:1.0];
+    UIColor *textColor = _DARK_COLOR;
     
     // create the parent view that will hold header Label
     UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 35.0)];
