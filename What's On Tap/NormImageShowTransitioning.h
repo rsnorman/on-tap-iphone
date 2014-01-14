@@ -7,14 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "NormModalShowTransitioning.h"
+#import "NormImageModalController.h"
 
-@interface NormImageShowTransitioning : NSObject <UIViewControllerAnimatedTransitioning>
+@interface NormImageShowTransitioning : NormModalShowTransitioning
 
-
-@property (nonatomic, assign) BOOL isPresenting;
-@property (nonatomic, assign) UIViewController *toVC;
-@property (nonatomic, assign) UIViewController *fromVC;
-
-- (id) initWithFromController:(UIViewController *)fromVC toController:(UIViewController *)toVC;
+@property (nonatomic, assign) NormImageModalController <NormModalControllerDelegate> *toVC;
+@property (nonatomic, assign) UIImage *presentingImage;
+@property (nonatomic, assign) CGRect presentingImageStartFrame;
+@property (nonatomic, assign) CGRect presentingImageFinishFrame;
+@property (nonatomic, assign) CALayer *presentingImageStartLayer;
+@property (nonatomic, assign) CALayer *presentingImageFinishLayer;
 
 @end

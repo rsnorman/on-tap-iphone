@@ -1,5 +1,5 @@
 //
-//  NormImageModalControllerViewController.h
+//  NormImageModalController.h
 //  On Tap
 //
 //  Created by Ryan Norman on 1/9/14.
@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@interface NormImageModalControllerViewController : UIViewController
+@interface NormImageModalController : UIViewController
 
 @property UIImage *draggableImage;
 
--(void) imageModalShouldBeDismissed;
+- (UIImageView *) getPresentedImage;
 
 @end

@@ -10,11 +10,13 @@
 		941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 941102A4186B4B0500B61F57 /* NormPriceLabel.m */; };
 		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
-		9460832A187D8546005EF155 /* NormTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94608329187D8546005EF155 /* NormTransitionDelegate.m */; };
+		9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */; };
 		9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832C187D8582005EF155 /* NormImageShowTransitioning.m */; };
-		94608330187ECDCB005EF155 /* NormImageModalControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832F187ECDCB005EF155 /* NormImageModalControllerViewController.m */; };
+		94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832F187ECDCB005EF155 /* NormImageModalController.m */; };
 		94608333188023B6005EF155 /* NormBlurImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 94608332188023B6005EF155 /* NormBlurImage.m */; };
-		9460833618802DDD005EF155 /* NormImageHideTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460833518802DDD005EF155 /* NormImageHideTransitioning.m */; };
+		9460833918834BE5005EF155 /* NormViewSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460833818834BE5005EF155 /* NormViewSnapshot.m */; };
+		9460833C1884DA27005EF155 /* NormModalShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460833B1884DA27005EF155 /* NormModalShowTransitioning.m */; };
+		946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */; };
 		94851F64186DD81D00668E77 /* NormImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F63186DD81D00668E77 /* NormImageView.m */; };
 		94851F6F1872578000668E77 /* bottle-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F651872578000668E77 /* bottle-button@2x.png */; };
 		94851F701872578000668E77 /* bottle-menu-item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F661872578000668E77 /* bottle-menu-item@2x.png */; };
@@ -71,16 +73,21 @@
 		94190C5C185FE6F0002704F2 /* NormMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormMenu.m; sourceTree = "<group>"; };
 		941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerViewController.h; path = ../NormBeerViewController.h; sourceTree = "<group>"; };
 		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerViewController.m; path = ../NormBeerViewController.m; sourceTree = "<group>"; };
-		94608328187D8546005EF155 /* NormTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormTransitionDelegate.h; sourceTree = "<group>"; };
-		94608329187D8546005EF155 /* NormTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormTransitionDelegate.m; sourceTree = "<group>"; };
+		94608328187D8546005EF155 /* NormImageModalTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageModalTransitionDelegate.h; sourceTree = "<group>"; };
+		94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageModalTransitionDelegate.m; sourceTree = "<group>"; };
 		9460832B187D8582005EF155 /* NormImageShowTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageShowTransitioning.h; sourceTree = "<group>"; };
 		9460832C187D8582005EF155 /* NormImageShowTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageShowTransitioning.m; sourceTree = "<group>"; };
-		9460832E187ECDCB005EF155 /* NormImageModalControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageModalControllerViewController.h; sourceTree = "<group>"; };
-		9460832F187ECDCB005EF155 /* NormImageModalControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageModalControllerViewController.m; sourceTree = "<group>"; };
+		9460832E187ECDCB005EF155 /* NormImageModalController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageModalController.h; sourceTree = "<group>"; };
+		9460832F187ECDCB005EF155 /* NormImageModalController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageModalController.m; sourceTree = "<group>"; };
 		94608331188023B6005EF155 /* NormBlurImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBlurImage.h; sourceTree = "<group>"; };
 		94608332188023B6005EF155 /* NormBlurImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBlurImage.m; sourceTree = "<group>"; };
-		9460833418802DDD005EF155 /* NormImageHideTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageHideTransitioning.h; sourceTree = "<group>"; };
-		9460833518802DDD005EF155 /* NormImageHideTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageHideTransitioning.m; sourceTree = "<group>"; };
+		9460833718834BE5005EF155 /* NormViewSnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormViewSnapshot.h; sourceTree = "<group>"; };
+		9460833818834BE5005EF155 /* NormViewSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormViewSnapshot.m; sourceTree = "<group>"; };
+		9460833A1884DA27005EF155 /* NormModalShowTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormModalShowTransitioning.h; sourceTree = "<group>"; };
+		9460833B1884DA27005EF155 /* NormModalShowTransitioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormModalShowTransitioning.m; sourceTree = "<group>"; };
+		9460833E1884DBBF005EF155 /* NormModalControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormModalControllerDelegate.h; sourceTree = "<group>"; };
+		946083421884E4A3005EF155 /* NormModalTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormModalTransitionDelegate.h; sourceTree = "<group>"; };
+		946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormModalTransitionDelegate.m; sourceTree = "<group>"; };
 		94851F62186DD81D00668E77 /* NormImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageView.h; sourceTree = "<group>"; };
 		94851F63186DD81D00668E77 /* NormImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageView.m; sourceTree = "<group>"; };
 		94851F651872578000668E77 /* bottle-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottle-button@2x.png"; path = "../Images/bottle-button@2x.png"; sourceTree = "<group>"; };
@@ -177,6 +184,17 @@
 			name = Interface;
 			sourceTree = "<group>";
 		};
+		9460833D1884DB79005EF155 /* ModalTransitions */ = {
+			isa = PBXGroup;
+			children = (
+				9460832B187D8582005EF155 /* NormImageShowTransitioning.h */,
+				9460832C187D8582005EF155 /* NormImageShowTransitioning.m */,
+				9460833A1884DA27005EF155 /* NormModalShowTransitioning.h */,
+				9460833B1884DA27005EF155 /* NormModalShowTransitioning.m */,
+			);
+			name = ModalTransitions;
+			sourceTree = "<group>";
+		};
 		94851F7918736CBF00668E77 /* REMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,8 +217,8 @@
 			children = (
 				941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */,
 				941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */,
-				9460832E187ECDCB005EF155 /* NormImageModalControllerViewController.h */,
-				9460832F187ECDCB005EF155 /* NormImageModalControllerViewController.m */,
+				9460832E187ECDCB005EF155 /* NormImageModalController.h */,
+				9460832F187ECDCB005EF155 /* NormImageModalController.m */,
 				94BA82D71847E80D00D60EDC /* NormBeerListController.h */,
 				94BA82D81847E80D00D60EDC /* NormBeerListController.m */,
 			);
@@ -240,13 +258,12 @@
 		94A74BF4187C2E48009075E9 /* Delegates */ = {
 			isa = PBXGroup;
 			children = (
-				9460833418802DDD005EF155 /* NormImageHideTransitioning.h */,
-				9460833518802DDD005EF155 /* NormImageHideTransitioning.m */,
 				94A74BF5187C2E70009075E9 /* NormDraggableImageViewDelegate.h */,
-				94608328187D8546005EF155 /* NormTransitionDelegate.h */,
-				94608329187D8546005EF155 /* NormTransitionDelegate.m */,
-				9460832B187D8582005EF155 /* NormImageShowTransitioning.h */,
-				9460832C187D8582005EF155 /* NormImageShowTransitioning.m */,
+				94608328187D8546005EF155 /* NormImageModalTransitionDelegate.h */,
+				94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */,
+				946083421884E4A3005EF155 /* NormModalTransitionDelegate.h */,
+				946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */,
+				9460833E1884DBBF005EF155 /* NormModalControllerDelegate.h */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -286,6 +303,7 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				9460833D1884DB79005EF155 /* ModalTransitions */,
 				94851F8A187376FE00668E77 /* constants.h */,
 				94851F891873711000668E77 /* Controllers */,
 				94A74BF4187C2E48009075E9 /* Delegates */,
@@ -300,6 +318,8 @@
 				94BA82A61847AC2100D60EDC /* Supporting Files */,
 				94608331188023B6005EF155 /* NormBlurImage.h */,
 				94608332188023B6005EF155 /* NormBlurImage.m */,
+				9460833718834BE5005EF155 /* NormViewSnapshot.h */,
+				9460833818834BE5005EF155 /* NormViewSnapshot.m */,
 			);
 			path = "What's On Tap";
 			sourceTree = "<group>";
@@ -445,11 +465,13 @@
 			files = (
 				9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */,
 				94BA82DF18484C2B00D60EDC /* NormBeer.m in Sources */,
+				9460833C1884DA27005EF155 /* NormModalShowTransitioning.m in Sources */,
 				94851F8818736CCF00668E77 /* REMenuItemView.m in Sources */,
+				9460833918834BE5005EF155 /* NormViewSnapshot.m in Sources */,
 				94BA82B31847AC2200D60EDC /* What_s_On_Tap.xcdatamodeld in Sources */,
-				9460832A187D8546005EF155 /* NormTransitionDelegate.m in Sources */,
+				9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */,
 				94851F8718736CCF00668E77 /* REMenuItem.m in Sources */,
-				94608330187ECDCB005EF155 /* NormImageModalControllerViewController.m in Sources */,
+				94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */,
 				94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */,
 				94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */,
 				94BA82B01847AC2100D60EDC /* NormAppDelegate.m in Sources */,
@@ -457,6 +479,7 @@
 				94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */,
 				94851F8418736CCF00668E77 /* RECommonFunctions.m in Sources */,
 				94851F8618736CCF00668E77 /* REMenuContainerView.m in Sources */,
+				946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */,
 				94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */,
 				94851F64186DD81D00668E77 /* NormImageView.m in Sources */,
 				94608333188023B6005EF155 /* NormBlurImage.m in Sources */,
@@ -464,7 +487,6 @@
 				941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */,
 				94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,
-				9460833618802DDD005EF155 /* NormImageHideTransitioning.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

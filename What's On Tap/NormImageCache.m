@@ -67,15 +67,5 @@ static NSCache *imageCache;
     }
 }
 
-//- (id)init
-//{
-//    self = [super init];
-//    
-//    if (self) {
-//        _imageCache = [[NSCache alloc] init];
-//    }
-//    
-//    return self;
-//}
 
 @end

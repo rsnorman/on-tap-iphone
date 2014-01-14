@@ -7,106 +7,116 @@
 //
 
 #import "NormImageShowTransitioning.h"
-#import "NormBlurImage.h"
 
 @implementation NormImageShowTransitioning
 
-//===================================================================
-// - UIViewControllerAnimatedTransitioning
-//===================================================================
+UIImageView *animatedPresentingImageView;
 
-
-- (id) initWithFromController:(UIViewController *)fromVC toController:(UIViewController *)toVC
+- (void) willAnimateShowTransition
 {
-    self = [super init];
-    if (self) {
-        [self setToVC:toVC];
-        [self setFromVC:fromVC];
-    }
+    [super willAnimateShowTransition];
     
-    return self;
+    animatedPresentingImageView = [[UIImageView alloc] initWithFrame:self.presentingImageStartFrame];
+    
+    animatedPresentingImageView.layer.cornerRadius = self.presentingImageStartLayer.cornerRadius;
+    animatedPresentingImageView.layer.masksToBounds = self.presentingImageStartLayer.masksToBounds;
+    
+    [animatedPresentingImageView setImage:self.presentingImage];
+    
+    [self.animationView addSubview:animatedPresentingImageView];
 }
 
-- (NSTimeInterval)transitionDuration:(id <UIViewControllerContextTransitioning>)transitionContext {
-    return 0.25f;
-}
-
--(UIImage *)blurredSnapshotOfView:(UIView *)view
+- (void) addShowAnimations
 {
-    // Create the image context
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, YES, view.window.screen.scale);
+    [super addShowAnimations];
     
-    // There he is! The new API method
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
+    animatedPresentingImageView.frame = self.presentingImageFinishFrame;
     
-    // Get the snapshot
-    UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+    // Change the position explicitly.
+    CABasicAnimation* cornerRadiusAnim = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    cornerRadiusAnim.fromValue = [NSNumber numberWithFloat:self.presentingImageStartLayer.cornerRadius];
+    cornerRadiusAnim.toValue = [NSNumber numberWithFloat:self.presentingImageFinishLayer.cornerRadius];
+    cornerRadiusAnim.duration = self.duration;
     
-    // Now apply the blur effect using Apple's UIImageEffect category
-//    UIImage *blurredSnapshotImage = [snapshotImage applyLightEffect];
+    CABasicAnimation* borderWidthAnim = [CABasicAnimation animationWithKeyPath:@"borderWidth"];
+    borderWidthAnim.fromValue = [NSNumber numberWithFloat:self.presentingImageStartLayer.borderWidth];
+    borderWidthAnim.toValue = [NSNumber numberWithFloat:self.presentingImageFinishLayer.borderWidth];
+    borderWidthAnim.duration = self.duration;
     
-    // Or apply any other effects available in "UIImage+ImageEffects.h"
-    UIImage *blurredSnapshotImage = [snapshotImage applyDarkEffect];
-    // UIImage *blurredSnapshotImage = [snapshotImage applyExtraLightEffect];
+    CABasicAnimation* borderColorAnim = [CABasicAnimation animationWithKeyPath:@"borderColor"];
+    borderColorAnim.fromValue = (id) self.presentingImageStartLayer.borderColor;
+    borderColorAnim.toValue = (id) self.presentingImageFinishLayer.borderColor;
+    borderColorAnim.duration = self.duration;
     
-    // Be nice and clean your mess up
-    UIGraphicsEndImageContext();
+    animatedPresentingImageView.layer.cornerRadius = self.presentingImageFinishLayer.cornerRadius;
+    animatedPresentingImageView.layer.borderWidth = self.presentingImageFinishLayer.borderWidth;
+    animatedPresentingImageView.layer.borderColor = self.presentingImageFinishLayer.borderColor;
+    animatedPresentingImageView.layer.masksToBounds = self.presentingImageFinishLayer.masksToBounds;
     
-    return blurredSnapshotImage;
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.fillMode = kCAFillModeForwards;
+    group.removedOnCompletion = NO;
+    group.duration = self.duration;
+    [group setAnimations:@[cornerRadiusAnim, borderWidthAnim, borderColorAnim]];
+    group.delegate = self;
+    
+    
+    [animatedPresentingImageView.layer addAnimation:group forKey:@"AnimateShowFrame"];
 }
 
--(UIImage *)snapshotOfView:(UIView *)view
+- (void) willAnimateHideTransition
 {
-    // Create the image context
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, YES, view.window.screen.scale);
+    [super willAnimateHideTransition];
     
-    // There he is! The new API method
-    [view drawViewHierarchyInRect:view.bounds afterScreenUpdates:NO];
+    self.presentingImageFinishFrame = [self.toVC getPresentedImage].frame;
     
-    // Get the snapshot
-    UIImage *snapshotImage = UIGraphicsGetImageFromCurrentImageContext();
+    animatedPresentingImageView = [[UIImageView alloc] initWithFrame:self.presentingImageFinishFrame];
     
-    // Be nice and clean your mess up
-    UIGraphicsEndImageContext();
+    animatedPresentingImageView.layer.cornerRadius = self.presentingImageFinishLayer.cornerRadius;
+    animatedPresentingImageView.layer.masksToBounds = self.presentingImageFinishLayer.masksToBounds;
     
-    return snapshotImage;
+    [animatedPresentingImageView setImage:self.presentingImage];
+    
+    
+    [self.animationView addSubview:animatedPresentingImageView];
 }
 
-
-
-- (void)animateTransition:(id <UIViewControllerContextTransitioning>)transitionContext {
+- (void) addHideAnimations
+{
+    [super addHideAnimations];
     
-    UIImage *bgImage = [self snapshotOfView:self.fromVC.view];
-    UIImageView *bgImageView = [[UIImageView alloc] initWithImage:bgImage];
+    animatedPresentingImageView.frame = self.presentingImageStartFrame;
     
-//    UIImage *bgBlurredImage = [self blurredSnapshotOfView:self.fromVC.view];
-//    UIImageView *modalBlurredImageView = [[UIImageView alloc] initWithImage:bgBlurredImage];
+    // Change the position explicitly.
+    CABasicAnimation* cornerRadiusAnim = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+    cornerRadiusAnim.fromValue = [NSNumber numberWithFloat:self.presentingImageFinishLayer.cornerRadius];
+    cornerRadiusAnim.toValue = [NSNumber numberWithFloat:self.presentingImageStartLayer.cornerRadius];
+    cornerRadiusAnim.duration = self.duration;
     
-    [bgImageView setFrame:CGRectMake(0, 0, bgImage.size.width, bgImage.size.height)];
-//    [bgImageView setFrame:CGRectMake(0, 0, bgBlurredImage.size.width, bgBlurredImage.size.height)];
+    CABasicAnimation* borderWidthAnim = [CABasicAnimation animationWithKeyPath:@"borderWidth"];
+    borderWidthAnim.fromValue = [NSNumber numberWithFloat:self.presentingImageFinishLayer.borderWidth];
+    borderWidthAnim.toValue = [NSNumber numberWithFloat:self.presentingImageStartLayer.borderWidth];
+    borderWidthAnim.duration = self.duration;
     
-    UIView *inView = [transitionContext containerView];
+    CABasicAnimation* borderColorAnim = [CABasicAnimation animationWithKeyPath:@"borderColor"];
+    borderColorAnim.fromValue = (id) self.presentingImageFinishLayer.borderColor;
+    borderColorAnim.toValue = (id) self.presentingImageStartLayer.borderColor;
+    borderColorAnim.duration = self.duration;
     
-    [inView addSubview:self.toVC.view];
-    [inView addSubview:bgImageView];
+    animatedPresentingImageView.layer.cornerRadius = self.presentingImageStartLayer.cornerRadius;
+    animatedPresentingImageView.layer.borderWidth = self.presentingImageStartLayer.borderWidth;
+    animatedPresentingImageView.layer.borderColor = self.presentingImageStartLayer.borderColor;
+    animatedPresentingImageView.layer.masksToBounds = self.presentingImageStartLayer.masksToBounds;
+    
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.fillMode = kCAFillModeForwards;
+    group.removedOnCompletion = NO;
+    group.duration = self.duration;
+    [group setAnimations:@[cornerRadiusAnim, borderWidthAnim, borderColorAnim]];
+    group.delegate = self;
     
     
-//    [self.toVC.view addSubview:modalBlurredImageView];
-//    [self.toVC.view sendSubviewToBack:modalBlurredImageView];
-
-
-
-    [UIView animateWithDuration:0.25f
-                     animations:^{
-                         bgImageView.alpha = 0.0f;
-                     }
-                     completion:^(BOOL finished) {
-                         [transitionContext completeTransition:YES];
-                     }];
-}
-
-- (void) animationEnded:(BOOL)transitionCompleted {
-    
+    [animatedPresentingImageView.layer addAnimation:group forKey:@"AnimateHideFrame"];
 }
 
 

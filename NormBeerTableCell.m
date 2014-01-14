@@ -54,7 +54,7 @@
     [self.costLabel setPrice:beer.price];
     self.detailsLabel.text = [[NSArray arrayWithObjects:beer.servedIn, @" - ", [NSString stringWithFormat:@"%g%% ABV", beer.abv], nil] componentsJoinedByString:@" "];
     
-    [self.imageView setURLForImage:beer.label defaultImage: [UIImage imageNamed: [beer.serveType isEqual: @"Bottles"] ? @"bottles.png" : [beer.serveType isEqual: @"Bottles"] ? @"cans.png" : @"glass.png"]];
+    [self.imageView setURLForImage:[[beer.label objectForKey:@"thumbnail"] objectForKey:@"url"]  defaultImage: [UIImage imageNamed: [beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
     
 }
 

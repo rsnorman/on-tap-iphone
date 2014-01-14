@@ -48,7 +48,7 @@
 @property NSString *lastUpdatedAt;
 
 // URL to the label of the beer
-@property NSString *label;
+@property NSDictionary *label;
 
 // Description of the beer
 @property NSString *description;

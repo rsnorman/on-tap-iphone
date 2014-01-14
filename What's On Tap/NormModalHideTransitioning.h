@@ -7,19 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NormImageModalController.h"
 
-@interface NormImageHideTransitioning : NSObject <UIViewControllerAnimatedTransitioning>
+@interface NormModalHideTransitioning : NSObject <UIViewControllerAnimatedTransitioning>
 
 
 @property (nonatomic, assign) BOOL isPresenting;
 @property (nonatomic, assign) UIViewController *toVC;
 @property (nonatomic, assign) UIViewController *fromVC;
-@property (nonatomic, assign) UIImage *dismissingImage;
-@property (nonatomic, assign) CGRect dismissingImageStartFrame;
-@property (nonatomic, assign) CGRect dismissingImageFinishFrame;
-@property (nonatomic, assign) CALayer *dismissingImageStartLayer;
-@property (nonatomic, assign) CALayer *dismissingImageFinishLayer;
 @property (nonatomic, assign) float duration;
 @property (nonatomic, assign) float zoomOutPercentage;
 @property (nonatomic, assign) UIImage *bgImage;

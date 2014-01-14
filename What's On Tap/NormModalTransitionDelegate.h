@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NormTransitionDelegate : NSObject <UIViewControllerTransitioningDelegate>
+@interface NormModalTransitionDelegate : NSObject <UIViewControllerTransitioningDelegate>
 
+@property float duration;
+@property float zoomOutPercentage;
 @end
