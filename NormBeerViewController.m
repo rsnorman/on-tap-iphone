@@ -8,11 +8,7 @@
 
 #import "NormBeerViewController.h"
 #import "NormImageCache.h"
-#import "NormDraggableImageViewDelegate.h"
-#import "NormModalTransitionDelegate.h"
-#import "NormImageModalTransitionDelegate.h"
-#import "NormImageModalController.h"
-#import "NormModalControllerDelegate.h"
+#import "NormEnlargeImage.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CoreImage/CoreImage.h>
 
@@ -49,11 +45,6 @@
         self.logoImage = [[NormImageView alloc] initWithFrame:CGRectMake(5.0, topPadding, imageWidth, imageHeight)];
         [self.logoImage setBorderWidth:2];
         [self.logoImage setBorderColor:[UIColor whiteColor]];
-        
-        UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapDetected)];
-        singleTap.numberOfTapsRequired = 1;
-        self.logoImage.userInteractionEnabled = YES;
-        [self.logoImage addGestureRecognizer:singleTap];
         
         [scrollView addSubview:self.logoImage];
         
@@ -115,74 +106,10 @@
 
         [scrollView addSubview:self.descriptionText];
         
-
-        
     }
     
     return self;
 }
-
-- (void)showLargeLogo:(UIImage *)largeLogo
-{
-    NormImageModalController *imageModalController = [[NormImageModalController alloc] init];
-    [imageModalController setDraggableImage: largeLogo];
-    
-    
-    NormImageModalTransitionDelegate *transitionController = [[NormImageModalTransitionDelegate alloc] init];
-    [transitionController setTransitionImage:largeLogo];
-    
-    CGPoint logoPosition = [self.view convertPoint:self.logoImage.frame.origin toView:nil];
-    CGRect windowFrame = self.view.window.screen.bounds;
-    
-    [transitionController setStartFrame: CGRectMake(logoPosition.x, logoPosition.y, self.logoImage.frame.size.width, self.logoImage.frame.size.height)];
-    
-    float logoWidth = largeLogo.size.width;
-    float logoHeight = largeLogo.size.height;
-    
-    if (logoWidth > windowFrame.size.width) {
-        logoHeight = logoHeight * windowFrame.size.width / logoWidth;
-        logoWidth = windowFrame.size.width;
-    }
-    
-    if (logoHeight > windowFrame.size.height) {
-        logoWidth = logoWidth * windowFrame.size.height / logoHeight;
-        logoHeight = windowFrame.size.height;
-    }
-    
-    [transitionController setFinishFrame:CGRectMake((windowFrame.size.width - logoWidth) / 2, (windowFrame.size.height - logoHeight) / 2, logoWidth, logoHeight)];
-    
-    [transitionController setDuration: 0.25f];
-    [transitionController setZoomOutPercentage:0.92f];
-    [transitionController setStartLayer:self.logoImage.layer];
-    CALayer *finishLayer = [[CALayer alloc] init];
-    [finishLayer setCornerRadius:5.0];
-    [finishLayer setMasksToBounds:YES];
-    [transitionController setFinishLayer:finishLayer];
-    
-    
-    [imageModalController setTransitioningDelegate:transitionController];
-    self.modalPresentationStyle = UIModalPresentationCustom;
-    [self presentViewController:imageModalController animated:YES completion:nil];
-}
-
--(void)tapDetected{
-    
-    
-    UIActivityIndicatorView *imageDownloadProgress = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    imageDownloadProgress.center = CGPointMake(self.logoImage.frame.size.width / 2, self.logoImage.frame.size.height / 2);
-    [imageDownloadProgress startAnimating];
-    [imageDownloadProgress setHidesWhenStopped:YES];
-    [self.logoImage addSubview:imageDownloadProgress];
-    
-    [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:[self.beer.label objectForKey:@"url"]]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        [imageDownloadProgress removeFromSuperview];
-        [self.logoImage setNeedsDisplay];
-        
-        [self performSelector:@selector(showLargeLogo:) withObject:[UIImage imageWithData:data] afterDelay:0.01];
-    }];
-}
-
 
 // Creates a label meant for the grid
 - (void)addCellLabel:(UILabel *)label frame:(CGRect)frame
@@ -219,7 +146,9 @@
     scrollView.contentSize = CGSizeMake(self.view.frame.size.width, descriptionSize.height + 190);
     
     [self.logoImage setURLForImage:[[self.beer.label objectForKey:@"thumbnail"] objectForKey:@"url"] defaultImage: [UIImage imageNamed: [self.beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [self.beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
-
+    
+    [self.logoImage setDelegate:self];
+    [self.logoImage setLargeImageURL:[self.beer.label objectForKey:@"url"]];
 }
 
 - (void)viewDidLoad

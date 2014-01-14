@@ -45,6 +45,6 @@
 -(void)setBeer:(NormBeer *)beer;
 
 // Shows the large version of the beer logo/label
-- (void)showLargeLogo:(UIImage *)largeLogo;
+//- (void)showLargeLogo:(UIImage *)largeLogo;
 
 @end

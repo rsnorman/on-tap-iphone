@@ -17,6 +17,7 @@
 		9460833918834BE5005EF155 /* NormViewSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460833818834BE5005EF155 /* NormViewSnapshot.m */; };
 		9460833C1884DA27005EF155 /* NormModalShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460833B1884DA27005EF155 /* NormModalShowTransitioning.m */; };
 		946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */; };
+		946083471885B4BA005EF155 /* NormEnlargeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 946083461885B4BA005EF155 /* NormEnlargeImage.m */; };
 		94851F64186DD81D00668E77 /* NormImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F63186DD81D00668E77 /* NormImageView.m */; };
 		94851F6F1872578000668E77 /* bottle-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F651872578000668E77 /* bottle-button@2x.png */; };
 		94851F701872578000668E77 /* bottle-menu-item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F661872578000668E77 /* bottle-menu-item@2x.png */; };
@@ -88,6 +89,8 @@
 		9460833E1884DBBF005EF155 /* NormModalControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormModalControllerDelegate.h; sourceTree = "<group>"; };
 		946083421884E4A3005EF155 /* NormModalTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormModalTransitionDelegate.h; sourceTree = "<group>"; };
 		946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormModalTransitionDelegate.m; sourceTree = "<group>"; };
+		946083451885B4BA005EF155 /* NormEnlargeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormEnlargeImage.h; sourceTree = "<group>"; };
+		946083461885B4BA005EF155 /* NormEnlargeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormEnlargeImage.m; sourceTree = "<group>"; };
 		94851F62186DD81D00668E77 /* NormImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageView.h; sourceTree = "<group>"; };
 		94851F63186DD81D00668E77 /* NormImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageView.m; sourceTree = "<group>"; };
 		94851F651872578000668E77 /* bottle-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottle-button@2x.png"; path = "../Images/bottle-button@2x.png"; sourceTree = "<group>"; };
@@ -180,6 +183,8 @@
 				94851F63186DD81D00668E77 /* NormImageView.m */,
 				94851F8D1877B43B00668E77 /* NormDraggableImageView.h */,
 				94851F8E1877B43B00668E77 /* NormDraggableImageView.m */,
+				946083451885B4BA005EF155 /* NormEnlargeImage.h */,
+				946083461885B4BA005EF155 /* NormEnlargeImage.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -469,6 +474,7 @@
 				94851F8818736CCF00668E77 /* REMenuItemView.m in Sources */,
 				9460833918834BE5005EF155 /* NormViewSnapshot.m in Sources */,
 				94BA82B31847AC2200D60EDC /* What_s_On_Tap.xcdatamodeld in Sources */,
+				946083471885B4BA005EF155 /* NormEnlargeImage.m in Sources */,
 				9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */,
 				94851F8718736CCF00668E77 /* REMenuItem.m in Sources */,
 				94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */,
