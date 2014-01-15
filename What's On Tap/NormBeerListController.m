@@ -9,20 +9,22 @@
 #import "NormBeerListController.h"
 #import "NormLocationFinderController.h"
 #import "NormModalTransitionDelegate.h"
+#import "NormLocationFinderDelegate.h"
+#import "NormLocation.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface NormBeerListController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
+@interface NormBeerListController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate, NormLocationFinderDelegate>
 @end
 
 @implementation NormBeerListController
 
-NSString *currentLocationId;
+NormLocation *_currentLocation;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [self initWithStyle:style];
     if (self) {
-        
+        _currentLocation = [[NormLocation alloc] init];
     }
     return self;
 }
@@ -39,16 +41,63 @@ NSString *currentLocationId;
     
     [self createSpinner];
     
-    if (currentLocationId != nil) {
+    if (self.beerMenu.locationId != nil) {
         [self startFetchingAvailableMenu];
     } else {
-        NormLocationFinderController *locationFinder = [[NormLocationFinderController alloc] init];
-        NormModalTransitionDelegate *transitionController = [[NormModalTransitionDelegate alloc] init];
-        [transitionController setDuration: 0.25f];
-        [transitionController setZoomOutPercentage:0.92f];
-        [locationFinder setTransitioningDelegate:transitionController];
-        self.modalPresentationStyle = UIModalPresentationCustom;
-        [self presentViewController:locationFinder animated:YES completion:nil];
+        [self showSelectLocationModal];
+    }
+}
+
+- (void) showSelectLocationModal
+{
+    NormLocationFinderController *locationFinder = [[NormLocationFinderController alloc] init];
+    NormModalTransitionDelegate *transitionController = [[NormModalTransitionDelegate alloc] init];
+    [transitionController setDuration: 0.25f];
+    [transitionController setZoomOutPercentage:0.92f];
+    [locationFinder setTransitioningDelegate:transitionController];
+    [locationFinder setDelegate:self];
+    self.modalPresentationStyle = UIModalPresentationCustom;
+    [self presentViewController:locationFinder animated:YES completion:nil];
+}
+
+- (void) setLocation:(NormLocation *)location
+{
+    if (_currentLocation.locationId != location.locationId) {
+        
+        if (_currentLocation != nil) {
+            self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 1);
+            [self.spinner startAnimating];
+            
+            [UIView animateWithDuration:0.3
+                                  delay:0.2
+                                options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
+                             animations:^
+             {
+                 self.tableView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
+             }
+                             completion:^(BOOL finished)
+             {
+
+             }];
+            
+            [UIView animateWithDuration:0.5
+                                  delay:0.5
+                 usingSpringWithDamping:0.6
+                  initialSpringVelocity:4.0
+                                options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
+                             animations:^
+             {
+                 self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+             }
+                             completion:^(BOOL finished)
+             {
+                 //         self.isAnimating = NO;
+             }];
+        }
+        
+        _currentLocation = location;
+        self.currentServeType = nil;
+        [self startFetchingAvailableMenu];
     }
 }
 
@@ -83,7 +132,7 @@ NSString *currentLocationId;
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating Menu..."];
     
     // Fetch beers from server
-    [NormMenu fetch: ^(NormMenu *beerMenu) {
+    [NormMenu fetchForLocation:_currentLocation.locationId success: ^(NormMenu *beerMenu) {
         self.beerMenu = beerMenu;
         
         if (self.currentServeType == nil){
@@ -156,7 +205,7 @@ NSString *currentLocationId;
     UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 90, 20)];
     [button addTarget:self action:@selector(toggleMenu) forControlEvents:UIControlEventTouchUpInside];
     [button setTitle:@"On Tap" forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont fontWithName:_SECONDARY_FONT size:28]];
+    [[button titleLabel] setFont:[UIFont fontWithName:@"RhinoRaja" size:28]];
     [container addSubview:button];
     
     
@@ -277,6 +326,15 @@ NSString *currentLocationId;
 
         [menuItems addObject:menuItem];
     }
+    
+    REMenuItem *locationMenuItem = [[REMenuItem alloc] initWithTitle:@"Locations"
+                                                       image:nil
+                                            highlightedImage:nil
+                                                      action:^(REMenuItem *item) {
+                                                          [weakSelf performSelector:@selector(showSelectLocationModal) withObject:nil afterDelay:0.5];                                                         
+                                                      }];
+    
+    [menuItems addObject:locationMenuItem];
     
     
     self.menu = [[REMenu alloc] initWithItems:menuItems];

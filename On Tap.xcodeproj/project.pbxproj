@@ -130,6 +130,7 @@
 		946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormModalTransitionDelegate.m; sourceTree = "<group>"; };
 		946083451885B4BA005EF155 /* NormEnlargeImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormEnlargeImage.h; sourceTree = "<group>"; };
 		946083461885B4BA005EF155 /* NormEnlargeImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormEnlargeImage.m; sourceTree = "<group>"; };
+		9484BE3B18863C3300902CEE /* NormLocationFinderDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormLocationFinderDelegate.h; sourceTree = "<group>"; };
 		94851F62186DD81D00668E77 /* NormImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageView.h; sourceTree = "<group>"; };
 		94851F63186DD81D00668E77 /* NormImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageView.m; sourceTree = "<group>"; };
 		94851F651872578000668E77 /* bottle-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bottle-button@2x.png"; path = "../Images/bottle-button@2x.png"; sourceTree = "<group>"; };
@@ -321,6 +322,7 @@
 				946083421884E4A3005EF155 /* NormModalTransitionDelegate.h */,
 				946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */,
 				9460833E1884DBBF005EF155 /* NormModalControllerDelegate.h */,
+				9484BE3B18863C3300902CEE /* NormLocationFinderDelegate.h */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -359,10 +361,14 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				94851F8A187376FE00668E77 /* constants.h */,
+				94608331188023B6005EF155 /* NormBlurImage.h */,
+				94608332188023B6005EF155 /* NormBlurImage.m */,
+				9460833718834BE5005EF155 /* NormViewSnapshot.h */,
+				9460833818834BE5005EF155 /* NormViewSnapshot.m */,
 				59381038188619B000D88215 /* Resources */,
 				596661A218860997003E755E /* DropDownMenu */,
 				9460833D1884DB79005EF155 /* ModalTransitions */,
-				94851F8A187376FE00668E77 /* constants.h */,
 				94851F891873711000668E77 /* Controllers */,
 				94A74BF4187C2E48009075E9 /* Delegates */,
 				941102A6186B4B1500B61F57 /* Interface */,
@@ -374,10 +380,6 @@
 				94BA82B41847AC2200D60EDC /* Images.xcassets */,
 				94BA82B11847AC2100D60EDC /* What_s_On_Tap.xcdatamodeld */,
 				94BA82A61847AC2100D60EDC /* Supporting Files */,
-				94608331188023B6005EF155 /* NormBlurImage.h */,
-				94608332188023B6005EF155 /* NormBlurImage.m */,
-				9460833718834BE5005EF155 /* NormViewSnapshot.h */,
-				9460833818834BE5005EF155 /* NormViewSnapshot.m */,
 			);
 			path = "What's On Tap";
 			sourceTree = "<group>";

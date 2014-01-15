@@ -13,9 +13,9 @@
 NSMutableDictionary *beerStyles;
 NSMutableDictionary *groupedBeers;
 
-+ (void)fetch:(void (^)(NormMenu *))action failedWithError:(void (^)(NSError *))errorAction
++ (void)fetchForLocation:(NSString *)location success:(void (^)(NormMenu *))action failedWithError:(void (^)(NSError *))errorAction
 {
-    NSString *urlAsString = @"http://whatisontap.herokuapp.com/menus/today";
+    NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
     

@@ -12,6 +12,9 @@
 // Model for the menu that holds all the beers
 @interface NormMenu : NSObject
 
+// Location id for the menu
+@property NSString *locationId;
+
 // All the beers in the menu
 @property NSArray *beers;
 
@@ -25,7 +28,7 @@
 @property NSMutableArray *serveTypeKeys;
 
 // Fetches menu from server
-+ (void)fetch:(void (^)(NormMenu *menu))action failedWithError:(void (^)(NSError *))errorAction;
++ (void)fetchForLocation:(NSString *)location success:(void (^)(NormMenu *menu))action failedWithError:(void (^)(NSError *))errorAction;
 
 // Parses the menu from JSON
 + (NormMenu *)menuFromJSON:(NSData *)objectNotation;

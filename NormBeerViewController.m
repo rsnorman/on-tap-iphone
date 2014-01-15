@@ -50,14 +50,14 @@
         
         
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageWidth + 20, topPadding, windowWidth - imageWidth - 25.0, 20)];
-        self.nameLabel.font = [UIFont boldSystemFontOfSize:18.0];
+        self.nameLabel.font = [UIFont fontWithName:_SECONDARY_FONT size:18.0];
         [self.nameLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [self.nameLabel setNumberOfLines:0];
         self.nameLabel.textColor = [UIColor whiteColor];
         [scrollView addSubview:self.nameLabel];
         
         self.breweryLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageWidth + 20, topPadding + 20, windowWidth - imageWidth - 25.0, 20)];
-        self.breweryLabel.font = [UIFont boldSystemFontOfSize:15.0];
+        self.breweryLabel.font = [UIFont fontWithName:_SECONDARY_FONT size:15.0];
         [self.breweryLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [self.breweryLabel setNumberOfLines:0];
         self.breweryLabel.textColor = [UIColor lightTextColor];
@@ -115,7 +115,7 @@
 - (void)addCellLabel:(UILabel *)label frame:(CGRect)frame
 {
     label.frame = frame;
-    label.font = [UIFont systemFontOfSize:12.0];
+    label.font = [UIFont fontWithName:_SECONDARY_FONT size:12.0];
     label.textColor = [UIColor lightGrayColor];
     label.textAlignment = NSTextAlignmentCenter;
     [label setLineBreakMode:NSLineBreakByTruncatingTail];
