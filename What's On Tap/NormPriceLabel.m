@@ -14,7 +14,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:13.0]];
+        [self setFont:[UIFont fontWithName:_SECONDARY_FONT size:13.0]];
         [self setTextColor:[UIColor whiteColor]];
         [self setTextAlignment:NSTextAlignmentCenter];
         [self setPersistentBackgroundColor:_MAIN_COLOR];

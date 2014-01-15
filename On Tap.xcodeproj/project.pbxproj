@@ -7,6 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5938104318861AC300D88215 /* chawp.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59381042188619E100D88215 /* chawp.otf */; };
+		5938104418861AC300D88215 /* Hipster Viral  condensed thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59381040188619D300D88215 /* Hipster Viral  condensed thin.otf */; };
+		5938104518861AC300D88215 /* Hipster Viral Blackletter condensed black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59381041188619D300D88215 /* Hipster Viral Blackletter condensed black.otf */; };
+		5938104618861AC300D88215 /* Kraftstoff-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5938103E188619C900D88215 /* Kraftstoff-Regular.otf */; };
+		5938104718861AC300D88215 /* Leatherwork-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5938103F188619C900D88215 /* Leatherwork-Regular.ttf */; };
+		5938104818861AC300D88215 /* Rhino Forte.otf in Resources */ = {isa = PBXBuildFile; fileRef = 59381039188619C000D88215 /* Rhino Forte.otf */; };
+		5938104918861AC300D88215 /* Rhino Luz.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5938103A188619C000D88215 /* Rhino Luz.otf */; };
+		5938104A18861AC300D88215 /* Rhino Pata.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5938103B188619C000D88215 /* Rhino Pata.otf */; };
+		5938104B18861AC300D88215 /* Rhino Ponta.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5938103C188619C000D88215 /* Rhino Ponta.otf */; };
+		5938104C18861AC300D88215 /* Rhino Raja.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5938103D188619C000D88215 /* Rhino Raja.otf */; };
+		5938104F188623E100D88215 /* NormLocationFinderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5938104E188623E100D88215 /* NormLocationFinderController.m */; };
+		59381052188627A900D88215 /* NormLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 59381051188627A900D88215 /* NormLocationCell.m */; };
+		59381055188627C000D88215 /* NormLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59381054188627C000D88215 /* NormLocation.m */; };
+		596661AD18860997003E755E /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661A418860997003E755E /* RECommonFunctions.m */; };
+		596661AE18860997003E755E /* REMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661A618860997003E755E /* REMenu.m */; };
+		596661AF18860997003E755E /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661A818860997003E755E /* REMenuContainerView.m */; };
+		596661B018860997003E755E /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661AA18860997003E755E /* REMenuItem.m */; };
+		596661B118860997003E755E /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661AC18860997003E755E /* REMenuItemView.m */; };
 		941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 941102A4186B4B0500B61F57 /* NormPriceLabel.m */; };
 		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
@@ -29,11 +47,6 @@
 		94851F761872578000668E77 /* glass-menu-item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6C1872578000668E77 /* glass-menu-item@2x.png */; };
 		94851F771872578000668E77 /* glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6D1872578000668E77 /* glass@2x.png */; };
 		94851F781872578000668E77 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6E1872578000668E77 /* icon@2x.png */; };
-		94851F8418736CCF00668E77 /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F7B18736CCF00668E77 /* RECommonFunctions.m */; };
-		94851F8518736CCF00668E77 /* REMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F7D18736CCF00668E77 /* REMenu.m */; };
-		94851F8618736CCF00668E77 /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F7F18736CCF00668E77 /* REMenuContainerView.m */; };
-		94851F8718736CCF00668E77 /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F8118736CCF00668E77 /* REMenuItem.m */; };
-		94851F8818736CCF00668E77 /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F8318736CCF00668E77 /* REMenuItemView.m */; };
 		94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F8E1877B43B00668E77 /* NormDraggableImageView.m */; };
 		94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A91D66185E5F90006FEA65 /* NormImageCache.m */; };
 		94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829D1847AC2100D60EDC /* Foundation.framework */; };
@@ -68,6 +81,32 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		59381039188619C000D88215 /* Rhino Forte.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rhino Forte.otf"; sourceTree = "<group>"; };
+		5938103A188619C000D88215 /* Rhino Luz.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rhino Luz.otf"; sourceTree = "<group>"; };
+		5938103B188619C000D88215 /* Rhino Pata.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rhino Pata.otf"; sourceTree = "<group>"; };
+		5938103C188619C000D88215 /* Rhino Ponta.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rhino Ponta.otf"; sourceTree = "<group>"; };
+		5938103D188619C000D88215 /* Rhino Raja.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Rhino Raja.otf"; sourceTree = "<group>"; };
+		5938103E188619C900D88215 /* Kraftstoff-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Kraftstoff-Regular.otf"; sourceTree = "<group>"; };
+		5938103F188619C900D88215 /* Leatherwork-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Leatherwork-Regular.ttf"; sourceTree = "<group>"; };
+		59381040188619D300D88215 /* Hipster Viral  condensed thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hipster Viral  condensed thin.otf"; sourceTree = "<group>"; };
+		59381041188619D300D88215 /* Hipster Viral Blackletter condensed black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Hipster Viral Blackletter condensed black.otf"; sourceTree = "<group>"; };
+		59381042188619E100D88215 /* chawp.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = chawp.otf; sourceTree = "<group>"; };
+		5938104D188623E100D88215 /* NormLocationFinderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormLocationFinderController.h; sourceTree = "<group>"; };
+		5938104E188623E100D88215 /* NormLocationFinderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocationFinderController.m; sourceTree = "<group>"; };
+		59381050188627A900D88215 /* NormLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormLocationCell.h; sourceTree = "<group>"; };
+		59381051188627A900D88215 /* NormLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocationCell.m; sourceTree = "<group>"; };
+		59381053188627C000D88215 /* NormLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormLocation.h; sourceTree = "<group>"; };
+		59381054188627C000D88215 /* NormLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocation.m; sourceTree = "<group>"; };
+		596661A318860997003E755E /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
+		596661A418860997003E755E /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
+		596661A518860997003E755E /* REMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenu.h; sourceTree = "<group>"; };
+		596661A618860997003E755E /* REMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenu.m; sourceTree = "<group>"; };
+		596661A718860997003E755E /* REMenuContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuContainerView.h; sourceTree = "<group>"; };
+		596661A818860997003E755E /* REMenuContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuContainerView.m; sourceTree = "<group>"; };
+		596661A918860997003E755E /* REMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItem.h; sourceTree = "<group>"; };
+		596661AA18860997003E755E /* REMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItem.m; sourceTree = "<group>"; };
+		596661AB18860997003E755E /* REMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItemView.h; sourceTree = "<group>"; };
+		596661AC18860997003E755E /* REMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItemView.m; sourceTree = "<group>"; };
 		941102A3186B4B0500B61F57 /* NormPriceLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormPriceLabel.h; sourceTree = "<group>"; };
 		941102A4186B4B0500B61F57 /* NormPriceLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormPriceLabel.m; sourceTree = "<group>"; };
 		94190C5B185FE6F0002704F2 /* NormMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormMenu.h; sourceTree = "<group>"; };
@@ -103,16 +142,6 @@
 		94851F6C1872578000668E77 /* glass-menu-item@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "glass-menu-item@2x.png"; path = "../Images/glass-menu-item@2x.png"; sourceTree = "<group>"; };
 		94851F6D1872578000668E77 /* glass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "glass@2x.png"; path = "../Images/glass@2x.png"; sourceTree = "<group>"; };
 		94851F6E1872578000668E77 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "../Images/icon@2x.png"; sourceTree = "<group>"; };
-		94851F7A18736CCF00668E77 /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RECommonFunctions.h; path = REMenu/RECommonFunctions.h; sourceTree = "<group>"; };
-		94851F7B18736CCF00668E77 /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RECommonFunctions.m; path = REMenu/RECommonFunctions.m; sourceTree = "<group>"; };
-		94851F7C18736CCF00668E77 /* REMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REMenu.h; path = REMenu/REMenu.h; sourceTree = "<group>"; };
-		94851F7D18736CCF00668E77 /* REMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REMenu.m; path = REMenu/REMenu.m; sourceTree = "<group>"; };
-		94851F7E18736CCF00668E77 /* REMenuContainerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REMenuContainerView.h; path = REMenu/REMenuContainerView.h; sourceTree = "<group>"; };
-		94851F7F18736CCF00668E77 /* REMenuContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REMenuContainerView.m; path = REMenu/REMenuContainerView.m; sourceTree = "<group>"; };
-		94851F8018736CCF00668E77 /* REMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REMenuItem.h; path = REMenu/REMenuItem.h; sourceTree = "<group>"; };
-		94851F8118736CCF00668E77 /* REMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REMenuItem.m; path = REMenu/REMenuItem.m; sourceTree = "<group>"; };
-		94851F8218736CCF00668E77 /* REMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = REMenuItemView.h; path = REMenu/REMenuItemView.h; sourceTree = "<group>"; };
-		94851F8318736CCF00668E77 /* REMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = REMenuItemView.m; path = REMenu/REMenuItemView.m; sourceTree = "<group>"; };
 		94851F8A187376FE00668E77 /* constants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		94851F8D1877B43B00668E77 /* NormDraggableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormDraggableImageView.h; sourceTree = "<group>"; };
 		94851F8E1877B43B00668E77 /* NormDraggableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormDraggableImageView.m; sourceTree = "<group>"; };
@@ -172,6 +201,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		59381038188619B000D88215 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				59381042188619E100D88215 /* chawp.otf */,
+				59381040188619D300D88215 /* Hipster Viral  condensed thin.otf */,
+				59381041188619D300D88215 /* Hipster Viral Blackletter condensed black.otf */,
+				5938103E188619C900D88215 /* Kraftstoff-Regular.otf */,
+				5938103F188619C900D88215 /* Leatherwork-Regular.ttf */,
+				59381039188619C000D88215 /* Rhino Forte.otf */,
+				5938103A188619C000D88215 /* Rhino Luz.otf */,
+				5938103B188619C000D88215 /* Rhino Pata.otf */,
+				5938103C188619C000D88215 /* Rhino Ponta.otf */,
+				5938103D188619C000D88215 /* Rhino Raja.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		596661A218860997003E755E /* DropDownMenu */ = {
+			isa = PBXGroup;
+			children = (
+				596661A318860997003E755E /* RECommonFunctions.h */,
+				596661A418860997003E755E /* RECommonFunctions.m */,
+				596661A518860997003E755E /* REMenu.h */,
+				596661A618860997003E755E /* REMenu.m */,
+				596661A718860997003E755E /* REMenuContainerView.h */,
+				596661A818860997003E755E /* REMenuContainerView.m */,
+				596661A918860997003E755E /* REMenuItem.h */,
+				596661AA18860997003E755E /* REMenuItem.m */,
+				596661AB18860997003E755E /* REMenuItemView.h */,
+				596661AC18860997003E755E /* REMenuItemView.m */,
+			);
+			path = DropDownMenu;
+			sourceTree = "<group>";
+		};
 		941102A6186B4B1500B61F57 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +248,8 @@
 				94851F8E1877B43B00668E77 /* NormDraggableImageView.m */,
 				946083451885B4BA005EF155 /* NormEnlargeImage.h */,
 				946083461885B4BA005EF155 /* NormEnlargeImage.m */,
+				59381050188627A900D88215 /* NormLocationCell.h */,
+				59381051188627A900D88215 /* NormLocationCell.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -200,23 +265,6 @@
 			name = ModalTransitions;
 			sourceTree = "<group>";
 		};
-		94851F7918736CBF00668E77 /* REMenu */ = {
-			isa = PBXGroup;
-			children = (
-				94851F7A18736CCF00668E77 /* RECommonFunctions.h */,
-				94851F7B18736CCF00668E77 /* RECommonFunctions.m */,
-				94851F7C18736CCF00668E77 /* REMenu.h */,
-				94851F7D18736CCF00668E77 /* REMenu.m */,
-				94851F7E18736CCF00668E77 /* REMenuContainerView.h */,
-				94851F7F18736CCF00668E77 /* REMenuContainerView.m */,
-				94851F8018736CCF00668E77 /* REMenuItem.h */,
-				94851F8118736CCF00668E77 /* REMenuItem.m */,
-				94851F8218736CCF00668E77 /* REMenuItemView.h */,
-				94851F8318736CCF00668E77 /* REMenuItemView.m */,
-			);
-			name = REMenu;
-			sourceTree = "<group>";
-		};
 		94851F891873711000668E77 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,6 +274,8 @@
 				9460832F187ECDCB005EF155 /* NormImageModalController.m */,
 				94BA82D71847E80D00D60EDC /* NormBeerListController.h */,
 				94BA82D81847E80D00D60EDC /* NormBeerListController.m */,
+				5938104D188623E100D88215 /* NormLocationFinderController.h */,
+				5938104E188623E100D88215 /* NormLocationFinderController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -256,6 +306,8 @@
 				94BA82DE18484C2B00D60EDC /* NormBeer.m */,
 				94190C5B185FE6F0002704F2 /* NormMenu.h */,
 				94190C5C185FE6F0002704F2 /* NormMenu.m */,
+				59381053188627C000D88215 /* NormLocation.h */,
+				59381054188627C000D88215 /* NormLocation.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -276,7 +328,6 @@
 		94BA82911847AC2100D60EDC = {
 			isa = PBXGroup;
 			children = (
-				94851F7918736CBF00668E77 /* REMenu */,
 				94BA82A51847AC2100D60EDC /* What's On Tap */,
 				94BA82C21847AC2200D60EDC /* What's On TapTests */,
 				94BA829C1847AC2100D60EDC /* Frameworks */,
@@ -308,6 +359,8 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				59381038188619B000D88215 /* Resources */,
+				596661A218860997003E755E /* DropDownMenu */,
 				9460833D1884DB79005EF155 /* ModalTransitions */,
 				94851F8A187376FE00668E77 /* constants.h */,
 				94851F891873711000668E77 /* Controllers */,
@@ -437,6 +490,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5938104318861AC300D88215 /* chawp.otf in Resources */,
+				5938104418861AC300D88215 /* Hipster Viral  condensed thin.otf in Resources */,
+				5938104518861AC300D88215 /* Hipster Viral Blackletter condensed black.otf in Resources */,
+				5938104618861AC300D88215 /* Kraftstoff-Regular.otf in Resources */,
+				5938104718861AC300D88215 /* Leatherwork-Regular.ttf in Resources */,
+				5938104818861AC300D88215 /* Rhino Forte.otf in Resources */,
+				5938104918861AC300D88215 /* Rhino Luz.otf in Resources */,
+				5938104A18861AC300D88215 /* Rhino Pata.otf in Resources */,
+				5938104B18861AC300D88215 /* Rhino Ponta.otf in Resources */,
+				5938104C18861AC300D88215 /* Rhino Raja.otf in Resources */,
 				94851F701872578000668E77 /* bottle-menu-item@2x.png in Resources */,
 				94851F751872578000668E77 /* glass-button@2x.png in Resources */,
 				94851F781872578000668E77 /* icon@2x.png in Resources */,
@@ -468,28 +531,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5938104F188623E100D88215 /* NormLocationFinderController.m in Sources */,
 				9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */,
 				94BA82DF18484C2B00D60EDC /* NormBeer.m in Sources */,
+				596661B018860997003E755E /* REMenuItem.m in Sources */,
 				9460833C1884DA27005EF155 /* NormModalShowTransitioning.m in Sources */,
-				94851F8818736CCF00668E77 /* REMenuItemView.m in Sources */,
 				9460833918834BE5005EF155 /* NormViewSnapshot.m in Sources */,
+				59381055188627C000D88215 /* NormLocation.m in Sources */,
 				94BA82B31847AC2200D60EDC /* What_s_On_Tap.xcdatamodeld in Sources */,
 				946083471885B4BA005EF155 /* NormEnlargeImage.m in Sources */,
+				596661B118860997003E755E /* REMenuItemView.m in Sources */,
 				9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */,
-				94851F8718736CCF00668E77 /* REMenuItem.m in Sources */,
 				94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */,
 				94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */,
+				596661AF18860997003E755E /* REMenuContainerView.m in Sources */,
 				94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */,
 				94BA82B01847AC2100D60EDC /* NormAppDelegate.m in Sources */,
 				941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */,
 				94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */,
-				94851F8418736CCF00668E77 /* RECommonFunctions.m in Sources */,
-				94851F8618736CCF00668E77 /* REMenuContainerView.m in Sources */,
+				596661AE18860997003E755E /* REMenu.m in Sources */,
+				59381052188627A900D88215 /* NormLocationCell.m in Sources */,
+				596661AD18860997003E755E /* RECommonFunctions.m in Sources */,
 				946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */,
 				94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */,
 				94851F64186DD81D00668E77 /* NormImageView.m in Sources */,
 				94608333188023B6005EF155 /* NormBlurImage.m in Sources */,
-				94851F8518736CCF00668E77 /* REMenu.m in Sources */,
 				941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */,
 				94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,

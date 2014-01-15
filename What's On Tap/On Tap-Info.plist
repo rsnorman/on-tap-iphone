@@ -24,6 +24,19 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Rhino Raja.otf</string>
+		<string>Rhino Forte.otf</string>
+		<string>Rhino Luz.otf</string>
+		<string>Rhino Pata.otf</string>
+		<string>Rhino Ponta.otf</string>
+		<string>Hipster Viral  condensed thin.otf</string>
+		<string>Leatherwork-Regular.ttf</string>
+		<string>chawp.otf</string>
+		<string>Hipster Viral  condensed thin.otf</string>
+		<string>Kraftstoff-Regular.otf</string>
+	</array>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

@@ -97,15 +97,15 @@ NSMutableDictionary *groupedBeers;
 - (NSDictionary *)getBeersGroupedByStyleForServeType:(NSString *)serveType
 {
     
-    if ([groupedBeers objectForKey:serveType] == nil) {
+    if ([groupedBeers objectForKey:serveType] == nil || (self.filter != nil && self.filter.length > 0)) {
         NSMutableDictionary *groupedBeersForServeType = [[NSMutableDictionary alloc] init];
         
         NSArray *serveTypeBeers = [self.serveTypes objectForKey:serveType];
         
         for (NormBeer* beer in serveTypeBeers)
         {
-            if (self.filter == nil || self.filter.length == 0 || [beer.name rangeOfString:self.filter].location != NSNotFound ) {
-                if ([groupedBeersForServeType objectForKey:beer.styleCategory] == nil){
+            if (self.filter == nil || self.filter.length == 0 || [beer.name rangeOfString:self.filter options:NSCaseInsensitiveSearch].location != NSNotFound ) {
+                if ([groupedBeersForServeType objectForKey:beer.styleCategory] == nil) {
                     [groupedBeersForServeType setObject:[[NSMutableArray alloc] init] forKey:beer.styleCategory];
                 }
                 
@@ -125,12 +125,12 @@ NSMutableDictionary *groupedBeers;
 
 - (NSArray *)getBeerStylesForServeType:(NSString *)serveType
 {
-    if ([beerStyles objectForKey:serveType] == nil) {
+    if ([beerStyles objectForKey:serveType] == nil || (self.filter != nil && self.filter.length > 0)) {
         NSMutableArray * unOrderedStyleKeys = [[NSMutableArray alloc] init];
         
         for (NormBeer* beer in [self.serveTypes objectForKey:serveType])
         {
-            if (self.filter == nil || self.filter.length == 0 || [beer.name rangeOfString:self.filter].location != NSNotFound ) {
+            if (self.filter == nil || self.filter.length == 0 || [beer.name rangeOfString:self.filter options:NSCaseInsensitiveSearch].location != NSNotFound ) {
                 if (![unOrderedStyleKeys containsObject:beer.styleCategory]){
                     [unOrderedStyleKeys addObject:beer.styleCategory];
                 }

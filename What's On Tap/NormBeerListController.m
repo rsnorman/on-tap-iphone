@@ -7,12 +7,16 @@
 //
 
 #import "NormBeerListController.h"
+#import "NormLocationFinderController.h"
+#import "NormModalTransitionDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface NormBeerListController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate>
 @end
 
 @implementation NormBeerListController
+
+NSString *currentLocationId;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -35,7 +39,17 @@
     
     [self createSpinner];
     
-    [self startFetchingAvailableMenu];
+    if (currentLocationId != nil) {
+        [self startFetchingAvailableMenu];
+    } else {
+        NormLocationFinderController *locationFinder = [[NormLocationFinderController alloc] init];
+        NormModalTransitionDelegate *transitionController = [[NormModalTransitionDelegate alloc] init];
+        [transitionController setDuration: 0.25f];
+        [transitionController setZoomOutPercentage:0.92f];
+        [locationFinder setTransitioningDelegate:transitionController];
+        self.modalPresentationStyle = UIModalPresentationCustom;
+        [self presentViewController:locationFinder animated:YES completion:nil];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated{
@@ -78,7 +92,7 @@
         
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
     } failedWithError:^(NSError *error) {
-        NSLog([NSString stringWithFormat: @"There was an error: %@", error]);
+
     }];
 }
 
@@ -142,7 +156,7 @@
     UIButton * button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 90, 20)];
     [button addTarget:self action:@selector(toggleMenu) forControlEvents:UIControlEventTouchUpInside];
     [button setTitle:@"On Tap" forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue-UltraLight" size:28]];
+    [[button titleLabel] setFont:[UIFont fontWithName:_SECONDARY_FONT size:28]];
     [container addSubview:button];
     
     
@@ -269,8 +283,8 @@
     
     self.menu.appearsBehindNavigationBar = NO; // Affects only iOS 7
     self.menu.backgroundColor = _DARK_COLOR;
-    self.menu.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:22];
-    self.menu.subtitleFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:14];
+    self.menu.font = [UIFont fontWithName:_SECONDARY_FONT size:22];
+//    self.menu.subtitleFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:14];
     self.menu.textColor = [UIColor lightGrayColor];
     self.menu.separatorColor = [UIColor darkGrayColor];
     
@@ -327,8 +341,15 @@
         cell = [[NormBeerTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:normTableCellIdentifier];
     }
     
-    [cell setBeer:[[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: [[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row]];
+    int sectionIndex = indexPath.section;
+    NSArray *currentBeerStyles = [self.beerMenu getBeerStylesForServeType:self.currentServeType];
     
+    // Not sure why I need this logic but wrong section index being returned when search bar is dismissed
+    if (currentBeerStyles.count > sectionIndex) {
+        NSArray *beerStyles = [currentBeerStyles objectAtIndex:sectionIndex];
+    
+        [cell setBeer:[[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: beerStyles] objectAtIndex:indexPath.row]];
+    }
     return cell;
 }
 
