@@ -136,7 +136,8 @@ NormLocation *_currentLocation;
         self.beerMenu = beerMenu;
         
         if (self.currentServeType == nil){
-            self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
+            self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];          
+            [self performSelectorOnMainThread:@selector(setMenuButton) withObject:nil waitUntilDone:NO];
         }
         
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
@@ -293,27 +294,7 @@ NormLocation *_currentLocation;
                                                                  if (![weakSelf.currentServeType isEqualToString:item.title]){
                                                                      weakSelf.currentServeType = item.title;
                                                                      
-                                                                     UIImage * menuButtonImage = nil;
-                                                                     
-                                                                     if ([item.title isEqual:@"On Tap"] || [item.title isEqual:@"Featured"] || [item.title isEqual:@"House"]) {
-                                                                         menuButtonImage = [UIImage imageNamed: @"glass-button"];
-                                                                     } else if([item.title isEqual:@"Bottles"]){
-                                                                         menuButtonImage = [UIImage imageNamed:@"bottle-button"];
-                                                                     }  else if([item.title isEqual:@"Cans"]){
-                                                                         menuButtonImage = [UIImage imageNamed:@"can-button"];
-                                                                     } else {
-                                                                         menuButtonImage = [UIImage imageNamed: @"glass-button"];
-                                                                     }
-                                                                     
-                                                                     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]
-                                                                                                    initWithImage:menuButtonImage
-                                                                                                    style:UIBarButtonItemStylePlain
-                                                                                                    target:self
-                                                                                                    action:@selector(toggleMenu)];
-                                                                     
-                                                                     
-                                                                     self.navigationItem.leftBarButtonItem = menuButton;
-                                                                     self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
+                                                                     [weakSelf setMenuButton];
                                                                      
                                                                      [weakSelf.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
                                                                      [weakSelf loadBeersIntoTableView];
@@ -363,6 +344,31 @@ NormLocation *_currentLocation;
         badgeLabel.layer.cornerRadius = 10.0;
         badgeLabel.layer.frame = CGRectMake(25.0, 10.0, 20.0, 20.0);
     };
+}
+
+- (void)setMenuButton
+{
+    UIImage * menuButtonImage = nil;
+    
+    if ([self.currentServeType isEqual:@"On Tap"]) {
+        menuButtonImage = [UIImage imageNamed: @"glass-button"];
+    } else if([self.currentServeType isEqual:@"Bottles"]){
+        menuButtonImage = [UIImage imageNamed:@"bottle-button"];
+    }  else if([self.currentServeType isEqual:@"Cans"]){
+        menuButtonImage = [UIImage imageNamed:@"can-button"];
+    } else {
+        menuButtonImage = [UIImage imageNamed: @"glass-button"];
+    }
+    
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc]
+                                   initWithImage:menuButtonImage
+                                   style:UIBarButtonItemStylePlain
+                                   target:self
+                                   action:@selector(toggleMenu)];
+    
+    
+    self.navigationItem.leftBarButtonItem = menuButton;
+    self.navigationItem.leftBarButtonItem.tintColor = [UIColor whiteColor];
 }
 
 - (void)toggleMenu
