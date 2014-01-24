@@ -15,4 +15,6 @@
 @property NSString *type;
 @property NSString *address;
 
++ (void)fetch:(void (^)(NSArray *))action failedWithError:(void (^)(NSError *))errorAction;
+
 @end

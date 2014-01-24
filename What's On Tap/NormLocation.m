@@ -29,7 +29,7 @@
 + (NSArray *)locationsFromJSON:(NSData *)objectNotation
 {
     NSError *localError = nil;
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:objectNotation options:1 error:&localError];
+    NSArray *results = [NSJSONSerialization JSONObjectWithData:objectNotation options:1 error:&localError];
 
     if (localError != nil) {
         //        *error = localError;
@@ -37,7 +37,7 @@
     }
 
     NSMutableArray *locations = [[NSMutableArray alloc] init];
-    NSArray *locationsJSON = [results objectForKey:@"locations"];
+    NSArray *locationsJSON = results;
 
     for(NSDictionary *locationDic in locationsJSON) {
         NormLocation *location = [[NormLocation alloc] init];

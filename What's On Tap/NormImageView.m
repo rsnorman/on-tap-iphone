@@ -7,6 +7,7 @@
 //
 
 #import "NormImageView.h"
+#import "constants.h"
 
 @implementation NormImageView
 
@@ -41,7 +42,7 @@
         if (image) {
             self.image = image;
             
-            if (image.size.height / image.size.width > self.scaleToFillAspectRatioMax) {
+            if (image.size.height / image.size.width > _MAX_IMAGE_RATIO) {
                 [self setContentMode:UIViewContentModeScaleAspectFit];
             } else{
                 [self setContentMode:UIViewContentModeScaleToFill];
@@ -55,7 +56,7 @@
                 
                 self.image = [UIImage imageWithData:data];
                 
-                if (image.size.height / image.size.width > self.scaleToFillAspectRatioMax) {
+                if (image.size.height / image.size.width > _MAX_IMAGE_RATIO) {
                     [self setContentMode:UIViewContentModeScaleAspectFit];
                 } else{
                     [self setContentMode:UIViewContentModeScaleToFill];

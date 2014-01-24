@@ -52,7 +52,7 @@
     {
         CGPoint swipeVelocity = [gesture velocityInView:self.superview];
         
-        if (fabsf(swipeVelocity.x) > 300.0 || fabsf(swipeVelocity.y) > 300.0) {
+        if (sqrt(pow(swipeVelocity.x, 2) + pow(swipeVelocity.y, 2)) > 1500) {
             float inertiaSeconds = 0.2f;  // let's calculate where that flick would take us this far in the future
             CGPoint final = CGPointMake(translate.x + swipeVelocity.x * inertiaSeconds, translate.y + swipeVelocity.y * inertiaSeconds);
             

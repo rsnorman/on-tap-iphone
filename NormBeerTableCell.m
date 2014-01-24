@@ -57,4 +57,10 @@
     [self.imageView setURLForImage:[[beer.label objectForKey:@"thumbnail"] objectForKey:@"url"]  defaultImage: [UIImage imageNamed: [beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
 }
 
+-(void) prepareForReuse
+{
+    [super prepareForReuse];
+    [self.imageView setImage: [UIImage imageNamed: @"glass.png"]];
+}
+
 @end

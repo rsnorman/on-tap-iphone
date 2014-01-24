@@ -59,7 +59,7 @@ UIViewController *_enlargeDelegate;
     [transitionController setFinishFrame:CGRectMake((windowFrame.size.width - imageWidth) / 2, (windowFrame.size.height - imageHeight) / 2, imageWidth, imageHeight)];
     
     [transitionController setDuration: 0.25f];
-    [transitionController setZoomOutPercentage:0.92f];
+    [transitionController setZoomOutPercentage:0.85f];
     [transitionController setStartLayer:self.layer];
     CALayer *finishLayer = [[CALayer alloc] init];
     [finishLayer setCornerRadius:5.0];

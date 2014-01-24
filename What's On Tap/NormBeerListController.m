@@ -53,7 +53,7 @@ NormLocation *_currentLocation;
     NormLocationFinderController *locationFinder = [[NormLocationFinderController alloc] init];
     NormModalTransitionDelegate *transitionController = [[NormModalTransitionDelegate alloc] init];
     [transitionController setDuration: 0.25f];
-    [transitionController setZoomOutPercentage:0.92f];
+    [transitionController setZoomOutPercentage:0.85f];
     [locationFinder setTransitioningDelegate:transitionController];
     [locationFinder setDelegate:self];
     self.modalPresentationStyle = UIModalPresentationCustom;
@@ -97,7 +97,8 @@ NormLocation *_currentLocation;
         
         _currentLocation = location;
         self.currentServeType = nil;
-        [self startFetchingAvailableMenu];
+        
+        [self performSelector:@selector(startFetchingAvailableMenu) withObject:nil afterDelay:1.0];
     }
 }
 
@@ -128,8 +129,6 @@ NormLocation *_currentLocation;
 
 - (void)startFetchingAvailableMenu
 {
-    NSLog(@"Start updating menu");
-    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating Menu..."];
     
     // Fetch beers from server
     [NormMenu fetchForLocation:_currentLocation.locationId success: ^(NormMenu *beerMenu) {
@@ -143,6 +142,26 @@ NormLocation *_currentLocation;
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
     } failedWithError:^(NSError *error) {
 
+    }];
+}
+
+- (void)refreshMenu
+{
+    NSLog(@"Start updating menu");
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating Menu..."];
+    
+    // Fetch beers from server
+    [NormMenu refreshForLocation:_currentLocation.locationId success: ^(NormMenu *beerMenu) {
+        self.beerMenu = beerMenu;
+        
+        if (self.currentServeType == nil){
+            self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
+            [self performSelectorOnMainThread:@selector(setMenuButton) withObject:nil waitUntilDone:NO];
+        }
+        
+        [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
+    } failedWithError:^(NSError *error) {
+        
     }];
 }
 
@@ -240,7 +259,7 @@ NormLocation *_currentLocation;
     _beerSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     _beerSearchBar.placeholder = @"Search Beers";
     
-    self.tableView.tableHeaderView = _beerSearchBar;
+
     
     /*the search bar widht must be > 1, the height must be at least 44
      (the real size of the search bar)*/
@@ -252,6 +271,8 @@ NormLocation *_currentLocation;
     _beerSearchDisplayController.delegate = self;
     _beerSearchDisplayController.searchResultsDataSource = self;
     _beerSearchDisplayController.searchResultsDelegate = self;
+    
+    self.tableView.tableHeaderView = _beerSearchBar;
 }
 
 - (void)createSpinner
@@ -315,6 +336,8 @@ NormLocation *_currentLocation;
                                                           [weakSelf performSelector:@selector(showSelectLocationModal) withObject:nil afterDelay:0.5];                                                         
                                                       }];
     
+    
+    [locationMenuItem setSubtitle:_currentLocation.name];
     [menuItems addObject:locationMenuItem];
     
     
@@ -323,7 +346,7 @@ NormLocation *_currentLocation;
     self.menu.appearsBehindNavigationBar = NO; // Affects only iOS 7
     self.menu.backgroundColor = _DARK_COLOR;
     self.menu.font = [UIFont fontWithName:_SECONDARY_FONT size:22];
-//    self.menu.subtitleFont = [UIFont fontWithName:@"HelveticaNeue-Thin" size:14];
+    self.menu.subtitleFont = [UIFont fontWithName:_SECONDARY_FONT size:14];
     self.menu.textColor = [UIColor lightGrayColor];
     self.menu.separatorColor = [UIColor darkGrayColor];
     
@@ -408,12 +431,9 @@ NormLocation *_currentLocation;
     int sectionIndex = indexPath.section;
     NSArray *currentBeerStyles = [self.beerMenu getBeerStylesForServeType:self.currentServeType];
     
-    // Not sure why I need this logic but wrong section index being returned when search bar is dismissed
-    if (currentBeerStyles.count > sectionIndex) {
-        NSArray *beerStyles = [currentBeerStyles objectAtIndex:sectionIndex];
+    NSArray *beerStyles = [currentBeerStyles objectAtIndex:sectionIndex];
     
-        [cell setBeer:[[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: beerStyles] objectAtIndex:indexPath.row]];
-    }
+    [cell setBeer:[[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: beerStyles] objectAtIndex:indexPath.row]];
     return cell;
 }
 
@@ -494,5 +514,13 @@ NormLocation *_currentLocation;
 {
     self.tableView.rowHeight = 75.0f; // or some other height
 }
+
+//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(NormBeerTableCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if ([tableView.indexPathsForVisibleRows indexOfObject:indexPath] == NSNotFound)
+//    {
+//        cell.imageView.stopDisplayDownloadedImage = YES;
+//    }
+//}
 
 @end

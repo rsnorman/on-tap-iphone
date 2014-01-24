@@ -7,6 +7,7 @@
 //
 
 #import "NormImageShowTransitioning.h"
+#import "constants.h"
 
 @implementation NormImageShowTransitioning
 
@@ -17,11 +18,18 @@ UIImageView *animatedPresentingImageView;
     [super willAnimateShowTransition];
     
     animatedPresentingImageView = [[UIImageView alloc] initWithFrame:self.presentingImageStartFrame];
+    [animatedPresentingImageView setBackgroundColor:[UIColor whiteColor]];
     
     animatedPresentingImageView.layer.cornerRadius = self.presentingImageStartLayer.cornerRadius;
     animatedPresentingImageView.layer.masksToBounds = self.presentingImageStartLayer.masksToBounds;
     
     [animatedPresentingImageView setImage:self.presentingImage];
+    
+    if (self.presentingImage.size.height / self.presentingImage.size.width > _MAX_IMAGE_RATIO) {
+        [animatedPresentingImageView setContentMode:UIViewContentModeScaleAspectFit];
+    } else{
+        [animatedPresentingImageView setContentMode:UIViewContentModeScaleToFill];
+    }
     
     [self.animationView addSubview:animatedPresentingImageView];
 }
@@ -71,11 +79,18 @@ UIImageView *animatedPresentingImageView;
     self.presentingImageFinishFrame = [self.toVC getPresentedImage].frame;
     
     animatedPresentingImageView = [[UIImageView alloc] initWithFrame:self.presentingImageFinishFrame];
+    [animatedPresentingImageView setBackgroundColor:[UIColor whiteColor]];
     
     animatedPresentingImageView.layer.cornerRadius = self.presentingImageFinishLayer.cornerRadius;
     animatedPresentingImageView.layer.masksToBounds = self.presentingImageFinishLayer.masksToBounds;
     
     [animatedPresentingImageView setImage:self.presentingImage];
+    
+    if (self.presentingImage.size.height / self.presentingImage.size.width > _MAX_IMAGE_RATIO) {
+        [animatedPresentingImageView setContentMode:UIViewContentModeScaleAspectFit];
+    } else{
+        [animatedPresentingImageView setContentMode:UIViewContentModeScaleToFill];
+    }
     
     
     [self.animationView addSubview:animatedPresentingImageView];

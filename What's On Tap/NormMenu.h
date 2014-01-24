@@ -30,6 +30,9 @@
 // Fetches menu from server
 + (void)fetchForLocation:(NSString *)location success:(void (^)(NormMenu *menu))action failedWithError:(void (^)(NSError *))errorAction;
 
+// Fetches menu from server
++ (void)refreshForLocation:(NSString *)location success:(void (^)(NormMenu *menu))action failedWithError:(void (^)(NSError *))errorAction;
+
 // Parses the menu from JSON
 + (NormMenu *)menuFromJSON:(NSData *)objectNotation;
 
