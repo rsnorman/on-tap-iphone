@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13B42" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Beer" representedClassName="Beer" syncable="YES">
+        <attribute name="abv" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="bID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="breweryLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="breweryName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="label" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="menuID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="price" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="servedIn" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="serveType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="style" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="styleCategory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="summary" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailLabel" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="Location" syncable="YES">
+        <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="menus" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Menu" syncable="YES"/>
+    </entity>
+    <entity name="Menu" representedClassName="Menu" syncable="YES">
+        <attribute name="createdOn" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="locationId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mID" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="beers" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Beer" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Location" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Menu" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Beer" positionX="0" positionY="0" width="0" height="0"/>
+    </elements>
+</model>

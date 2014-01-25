@@ -20,6 +20,10 @@
 		5938104F188623E100D88215 /* NormLocationFinderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5938104E188623E100D88215 /* NormLocationFinderController.m */; };
 		59381052188627A900D88215 /* NormLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 59381051188627A900D88215 /* NormLocationCell.m */; };
 		59381055188627C000D88215 /* NormLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59381054188627C000D88215 /* NormLocation.m */; };
+		59656042189426D400ED2E9A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 59656040189426D400ED2E9A /* Model.xcdatamodeld */; };
+		5965605D189440E400ED2E9A /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 5965605C189440E400ED2E9A /* Location.m */; };
+		596560601894410300ED2E9A /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5965605F1894410300ED2E9A /* Menu.m */; };
+		596560631894411600ED2E9A /* Beer.m in Sources */ = {isa = PBXBuildFile; fileRef = 596560621894411600ED2E9A /* Beer.m */; };
 		596661AD18860997003E755E /* RECommonFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661A418860997003E755E /* RECommonFunctions.m */; };
 		596661AE18860997003E755E /* REMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661A618860997003E755E /* REMenu.m */; };
 		596661AF18860997003E755E /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661A818860997003E755E /* REMenuContainerView.m */; };
@@ -97,6 +101,13 @@
 		59381051188627A900D88215 /* NormLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocationCell.m; sourceTree = "<group>"; };
 		59381053188627C000D88215 /* NormLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormLocation.h; sourceTree = "<group>"; };
 		59381054188627C000D88215 /* NormLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocation.m; sourceTree = "<group>"; };
+		59656041189426D400ED2E9A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		5965605B189440E400ED2E9A /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
+		5965605C189440E400ED2E9A /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
+		5965605E1894410300ED2E9A /* Menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Menu.h; sourceTree = "<group>"; };
+		5965605F1894410300ED2E9A /* Menu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Menu.m; sourceTree = "<group>"; };
+		596560611894411600ED2E9A /* Beer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Beer.h; sourceTree = "<group>"; };
+		596560621894411600ED2E9A /* Beer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Beer.m; sourceTree = "<group>"; };
 		596661A318860997003E755E /* RECommonFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECommonFunctions.h; sourceTree = "<group>"; };
 		596661A418860997003E755E /* RECommonFunctions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECommonFunctions.m; sourceTree = "<group>"; };
 		596661A518860997003E755E /* REMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenu.h; sourceTree = "<group>"; };
@@ -217,6 +228,20 @@
 				5938103D188619C000D88215 /* Rhino Raja.otf */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		5965603F189426A600ED2E9A /* DataModels */ = {
+			isa = PBXGroup;
+			children = (
+				59656040189426D400ED2E9A /* Model.xcdatamodeld */,
+				596560611894411600ED2E9A /* Beer.h */,
+				596560621894411600ED2E9A /* Beer.m */,
+				5965605E1894410300ED2E9A /* Menu.h */,
+				5965605F1894410300ED2E9A /* Menu.m */,
+				5965605B189440E400ED2E9A /* Location.h */,
+				5965605C189440E400ED2E9A /* Location.m */,
+			);
+			name = DataModels;
 			sourceTree = "<group>";
 		};
 		596661A218860997003E755E /* DropDownMenu */ = {
@@ -361,6 +386,7 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				5965603F189426A600ED2E9A /* DataModels */,
 				94851F8A187376FE00668E77 /* constants.h */,
 				94608331188023B6005EF155 /* NormBlurImage.h */,
 				94608332188023B6005EF155 /* NormBlurImage.m */,
@@ -537,6 +563,7 @@
 				9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */,
 				94BA82DF18484C2B00D60EDC /* NormBeer.m in Sources */,
 				596661B018860997003E755E /* REMenuItem.m in Sources */,
+				5965605D189440E400ED2E9A /* Location.m in Sources */,
 				9460833C1884DA27005EF155 /* NormModalShowTransitioning.m in Sources */,
 				9460833918834BE5005EF155 /* NormViewSnapshot.m in Sources */,
 				59381055188627C000D88215 /* NormLocation.m in Sources */,
@@ -544,6 +571,7 @@
 				946083471885B4BA005EF155 /* NormEnlargeImage.m in Sources */,
 				596661B118860997003E755E /* REMenuItemView.m in Sources */,
 				9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */,
+				596560631894411600ED2E9A /* Beer.m in Sources */,
 				94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */,
 				94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */,
 				596661AF18860997003E755E /* REMenuContainerView.m in Sources */,
@@ -554,6 +582,7 @@
 				596661AE18860997003E755E /* REMenu.m in Sources */,
 				59381052188627A900D88215 /* NormLocationCell.m in Sources */,
 				596661AD18860997003E755E /* RECommonFunctions.m in Sources */,
+				596560601894410300ED2E9A /* Menu.m in Sources */,
 				946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */,
 				94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */,
 				94851F64186DD81D00668E77 /* NormImageView.m in Sources */,
@@ -561,6 +590,7 @@
 				941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */,
 				94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,
+				59656042189426D400ED2E9A /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +813,16 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
+		59656040189426D400ED2E9A /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				59656041189426D400ED2E9A /* Model.xcdatamodel */,
+			);
+			currentVersion = 59656041189426D400ED2E9A /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
 		94BA82B11847AC2100D60EDC /* What_s_On_Tap.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (

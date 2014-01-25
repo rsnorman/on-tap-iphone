@@ -41,4 +41,7 @@
 // Drop down menu for selecting different serve types from the menu
 @property (strong, readwrite, nonatomic) REMenu *menu;
 
+// Managed context for saving menu and beers
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @end

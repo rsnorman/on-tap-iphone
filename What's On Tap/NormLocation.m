@@ -41,11 +41,11 @@
 
     for(NSDictionary *locationDic in locationsJSON) {
         NormLocation *location = [[NormLocation alloc] init];
-        for (NSString *key in locationDic) {
-            if ([location respondsToSelector:NSSelectorFromString(key)]) {
-                [location setValue:[locationDic valueForKey:key] forKey:key];
-            }
-        }
+        
+        location.lID = [locationDic objectForKey:@"locationId"];
+        location.name = [locationDic objectForKey:@"name"];
+        location.address = [locationDic objectForKey:@"address"];
+        location.type = [locationDic objectForKey:@"type"];
         
         [locations addObject:location];
     }

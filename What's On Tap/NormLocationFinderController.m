@@ -8,7 +8,7 @@
 
 #import "NormLocationFinderController.h"
 #import "NormModalControllerDelegate.h"
-#import "NormLocation.h"
+#import "Location.h"
 #import "NormLocationCell.h"
 #import "NormLocationFinderDelegate.h"
 #import "constants.h"
@@ -18,6 +18,8 @@
 @end
 
 @implementation NormLocationFinderController
+
+@synthesize managedObjectContext;
 
 NSArray *_locations;
 UITableView *_tableView;
@@ -75,27 +77,59 @@ UIView *_fetchingLocationsView;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
-    [NormLocation fetch:^(NSArray *locations){
-        [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
+    _locations = [Location fetch];
+    
+    if (_locations.count != 0 ) {
+        [_fetchingLocationsView setHidden:YES];
+        [_tableView reloadData];
+    } else {
+        for (Location *location in _locations) {
+            NSLog(@"Name: %@", location.name);
+        }
         
-    } failedWithError:nil];
+        [Location fetchFromServer:^(NSArray *locations){
+            [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
+            
+        } failedWithError:nil];
+    }
 }
 
 - (void) loadLocations:(NSArray *)locations
 {
     _locations = locations;
     
+//    for (Location *location in locations) {
+//        [self saveLocation:location];
+//    }
+    
     [_fetchingLocationsView setHidden:YES];
     [_tableView reloadData];
     
     NSLog(@"Found Locations");
 }
+
+//- (void) saveLocation:(NormLocation *)location
+//{
+//    Location *_location = [NSEntityDescription insertNewObjectForEntityForName:@"Location"
+//                                               inManagedObjectContext:self.managedObjectContext];
+//
+//    _location.name = location.name;
+//    _location.lID = location.lID;
+//    _location.address = location.address;
+//    _location.type = location.type;
+//
+//    [self.managedObjectContext save:nil];  // write to database
+//}
 
 - (void)didReceiveMemoryWarning
 {

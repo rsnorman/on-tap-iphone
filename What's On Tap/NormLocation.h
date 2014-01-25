@@ -8,12 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NormLocation : NSObject
+#import "Location.h"
 
-@property NSString *name;
-@property NSString *locationId;
-@property NSString *type;
-@property NSString *address;
+@interface NormLocation : Location
 
 + (void)fetch:(void (^)(NSArray *))action failedWithError:(void (^)(NSError *))errorAction;
 

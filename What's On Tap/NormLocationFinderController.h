@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "NormLocationFinderDelegate.h"
+
+
 @interface NormLocationFinderController : UIViewController
 @property id <NormLocationFinderDelegate> delegate;
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @end

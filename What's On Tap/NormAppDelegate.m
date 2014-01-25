@@ -7,7 +7,7 @@
 //
 
 #import "NormAppDelegate.h"
-
+#import "Location.h"
 @implementation NormAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -17,6 +17,30 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    
+//    NSManagedObjectContext *context = [self managedObjectContext];
+//    Location *location = [NSEntityDescription
+//                                      insertNewObjectForEntityForName:@"Location"
+//                                      inManagedObjectContext:context];
+//    location.name = @"Test Bank";
+//    location.locationId = @"1";
+//    location.address = @"914 Carpenter St";
+//    location.type = @"Bar";
+//
+//    NSError *error;
+//    if (![context save:&error]) {
+//        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+//    }
+    
+    // Test listing all FailedBankInfos from the store
+//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location"
+//                                              inManagedObjectContext:context];
+//    [fetchRequest setEntity:entity];
+//    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+//    for (Location *location in fetchedObjects) {
+//        NSLog(@"Name: %@", location.name);
+//    }
     
     return YES;
 }
@@ -88,7 +112,7 @@
     if (_managedObjectModel != nil) {
         return _managedObjectModel;
     }
-    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"What_s_On_Tap" withExtension:@"momd"];
+    NSURL *modelURL = [[NSBundle mainBundle] URLForResource:@"Model" withExtension:@"momd"];
     _managedObjectModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
     return _managedObjectModel;
 }
@@ -101,7 +125,7 @@
         return _persistentStoreCoordinator;
     }
     
-    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"What_s_On_Tap.sqlite"];
+    NSURL *storeURL = [[self applicationDocumentsDirectory] URLByAppendingPathComponent:@"Model.sqlite"];
     
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];

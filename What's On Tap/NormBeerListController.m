@@ -18,6 +18,8 @@
 
 @implementation NormBeerListController
 
+@synthesize managedObjectContext;
+
 NormLocation *_currentLocation;
 
 - (id)initWithStyle:(UITableViewStyle)style
@@ -32,6 +34,9 @@ NormLocation *_currentLocation;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    self.managedObjectContext = [appDelegate managedObjectContext];
     
     self.edgesForExtendedLayout = UIRectEdgeNone;
     
@@ -62,7 +67,7 @@ NormLocation *_currentLocation;
 
 - (void) setLocation:(NormLocation *)location
 {
-    if (_currentLocation.locationId != location.locationId) {
+    if (_currentLocation.lID != location.lID) {
         
         if (_currentLocation != nil) {
             self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 1);
@@ -131,7 +136,7 @@ NormLocation *_currentLocation;
 {
     
     // Fetch beers from server
-    [NormMenu fetchForLocation:_currentLocation.locationId success: ^(NormMenu *beerMenu) {
+    [NormMenu fetchForLocation:_currentLocation.lID success: ^(NormMenu *beerMenu) {
         self.beerMenu = beerMenu;
         
         if (self.currentServeType == nil){
@@ -151,7 +156,7 @@ NormLocation *_currentLocation;
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating Menu..."];
     
     // Fetch beers from server
-    [NormMenu refreshForLocation:_currentLocation.locationId success: ^(NormMenu *beerMenu) {
+    [NormMenu refreshForLocation:_currentLocation.lID success: ^(NormMenu *beerMenu) {
         self.beerMenu = beerMenu;
         
         if (self.currentServeType == nil){

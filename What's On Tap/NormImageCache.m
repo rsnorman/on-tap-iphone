@@ -21,10 +21,12 @@ static NSCache *imageCache;
 
 + (void)setImage:(UIImage *)image forKey:(NSString *)key
 {
-    [imageCache setObject:image forKey:key];
-    [self saveImage:image forURL:key];
+    if (image != nil) {
+        [imageCache setObject:image forKey:key];
+        [self saveImage:image forURL:key];
+    }
 }
-     
+
 + (void) saveImage:(UIImage *)image forURL:(NSString *)url {
      NSString * extension = [url componentsSeparatedByString:@"."].lastObject;
      NSString * directoryPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
