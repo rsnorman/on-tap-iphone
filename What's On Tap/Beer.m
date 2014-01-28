@@ -25,5 +25,6 @@
 @dynamic thumbnailLabel;
 @dynamic summary;
 @dynamic menuID;
+@dynamic menu;
 
 @end

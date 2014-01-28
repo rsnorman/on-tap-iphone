@@ -11,6 +11,6 @@
 @interface UIView (EnlargeImage)
 
 - (void) setDelegate:(UIViewController *)enlargeDelegate;
-- (void) setLargeImageURL:(UIImage *)largeImage;
+- (void) setLargeImageURL:(NSString *)largeImage;
 
 @end

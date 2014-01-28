@@ -7,7 +7,8 @@
 //
 
 #import "NormAppDelegate.h"
-#import "Location.h"
+#import "User.h"
+
 @implementation NormAppDelegate
 
 @synthesize managedObjectContext = _managedObjectContext;
@@ -18,29 +19,28 @@
 {    
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     
-//    NSManagedObjectContext *context = [self managedObjectContext];
-//    Location *location = [NSEntityDescription
-//                                      insertNewObjectForEntityForName:@"Location"
-//                                      inManagedObjectContext:context];
-//    location.name = @"Test Bank";
-//    location.locationId = @"1";
-//    location.address = @"914 Carpenter St";
-//    location.type = @"Bar";
-//
-//    NSError *error;
-//    if (![context save:&error]) {
-//        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
-//    }
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSError *error;
     
-    // Test listing all FailedBankInfos from the store
-//    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-//    NSEntityDescription *entity = [NSEntityDescription entityForName:@"Location"
-//                                              inManagedObjectContext:context];
-//    [fetchRequest setEntity:entity];
-//    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
-//    for (Location *location in fetchedObjects) {
-//        NSLog(@"Name: %@", location.name);
-//    }
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"User"
+                                              inManagedObjectContext:context];
+    [fetchRequest setEntity:entity];
+    NSArray *fetchedObjects = [context executeFetchRequest:fetchRequest error:&error];
+    
+    if ([fetchedObjects count] > 0) {
+        NSLog(@"Found user");
+    } else {
+        User *user = [NSEntityDescription
+                      insertNewObjectForEntityForName:@"User"
+                      inManagedObjectContext:context];
+        user.name = @"Norman";
+        
+        
+        if (![context save:&error]) {
+            NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+        }
+    }
     
     return YES;
 }

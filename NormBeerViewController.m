@@ -13,7 +13,7 @@
 #import <CoreImage/CoreImage.h>
 
 @interface NormBeerViewController ()
-@property NormBeer *beer;
+@property Beer *beer;
 
 @end
 
@@ -128,10 +128,10 @@
     [self.nameLabel setText:self.beer.name];
     [self.breweryLabel setText:self.beer.breweryName];
     [self.styleLabel setText:self.beer.style];
-    [self.abvLabel setText:[NSString stringWithFormat:@"ABV: %g%%", self.beer.abv]];
-    [self.descriptionText setText:self.beer.description];
+    [self.abvLabel setText:[NSString stringWithFormat:@"ABV: %g%%", [self.beer.abv floatValue] ]];
+    [self.descriptionText setText:self.beer.summary];
     [self.servedInLabel setText:self.beer.servedIn];
-    [self.costLabel setText: [NSString stringWithFormat:@"$%.02f", self.beer.price]];
+    [self.costLabel setText: [NSString stringWithFormat:@"$%.02f", [self.beer.price floatValue]]];
     
     CGSize nameSize = [self.nameLabel sizeThatFits:CGSizeMake(self.nameLabel.frame.size.width, CGFLOAT_MAX)];
     CGSize brewerySize = [self.breweryLabel sizeThatFits:CGSizeMake(self.breweryLabel.frame.size.width, CGFLOAT_MAX)];
@@ -145,10 +145,10 @@
     UIScrollView * scrollView = [self.view.subviews objectAtIndex:0];
     scrollView.contentSize = CGSizeMake(self.view.frame.size.width, descriptionSize.height + 190);
     
-    [self.logoImage setURLForImage:[[self.beer.label objectForKey:@"thumbnail"] objectForKey:@"url"] defaultImage: [UIImage imageNamed: [self.beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [self.beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
+    [self.logoImage setURLForImage:self.beer.thumbnailLabel defaultImage: [UIImage imageNamed: [self.beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [self.beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
     
     [self.logoImage setDelegate:self];
-    [self.logoImage setLargeImageURL:[self.beer.label objectForKey:@"url"]];
+    [self.logoImage setLargeImageURL: self.beer.label];
 }
 
 - (void)viewDidLoad

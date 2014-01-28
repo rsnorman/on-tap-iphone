@@ -21,6 +21,7 @@
 
 + (NSArray *)fetch;
 + (void)fetchFromServer:(void (^)(NSArray *))action failedWithError:(void (^)(NSError *))errorAction;
++ (Location *)findByLocationId:(NSString *)locationId;
 
 @end
 

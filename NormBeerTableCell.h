@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NormBeer.h"
+#import "Beer.h"
 #import "NormPriceLabel.h"
 #import "NormImageView.h"
 
@@ -32,6 +32,6 @@
 @property (nonatomic) NormImageView *imageView;
 
 // Sets the beer that will be displayed in the cell
-- (void)setBeer:(NormBeer *)beer;
+- (void)setBeer:(Beer *)beer;
 
 @end

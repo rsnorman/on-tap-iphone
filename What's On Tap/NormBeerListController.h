@@ -10,6 +10,7 @@
 #import "REMenu.h"
 #import "NormBeer.h"
 #import "NormMenu.h"
+#import "Menu.h"
 #import "NormBeerViewController.h"
 #import "NormBeerTableCell.h"
 #import "constants.h"
@@ -18,7 +19,7 @@
 @interface NormBeerListController : UIViewController
 
 // Menu that contains all the beers
-@property NormMenu *beerMenu;
+@property Menu *beerMenu;
 
 // Current serve type that is being displayed
 @property NSString *currentServeType;
@@ -27,7 +28,7 @@
 @property (nonatomic) UITableView *tableView;
 
 // Spinner to indicate menu is being loaded
-@property (nonatomic) UIActivityIndicatorView *spinner;
+@property (nonatomic) UIView *spinnerView;
 
 // Refresh control to allow pull down action to refresh menu
 @property UIRefreshControl *refreshControl;

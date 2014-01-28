@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NormBeer.h"
+#import "Beer.h"
 #import "NormImageView.h"
 #import "NormDraggableImageView.h"
 #import "constants.h"
@@ -42,7 +42,7 @@
 @property UIView *overlay;
 
 // Sets the active beer for the controller
--(void)setBeer:(NormBeer *)beer;
+-(void)setBeer:(Beer *)beer;
 
 // Shows the large version of the beer logo/label
 //- (void)showLargeLogo:(UIImage *)largeLogo;

@@ -47,14 +47,14 @@
     return self;
 }
 
-- (void)setBeer:(NormBeer *)beer
+- (void)setBeer:(Beer *)beer
 {
     self.nameLabel.text = beer.name;
     self.breweryLabel.text = beer.breweryName;
-    [self.costLabel setPrice:beer.price];
-    self.detailsLabel.text = [[NSArray arrayWithObjects:beer.servedIn, @" - ", [NSString stringWithFormat:@"%g%% ABV", beer.abv], nil] componentsJoinedByString:@" "];
+    [self.costLabel setPrice:[beer.price floatValue]];
+    self.detailsLabel.text = [[NSArray arrayWithObjects:beer.servedIn, @" - ", [NSString stringWithFormat:@"%g%% ABV", [beer.abv floatValue]], nil] componentsJoinedByString:@" "];
     
-    [self.imageView setURLForImage:[[beer.label objectForKey:@"thumbnail"] objectForKey:@"url"]  defaultImage: [UIImage imageNamed: [beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
+    [self.imageView setURLForImage:beer.thumbnailLabel  defaultImage: [UIImage imageNamed: [beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
 }
 
 -(void) prepareForReuse

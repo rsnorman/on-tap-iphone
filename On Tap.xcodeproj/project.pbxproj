@@ -32,6 +32,7 @@
 		941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 941102A4186B4B0500B61F57 /* NormPriceLabel.m */; };
 		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
+		943D938918977CB800634229 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938818977CB800634229 /* User.m */; };
 		9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */; };
 		9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832C187D8582005EF155 /* NormImageShowTransitioning.m */; };
 		94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832F187ECDCB005EF155 /* NormImageModalController.m */; };
@@ -124,6 +125,8 @@
 		94190C5C185FE6F0002704F2 /* NormMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormMenu.m; sourceTree = "<group>"; };
 		941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerViewController.h; path = ../NormBeerViewController.h; sourceTree = "<group>"; };
 		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerViewController.m; path = ../NormBeerViewController.m; sourceTree = "<group>"; };
+		943D938718977CB800634229 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		943D938818977CB800634229 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		94608328187D8546005EF155 /* NormImageModalTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageModalTransitionDelegate.h; sourceTree = "<group>"; };
 		94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageModalTransitionDelegate.m; sourceTree = "<group>"; };
 		9460832B187D8582005EF155 /* NormImageShowTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageShowTransitioning.h; sourceTree = "<group>"; };
@@ -234,6 +237,8 @@
 			isa = PBXGroup;
 			children = (
 				59656040189426D400ED2E9A /* Model.xcdatamodeld */,
+				943D938718977CB800634229 /* User.h */,
+				943D938818977CB800634229 /* User.m */,
 				596560611894411600ED2E9A /* Beer.h */,
 				596560621894411600ED2E9A /* Beer.m */,
 				5965605E1894410300ED2E9A /* Menu.h */,
@@ -576,6 +581,7 @@
 				94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */,
 				596661AF18860997003E755E /* REMenuContainerView.m in Sources */,
 				94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */,
+				943D938918977CB800634229 /* User.m in Sources */,
 				94BA82B01847AC2100D60EDC /* NormAppDelegate.m in Sources */,
 				941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */,
 				94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */,

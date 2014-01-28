@@ -11,6 +11,6 @@
 
 @protocol NormLocationFinderDelegate <NSObject>
 
-- (void) setLocation:(NormLocation *)location;
+- (void) setLocation:(Location *)location;
 
 @end

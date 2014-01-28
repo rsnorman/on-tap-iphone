@@ -10,7 +10,8 @@
 #import "NormLocationFinderController.h"
 #import "NormModalTransitionDelegate.h"
 #import "NormLocationFinderDelegate.h"
-#import "NormLocation.h"
+#import "Location.h"
+#import "User.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface NormBeerListController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate, NormLocationFinderDelegate>
@@ -20,13 +21,14 @@
 
 @synthesize managedObjectContext;
 
-NormLocation *_currentLocation;
+Location *_currentLocation;
+User *_currentUser;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [self initWithStyle:style];
     if (self) {
-        _currentLocation = [[NormLocation alloc] init];
+        _currentLocation = [[Location alloc] init];
     }
     return self;
 }
@@ -46,7 +48,11 @@ NormLocation *_currentLocation;
     
     [self createSpinner];
     
-    if (self.beerMenu.locationId != nil) {
+    _currentUser = [User current];
+    _currentLocation = _currentUser.currentLocation;
+    
+    if (_currentLocation != nil) {
+        NSLog([NSString stringWithFormat: @"Loading User's Last Location: %@", _currentLocation.name]);
         [self startFetchingAvailableMenu];
     } else {
         [self showSelectLocationModal];
@@ -65,13 +71,14 @@ NormLocation *_currentLocation;
     [self presentViewController:locationFinder animated:YES completion:nil];
 }
 
-- (void) setLocation:(NormLocation *)location
+- (void) setLocation:(Location *)location
 {
     if (_currentLocation.lID != location.lID) {
         
         if (_currentLocation != nil) {
-            self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 1);
-            [self.spinner startAnimating];
+            self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 1);
+//            [self.spinner startAnimating];
+            [self.spinnerView setHidden:NO];
             
             [UIView animateWithDuration:0.3
                                   delay:0.2
@@ -92,7 +99,7 @@ NormLocation *_currentLocation;
                                 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                              animations:^
              {
-                 self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+                 self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
              }
                              completion:^(BOOL finished)
              {
@@ -102,6 +109,9 @@ NormLocation *_currentLocation;
         
         _currentLocation = location;
         self.currentServeType = nil;
+        
+        [_currentUser setCurrentLocation:location];
+        [_currentUser save];
         
         [self performSelector:@selector(startFetchingAvailableMenu) withObject:nil afterDelay:1.0];
     }
@@ -118,7 +128,7 @@ NormLocation *_currentLocation;
                         options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                      animations:^
      {
-         self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+         self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
      }
                      completion:^(BOOL finished)
      {
@@ -134,9 +144,9 @@ NormLocation *_currentLocation;
 
 - (void)startFetchingAvailableMenu
 {
-    
+    NSLog(@"Start fetching menu");
     // Fetch beers from server
-    [NormMenu fetchForLocation:_currentLocation.lID success: ^(NormMenu *beerMenu) {
+    [Menu fetchForLocation:_currentLocation.lID success: ^(Menu *beerMenu) {
         self.beerMenu = beerMenu;
         
         if (self.currentServeType == nil){
@@ -156,7 +166,7 @@ NormLocation *_currentLocation;
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating Menu..."];
     
     // Fetch beers from server
-    [NormMenu refreshForLocation:_currentLocation.lID success: ^(NormMenu *beerMenu) {
+    [Menu refreshForLocation:_currentLocation.lID success: ^(Menu *beerMenu) {
         self.beerMenu = beerMenu;
         
         if (self.currentServeType == nil){
@@ -172,7 +182,8 @@ NormLocation *_currentLocation;
 
 - (void)loadBeersIntoTableView
 {    
-    [self.spinner stopAnimating];
+//    [self.spinner stopAnimating];
+    [self.spinnerView setHidden:YES];
     [self.tableView reloadData];
     self.tableView.hidden = NO;
     [self.refreshControl endRefreshing];
@@ -197,7 +208,10 @@ NormLocation *_currentLocation;
 
 - (void) didFinishReceivingMenu
 {
-    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh Menu"];
+    NSDateFormatter *inFormat = [[NSDateFormatter alloc] init];
+    [inFormat setDateFormat:@"MMM dd H:mm a"];
+//    [inFormat stringFromDate:self.beerMenu.createdOn]
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat: @"Last Updated %@ - Pull to Refresh",  [inFormat stringFromDate:self.beerMenu.createdOn] ]];
     [self createFilterMenu];
     [self loadBeersIntoTableView];
 }
@@ -245,10 +259,10 @@ NormLocation *_currentLocation;
     
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull to Refresh Beer List"];
-    [self.refreshControl addTarget:self action:@selector(startFetchingAvailableMenu) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl addTarget:self action:@selector(refreshMenu) forControlEvents:UIControlEventValueChanged];
     
     tableViewController.refreshControl = self.refreshControl;
-    [tableViewController.refreshControl addTarget:self action:@selector(startFetchingAvailableMenu) forControlEvents:UIControlEventValueChanged];
+//    [tableViewController.refreshControl addTarget:self action:@selector(startFetchingAvailableMenu) forControlEvents:UIControlEventValueChanged];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, 320, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
@@ -282,11 +296,13 @@ NormLocation *_currentLocation;
 
 - (void)createSpinner
 {
-    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 10);
-    [self.spinner setBackgroundColor:[UIColor whiteColor]];
-    [self.spinner startAnimating];
-    [self.view addSubview:self.spinner];
+    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    [spinner setBackgroundColor:[UIColor whiteColor]];
+    [spinner startAnimating];
+    self.spinnerView = [[UIView alloc] initWithFrame:spinner.frame];
+    [self.spinnerView addSubview:spinner];
+    self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 10);
+    [self.view addSubview:self.spinnerView];
 }
 
 
@@ -450,7 +466,7 @@ NormLocation *_currentLocation;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NormBeer *beer = [[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: [[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    Beer *beer = [[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: [[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
     
     NormBeerViewController *nbvc = [[NormBeerViewController alloc] init];
     [nbvc setBeer:beer];

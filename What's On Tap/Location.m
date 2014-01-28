@@ -29,8 +29,6 @@ NSManagedObjectContext *managedObjectContext;
     NSEntityDescription *entity = [NSEntityDescription
                                    entityForName:@"Location" inManagedObjectContext:managedObjectContext];
     [fetchRequest setEntity:entity];
-//    NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"name == %s", @"Whichcraft Taproom"];
-//    [fetchRequest setPredicate:predicateID];
     NSError *error;
     return [managedObjectContext executeFetchRequest:fetchRequest error:&error];
 }
@@ -53,8 +51,6 @@ NSManagedObjectContext *managedObjectContext;
 
 + (NSArray *)locationsFromJSON:(NSData *)objectNotation
 {
-    
-    
     NSError *localError = nil;
     NSArray *results = [NSJSONSerialization JSONObjectWithData:objectNotation options:1 error:&localError];
     
@@ -80,6 +76,22 @@ NSManagedObjectContext *managedObjectContext;
     }
     
     return locations;
+}
+
++ (Location *)findByLocationId:(NSString *)locationId
+{
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    managedObjectContext = [appDelegate managedObjectContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Location" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"lID == %@", locationId];
+    [fetchRequest setPredicate:predicateID];
+    
+    NSError *error;
+    return [[managedObjectContext executeFetchRequest:fetchRequest error:&error] objectAtIndex:0];
 }
 
 @end

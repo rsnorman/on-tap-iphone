@@ -9,6 +9,7 @@
 #import "NormLocationFinderController.h"
 #import "NormModalControllerDelegate.h"
 #import "Location.h"
+#import "User.h"
 #import "NormLocationCell.h"
 #import "NormLocationFinderDelegate.h"
 #import "constants.h"
@@ -108,28 +109,11 @@ UIView *_fetchingLocationsView;
 {
     _locations = locations;
     
-//    for (Location *location in locations) {
-//        [self saveLocation:location];
-//    }
-    
     [_fetchingLocationsView setHidden:YES];
     [_tableView reloadData];
     
     NSLog(@"Found Locations");
 }
-
-//- (void) saveLocation:(NormLocation *)location
-//{
-//    Location *_location = [NSEntityDescription insertNewObjectForEntityForName:@"Location"
-//                                               inManagedObjectContext:self.managedObjectContext];
-//
-//    _location.name = location.name;
-//    _location.lID = location.lID;
-//    _location.address = location.address;
-//    _location.type = location.type;
-//
-//    [self.managedObjectContext save:nil];  // write to database
-//}
 
 - (void)didReceiveMemoryWarning
 {

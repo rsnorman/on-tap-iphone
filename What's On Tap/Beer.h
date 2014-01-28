@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
+@class Menu;
 
 @interface Beer : NSManagedObject
 
@@ -26,5 +27,6 @@
 @property (nonatomic, retain) NSString * thumbnailLabel;
 @property (nonatomic, retain) NSString * summary;
 @property (nonatomic, retain) NSString * menuID;
+@property (nonatomic, retain) Menu * menu;
 
 @end
