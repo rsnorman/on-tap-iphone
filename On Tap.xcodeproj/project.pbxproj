@@ -33,6 +33,8 @@
 		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
 		943D938918977CB800634229 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938818977CB800634229 /* User.m */; };
+		943D938C189B02D200634229 /* NormIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938B189B02D200634229 /* NormIndicatorView.m */; };
+		943D938F189B25B400634229 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938E189B25B400634229 /* Reachability.m */; };
 		9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */; };
 		9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832C187D8582005EF155 /* NormImageShowTransitioning.m */; };
 		94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832F187ECDCB005EF155 /* NormImageModalController.m */; };
@@ -127,6 +129,10 @@
 		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerViewController.m; path = ../NormBeerViewController.m; sourceTree = "<group>"; };
 		943D938718977CB800634229 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		943D938818977CB800634229 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		943D938A189B02D200634229 /* NormIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormIndicatorView.h; sourceTree = "<group>"; };
+		943D938B189B02D200634229 /* NormIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormIndicatorView.m; sourceTree = "<group>"; };
+		943D938D189B258C00634229 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		943D938E189B25B400634229 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		94608328187D8546005EF155 /* NormImageModalTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageModalTransitionDelegate.h; sourceTree = "<group>"; };
 		94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageModalTransitionDelegate.m; sourceTree = "<group>"; };
 		9460832B187D8582005EF155 /* NormImageShowTransitioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageShowTransitioning.h; sourceTree = "<group>"; };
@@ -281,6 +287,8 @@
 				946083461885B4BA005EF155 /* NormEnlargeImage.m */,
 				59381050188627A900D88215 /* NormLocationCell.h */,
 				59381051188627A900D88215 /* NormLocationCell.m */,
+				943D938A189B02D200634229 /* NormIndicatorView.h */,
+				943D938B189B02D200634229 /* NormIndicatorView.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -328,9 +336,13 @@
 			name = Images;
 			sourceTree = "<group>";
 		};
-		9488C0B01867ACA30038ED51 /* Models */ = {
+		9488C0B01867ACA30038ED51 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				94608331188023B6005EF155 /* NormBlurImage.h */,
+				94608332188023B6005EF155 /* NormBlurImage.m */,
+				9460833718834BE5005EF155 /* NormViewSnapshot.h */,
+				9460833818834BE5005EF155 /* NormViewSnapshot.m */,
 				94A91D65185E5F90006FEA65 /* NormImageCache.h */,
 				94A91D66185E5F90006FEA65 /* NormImageCache.m */,
 				94BA82DD18484C2B00D60EDC /* NormBeer.h */,
@@ -339,8 +351,10 @@
 				94190C5C185FE6F0002704F2 /* NormMenu.m */,
 				59381053188627C000D88215 /* NormLocation.h */,
 				59381054188627C000D88215 /* NormLocation.m */,
+				943D938D189B258C00634229 /* Reachability.h */,
+				943D938E189B25B400634229 /* Reachability.m */,
 			);
-			name = Models;
+			name = Helpers;
 			sourceTree = "<group>";
 		};
 		94A74BF4187C2E48009075E9 /* Delegates */ = {
@@ -393,17 +407,13 @@
 			children = (
 				5965603F189426A600ED2E9A /* DataModels */,
 				94851F8A187376FE00668E77 /* constants.h */,
-				94608331188023B6005EF155 /* NormBlurImage.h */,
-				94608332188023B6005EF155 /* NormBlurImage.m */,
-				9460833718834BE5005EF155 /* NormViewSnapshot.h */,
-				9460833818834BE5005EF155 /* NormViewSnapshot.m */,
 				59381038188619B000D88215 /* Resources */,
 				596661A218860997003E755E /* DropDownMenu */,
 				9460833D1884DB79005EF155 /* ModalTransitions */,
 				94851F891873711000668E77 /* Controllers */,
 				94A74BF4187C2E48009075E9 /* Delegates */,
 				941102A6186B4B1500B61F57 /* Interface */,
-				9488C0B01867ACA30038ED51 /* Models */,
+				9488C0B01867ACA30038ED51 /* Helpers */,
 				9488C0AD18675FB70038ED51 /* Images */,
 				94BA82AE1847AC2100D60EDC /* NormAppDelegate.h */,
 				94BA82AF1847AC2100D60EDC /* NormAppDelegate.m */,
@@ -588,6 +598,7 @@
 				596661AE18860997003E755E /* REMenu.m in Sources */,
 				59381052188627A900D88215 /* NormLocationCell.m in Sources */,
 				596661AD18860997003E755E /* RECommonFunctions.m in Sources */,
+				943D938F189B25B400634229 /* Reachability.m in Sources */,
 				596560601894410300ED2E9A /* Menu.m in Sources */,
 				946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */,
 				94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */,
@@ -596,6 +607,7 @@
 				941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */,
 				94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,
+				943D938C189B02D200634229 /* NormIndicatorView.m in Sources */,
 				59656042189426D400ED2E9A /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

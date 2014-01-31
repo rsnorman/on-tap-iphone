@@ -84,10 +84,14 @@ UIViewController *_enlargeDelegate;
         
         [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_largeImageUrl]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
             
-            [imageDownloadProgress removeFromSuperview];
-            [self setNeedsDisplay];
-            
-            [self performSelector:@selector(showLargeLogo:) withObject:[UIImage imageWithData:data] afterDelay:0.01];
+            if (error == nil) {
+                [imageDownloadProgress removeFromSuperview];
+                [self setNeedsDisplay];
+                [self performSelector:@selector(showLargeLogo:) withObject:[UIImage imageWithData:data] afterDelay:0.01];
+            } else {
+                NSLog(@"error: %@", error);
+                [imageDownloadProgress stopAnimating];
+            }
         }];
     }
 }

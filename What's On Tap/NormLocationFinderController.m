@@ -11,6 +11,7 @@
 #import "Location.h"
 #import "User.h"
 #import "NormLocationCell.h"
+#import "NormIndicatorView.h"
 #import "NormLocationFinderDelegate.h"
 #import "constants.h"
 
@@ -24,8 +25,7 @@
 
 NSArray *_locations;
 UITableView *_tableView;
-UIActivityIndicatorView *_spinner;
-UIView *_fetchingLocationsView;
+NormIndicatorView *_spinner;
 
 - (id)init
 {
@@ -41,26 +41,20 @@ UIView *_fetchingLocationsView;
         [titleLabel setTextAlignment:NSTextAlignmentCenter];
         
         [self.view addSubview:titleLabel];
-        
-        _fetchingLocationsView = [[UIView alloc] initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, 100)];
-        UILabel *fetchingLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 35)];
-        [fetchingLabel setTextColor:[UIColor whiteColor]];
-        [fetchingLabel setFont:[UIFont systemFontOfSize:14.0]];
-        [fetchingLabel setTextAlignment:NSTextAlignmentCenter];
-        [fetchingLabel setText: @"Searching for nearby locations"];
-        [_fetchingLocationsView addSubview:fetchingLabel];
-        
-        _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-        _spinner.center = CGPointMake(self.view.frame.size.width / 2, 50);
+
+        _spinner = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 125)];
+        _spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
         [_spinner startAnimating];
-        [_fetchingLocationsView addSubview:_spinner];
-        
-        [self.view addSubview:_fetchingLocationsView];
+        [_spinner setMessage:@"Fetching nearby locations"];
+        [_spinner.spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+        [_spinner.spinner setBackgroundColor:[UIColor clearColor]];
+        [_spinner.messageLabel setTextColor:[UIColor whiteColor]];
+        [self.view addSubview:_spinner];
         
         UITableViewController *tableViewController = [[UITableViewController alloc]init];
         [self addChildViewController:tableViewController];
         
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(25, 100, 270, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 200)];
+        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(25, 100, 270, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 100)];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.backgroundColor = [UIColor clearColor];
@@ -90,8 +84,8 @@ UIView *_fetchingLocationsView;
     
     _locations = [Location fetch];
     
-    if (_locations.count != 0 ) {
-        [_fetchingLocationsView setHidden:YES];
+    if (_locations.count != 0 && false) {
+        [_spinner setHidden:YES];
         [_tableView reloadData];
     } else {
         for (Location *location in _locations) {
@@ -101,15 +95,25 @@ UIView *_fetchingLocationsView;
         [Location fetchFromServer:^(NSArray *locations){
             [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
             
-        } failedWithError:nil];
+        } failedWithError:^(NSError *error){
+            NSLog(@"There was an error: %@", error);
+            [self performSelectorOnMainThread:@selector(showError) withObject:error waitUntilDone:NO];
+        }];
     }
+}
+
+- (void) showError
+{
+    [_spinner stopAnimating];
+    [_spinner setMessage:@"There was an error fetching locations"];
+    [_tableView setHidden:YES];
 }
 
 - (void) loadLocations:(NSArray *)locations
 {
     _locations = locations;
     
-    [_fetchingLocationsView setHidden:YES];
+    [_spinner setHidden:YES];
     [_tableView reloadData];
     
     NSLog(@"Found Locations");
@@ -165,7 +169,7 @@ UIView *_fetchingLocationsView;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 75;
+    return 70;
 }
 
 @end

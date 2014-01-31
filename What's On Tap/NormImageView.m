@@ -54,15 +54,17 @@
             // get the UIImage
             [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URL]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                 
-                self.image = [UIImage imageWithData:data];
-                
-                if (image.size.height / image.size.width > _MAX_IMAGE_RATIO) {
-                    [self setContentMode:UIViewContentModeScaleAspectFit];
-                } else{
-                    [self setContentMode:UIViewContentModeScaleToFill];
+                if (error == nil) {
+                    self.image = [UIImage imageWithData:data];
+                    
+                    if (image.size.height / image.size.width > _MAX_IMAGE_RATIO) {
+                        [self setContentMode:UIViewContentModeScaleAspectFit];
+                    } else{
+                        [self setContentMode:UIViewContentModeScaleToFill];
+                    }
+                    
+                    [NormImageCache setImage:self.image forKey:URL];
                 }
-                
-                [NormImageCache setImage:self.image forKey:URL];
             }];
         }
     } else {

@@ -10,6 +10,7 @@
 #import "NormLocationFinderController.h"
 #import "NormModalTransitionDelegate.h"
 #import "NormLocationFinderDelegate.h"
+#import "Reachability.h"
 #import "Location.h"
 #import "User.h"
 #import <QuartzCore/QuartzCore.h>
@@ -48,14 +49,23 @@ User *_currentUser;
     
     [self createSpinner];
     
+    [self createMenu];
+    
     _currentUser = [User current];
     _currentLocation = _currentUser.currentLocation;
     
-    if (_currentLocation != nil) {
-        NSLog([NSString stringWithFormat: @"Loading User's Last Location: %@", _currentLocation.name]);
-        [self startFetchingAvailableMenu];
+    if ([self connectedToNetwork]) {
+        if (_currentLocation != nil) {
+            NSLog(@"Create Location Menu");
+            [self createLocationMenu];
+            NSLog(@"Loading User's Last Location: %@", _currentLocation.name);
+            [self startFetchingAvailableMenu];
+        } else {
+            [self showSelectLocationModal];
+        }
     } else {
-        [self showSelectLocationModal];
+        [self.spinnerView stopAnimating];
+        [self.spinnerView setMessage:@"Please connect to the Internet"];
     }
 }
 
@@ -77,7 +87,7 @@ User *_currentUser;
         
         if (_currentLocation != nil) {
             self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 1);
-//            [self.spinner startAnimating];
+            [self.spinnerView startAnimating];
             [self.spinnerView setHidden:NO];
             
             [UIView animateWithDuration:0.3
@@ -105,6 +115,7 @@ User *_currentUser;
              {
                  //         self.isAnimating = NO;
              }];
+            
         }
         
         _currentLocation = location;
@@ -113,6 +124,10 @@ User *_currentUser;
         [_currentUser setCurrentLocation:location];
         [_currentUser save];
         
+        NSLog(@"Create Location Menu");
+        [self createLocationMenu];
+        
+        [self.spinnerView setMessage:[NSString stringWithFormat:@"Fetching menu for\n%@", _currentLocation.name]];
         [self performSelector:@selector(startFetchingAvailableMenu) withObject:nil afterDelay:1.0];
     }
 }
@@ -146,6 +161,7 @@ User *_currentUser;
 {
     NSLog(@"Start fetching menu");
     // Fetch beers from server
+    
     [Menu fetchForLocation:_currentLocation.lID success: ^(Menu *beerMenu) {
         self.beerMenu = beerMenu;
         
@@ -156,8 +172,15 @@ User *_currentUser;
         
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
     } failedWithError:^(NSError *error) {
-
+        NSLog(@"There was an error grabbing the new menu");
+        [self performSelectorOnMainThread:@selector(showErrorWithMessage:) withObject:@"There was an error fetching the menu" waitUntilDone:NO];
     }];
+}
+
+- (void)showErrorWithMessage:(NSString *)errorMessage
+{
+    [self.spinnerView setMessage:errorMessage];
+    [self.spinnerView stopAnimating];
 }
 
 - (void)refreshMenu
@@ -176,14 +199,23 @@ User *_currentUser;
         
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
     } failedWithError:^(NSError *error) {
+        NSLog(@"Failed refreshing menu");
         
+        [self performSelectorOnMainThread:@selector(showErrorRefresh) withObject:nil waitUntilDone:NO];
     }];
+}
+
+- (void)showErrorRefresh
+{
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"There was an error refreshing the menu"];
+    [self performSelector:@selector(didFinishReceivingMenu) withObject:nil afterDelay:1.0];
 }
 
 - (void)loadBeersIntoTableView
 {    
-//    [self.spinner stopAnimating];
+    [self.spinnerView stopAnimating];
     [self.spinnerView setHidden:YES];
+    
     [self.tableView reloadData];
     self.tableView.hidden = NO;
     [self.refreshControl endRefreshing];
@@ -210,8 +242,7 @@ User *_currentUser;
 {
     NSDateFormatter *inFormat = [[NSDateFormatter alloc] init];
     [inFormat setDateFormat:@"MMM dd H:mm a"];
-//    [inFormat stringFromDate:self.beerMenu.createdOn]
-    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat: @"Last Updated %@ - Pull to Refresh",  [inFormat stringFromDate:self.beerMenu.createdOn] ]];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat: @"Last Updated %@ \n Pull to Refresh",  [inFormat stringFromDate:self.beerMenu.createdOn] ]];
     [self createFilterMenu];
     [self loadBeersIntoTableView];
 }
@@ -262,7 +293,6 @@ User *_currentUser;
     [self.refreshControl addTarget:self action:@selector(refreshMenu) forControlEvents:UIControlEventValueChanged];
     
     tableViewController.refreshControl = self.refreshControl;
-//    [tableViewController.refreshControl addTarget:self action:@selector(startFetchingAvailableMenu) forControlEvents:UIControlEventValueChanged];
     
     self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, 320, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - self.navigationController.navigationBar.frame.origin.y) style:UITableViewStylePlain];
     self.tableView.dataSource = self;
@@ -277,7 +307,6 @@ User *_currentUser;
     // Search Bar
     _beerSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
     _beerSearchBar.placeholder = @"Search Beers";
-    
 
     
     /*the search bar widht must be > 1, the height must be at least 44
@@ -296,13 +325,40 @@ User *_currentUser;
 
 - (void)createSpinner
 {
-    UIActivityIndicatorView *spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    [spinner setBackgroundColor:[UIColor whiteColor]];
-    [spinner startAnimating];
-    self.spinnerView = [[UIView alloc] initWithFrame:spinner.frame];
-    [self.spinnerView addSubview:spinner];
+    self.spinnerView = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 200, 150)];
     self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 10);
+    [self.spinnerView setHidesWhenStopped:YES];
     [self.view addSubview:self.spinnerView];
+}
+
+-(void)createMenu
+{
+    self.menu = [[REMenu alloc] init];
+    
+    self.menu.appearsBehindNavigationBar = NO; // Affects only iOS 7
+    self.menu.backgroundColor = _DARK_COLOR;
+    self.menu.font = [UIFont fontWithName:_SECONDARY_FONT size:22];
+    self.menu.subtitleFont = [UIFont fontWithName:_SECONDARY_FONT size:14];
+    self.menu.textColor = [UIColor lightGrayColor];
+    self.menu.separatorColor = [UIColor darkGrayColor];
+    
+    if (!REUIKitIsFlatMode()) {
+        self.menu.cornerRadius = 4;
+        self.menu.shadowRadius = 4;
+        self.menu.shadowColor = [UIColor blackColor];
+        self.menu.shadowOffset = CGSizeMake(0, 1);
+        self.menu.shadowOpacity = 1;
+    }
+    
+    self.menu.imageOffset = CGSizeMake(8, -1);
+    self.menu.waitUntilAnimationIsComplete = NO;
+    self.menu.badgeLabelConfigurationBlock = ^(UILabel *badgeLabel, REMenuItem *item) {
+        badgeLabel.backgroundColor = _MAIN_COLOR;
+        badgeLabel.layer.borderWidth = 0.0;
+        badgeLabel.textColor = [UIColor whiteColor];
+        badgeLabel.layer.cornerRadius = 10.0;
+        badgeLabel.layer.frame = CGRectMake(25.0, 10.0, 20.0, 20.0);
+    };
 }
 
 
@@ -361,34 +417,30 @@ User *_currentUser;
     [locationMenuItem setSubtitle:_currentLocation.name];
     [menuItems addObject:locationMenuItem];
     
-    
-    self.menu = [[REMenu alloc] initWithItems:menuItems];
-    
-    self.menu.appearsBehindNavigationBar = NO; // Affects only iOS 7
-    self.menu.backgroundColor = _DARK_COLOR;
-    self.menu.font = [UIFont fontWithName:_SECONDARY_FONT size:22];
-    self.menu.subtitleFont = [UIFont fontWithName:_SECONDARY_FONT size:14];
-    self.menu.textColor = [UIColor lightGrayColor];
-    self.menu.separatorColor = [UIColor darkGrayColor];
-    
-    if (!REUIKitIsFlatMode()) {
-        self.menu.cornerRadius = 4;
-        self.menu.shadowRadius = 4;
-        self.menu.shadowColor = [UIColor blackColor];
-        self.menu.shadowOffset = CGSizeMake(0, 1);
-        self.menu.shadowOpacity = 1;
-    }
-    
-    self.menu.imageOffset = CGSizeMake(8, -1);
-    self.menu.waitUntilAnimationIsComplete = NO;
-    self.menu.badgeLabelConfigurationBlock = ^(UILabel *badgeLabel, REMenuItem *item) {
-        badgeLabel.backgroundColor = _MAIN_COLOR;
-        badgeLabel.layer.borderWidth = 0.0;
-        badgeLabel.textColor = [UIColor whiteColor];
-        badgeLabel.layer.cornerRadius = 10.0;
-        badgeLabel.layer.frame = CGRectMake(25.0, 10.0, 20.0, 20.0);
-    };
+    [self.menu setItems:menuItems];
 }
+
+- (void) createLocationMenu
+{
+    __typeof (self) __weak weakSelf = self;
+    
+    NSMutableArray *menuItems = [[NSMutableArray alloc] init];
+    
+    REMenuItem *locationMenuItem = [[REMenuItem alloc] initWithTitle:@"Locations"
+                                                               image:nil
+                                                    highlightedImage:nil
+                                                              action:^(REMenuItem *item) {
+                                                                  [weakSelf performSelector:@selector(showSelectLocationModal) withObject:nil afterDelay:0.5];
+                                                              }];
+    
+    
+    [locationMenuItem setSubtitle:_currentLocation.name];
+    [menuItems addObject:locationMenuItem];
+    
+    [self.menu setItems:menuItems];
+}
+
+
 
 - (void)setMenuButton
 {
@@ -534,6 +586,27 @@ User *_currentUser;
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
     self.tableView.rowHeight = 75.0f; // or some other height
+}
+
+- (BOOL) connectedToNetwork
+{
+    BOOL isInternet = NO;
+    Reachability* reachability = [Reachability reachabilityWithHostName:@"google.com"];
+    NetworkStatus remoteHostStatus = [reachability currentReachabilityStatus];
+    
+    if(remoteHostStatus == NotReachable)
+    {
+        isInternet = NO;
+    }
+    else if (remoteHostStatus == ReachableViaWWAN)
+    {
+        isInternet = YES;
+    }
+    else if (remoteHostStatus == ReachableViaWiFi)
+    {
+        isInternet = YES;
+    }
+    return isInternet;
 }
 
 //- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(NormBeerTableCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath

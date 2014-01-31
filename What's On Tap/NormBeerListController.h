@@ -13,6 +13,7 @@
 #import "Menu.h"
 #import "NormBeerViewController.h"
 #import "NormBeerTableCell.h"
+#import "NormIndicatorView.h"
 #import "constants.h"
 
 // Controller for view the list of all beers on a menu
@@ -28,7 +29,7 @@
 @property (nonatomic) UITableView *tableView;
 
 // Spinner to indicate menu is being loaded
-@property (nonatomic) UIView *spinnerView;
+@property (nonatomic) NormIndicatorView *spinnerView;
 
 // Refresh control to allow pull down action to refresh menu
 @property UIRefreshControl *refreshControl;
@@ -38,6 +39,8 @@
 
 // Search display controller for filtering beers
 @property UISearchDisplayController *beerSearchDisplayController;
+
+@property UILabel *errorLabel;
 
 // Drop down menu for selecting different serve types from the menu
 @property (strong, readwrite, nonatomic) REMenu *menu;

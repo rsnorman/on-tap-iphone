@@ -42,7 +42,9 @@ NSManagedObjectContext *managedObjectContext;
     [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
         if (error) {
-            errorAction(error);
+            if (errorAction != nil) {
+                 errorAction(error);
+            }
         } else {
             action([self locationsFromJSON:data]);
         }
