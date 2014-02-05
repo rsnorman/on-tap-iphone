@@ -186,7 +186,14 @@ NSManagedObjectContext *managedObjectContext;
     if ([[self.serveTypes objectForKey:@"On Tap"] count] == 0) {
         [self.serveTypeKeys removeObject:@"On Tap"];
     }
-
+    
+    for (NSString *serveType in serveTypeKeys) {
+        NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name"
+                                                                     ascending:YES];
+        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
+        
+        [self.serveTypes setObject:[(NSArray *)[self.serveTypes objectForKey:serveType] sortedArrayUsingDescriptors:sortDescriptors] forKey:serveType];
+    }
 }
 
 

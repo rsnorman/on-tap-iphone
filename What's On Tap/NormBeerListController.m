@@ -91,6 +91,8 @@ User *_currentUser;
             NSLog(@"Create Location Menu");
             [self createLocationMenu];
             NSLog(@"Loading User's Last Location: %@", _currentLocation.name);
+            [self.spinnerView setMessage:[NSString stringWithFormat:@"Fetching menu for\n%@", _currentLocation.name]];
+            [self.spinnerView startAnimating];
             [self startFetchingAvailableMenu];
         } else {
             [self showSelectLocationModal];
