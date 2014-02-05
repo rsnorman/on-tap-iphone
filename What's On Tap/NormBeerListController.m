@@ -54,7 +54,16 @@ User *_currentUser;
     _currentUser = [User current];
     _currentLocation = _currentUser.currentLocation;
     
-    if ([self connectedToNetwork]) {
+    /*
+     Observe the kNetworkReachabilityChangedNotification. When that notification is posted, the method reachabilityChanged will be called.
+     */
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
+    
+    self.internetReachability = [Reachability reachabilityForInternetConnection];
+    [self.internetReachability startNotifier];
+    
+    
+    if ([self connectedToNetwork] || true) {
         if (_currentLocation != nil) {
             NSLog(@"Create Location Menu");
             [self createLocationMenu];
@@ -66,6 +75,26 @@ User *_currentUser;
     } else {
         [self.spinnerView stopAnimating];
         [self.spinnerView setMessage:@"Please connect to the Internet"];
+    }
+}
+
+/*!
+ * Called by Reachability whenever status changes.
+ */
+- (void) reachabilityChanged:(NSNotification *)note
+{
+//    Reachability* curReach = [note object];
+//    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
+    
+    if ([self connectedToNetwork]) {
+        if (_currentLocation != nil) {
+            NSLog(@"Create Location Menu");
+            [self createLocationMenu];
+            NSLog(@"Loading User's Last Location: %@", _currentLocation.name);
+            [self startFetchingAvailableMenu];
+        } else {
+            [self showSelectLocationModal];
+        }
     }
 }
 

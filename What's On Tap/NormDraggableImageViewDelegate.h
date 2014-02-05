@@ -11,6 +11,7 @@
 
 @protocol NormDraggableImageViewDelegate <NSObject>
 
-- (void)imageShouldBeThrownOffScreen:(NormDraggableImageView *)imageView;
+- (void)imageShouldBeDismissed:(NormDraggableImageView *)imageView;
+@property UIView *view;
 
 @end

@@ -10,7 +10,9 @@
 
 @interface NormImageModalController : UIViewController
 
+//@property UIScrollView *scrollView;
 @property UIImage *draggableImage;
+@property BOOL imageZoomedIn;
 
 - (UIImageView *) getPresentedImage;
 

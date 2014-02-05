@@ -39,29 +39,24 @@ NormDraggableImageView *draggableImageView;
     draggableImageView = [[NormDraggableImageView alloc] initWithFrame:CGRectMake((self.view.frame.size.width - width) / 2, (self.view.frame.size.height - height) / 2, width, height)];
     [draggableImageView setBackgroundColor:[UIColor whiteColor]];
     [draggableImageView setImage:self.draggableImage];
-    [self.view setFrame:draggableImageView.frame];
-    
     [draggableImageView setDelegate: self];
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(modalShouldBeDismissed)];
-    
-    singleTap.numberOfTapsRequired = 1;
-    draggableImageView.userInteractionEnabled = YES;
-    [draggableImageView addGestureRecognizer:singleTap];
     
     [self.view addSubview:draggableImageView];
 }
 
+
 - (UIImageView *)getPresentedImage{
     return draggableImageView;
 }
+
 
 - (void)modalShouldBeDismissed
 {
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)imageShouldBeThrownOffScreen:(NormDraggableImageView *)imageView
+- (void)imageShouldBeDismissed:(NormDraggableImageView *)imageView
 {
     [self modalShouldBeDismissed];
 }

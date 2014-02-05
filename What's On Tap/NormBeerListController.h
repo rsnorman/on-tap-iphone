@@ -15,6 +15,7 @@
 #import "NormBeerTableCell.h"
 #import "NormIndicatorView.h"
 #import "constants.h"
+#import "Reachability.h"
 
 // Controller for view the list of all beers on a menu
 @interface NormBeerListController : UIViewController
@@ -47,5 +48,9 @@
 
 // Managed context for saving menu and beers
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
+@property (nonatomic) Reachability *hostReachability;
+@property (nonatomic) Reachability *internetReachability;
+@property (nonatomic) Reachability *wifiReachability;
 
 @end

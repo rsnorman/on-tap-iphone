@@ -23,6 +23,7 @@
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="menus" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Menu" inverseName="location" inverseEntity="Menu" syncable="YES"/>
+        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="currentLocation" inverseEntity="User" syncable="YES"/>
     </entity>
     <entity name="Menu" representedClassName="Menu" syncable="YES">
         <attribute name="createdOn" optional="YES" attributeType="Date" syncable="YES"/>
@@ -33,7 +34,7 @@
     </entity>
     <entity name="User" representedClassName="User" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="currentLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" syncable="YES"/>
+        <relationship name="currentLocation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="user" inverseEntity="Location" syncable="YES"/>
     </entity>
     <elements>
         <element name="Beer" positionX="0" positionY="0" width="0" height="0"/>

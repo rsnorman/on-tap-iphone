@@ -12,5 +12,7 @@
 @interface NormDraggableImageView : UIImageView
 @property CGPoint previousPoint;
 @property NSDate *lastTouchAt;
+@property BOOL zoomedIn;
+@property BOOL aspectRatio;
 @property(nonatomic,assign) id<NormDraggableImageViewDelegate> delegate;
 @end
