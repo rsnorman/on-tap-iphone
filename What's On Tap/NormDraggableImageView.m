@@ -166,6 +166,25 @@
              
          }
                          completion:nil];
+    } else {
+        [UIView animateWithDuration:0.1
+                              delay:0.0
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^
+         {
+             self.frame = CGRectMake(self.frame.origin.x - 10, self.frame.origin.y - 10, self.frame.size.width + 20, self.frame.size.height + 20);
+         }
+                         completion:^(BOOL finished)
+         {
+             [UIView animateWithDuration:0.1
+                                   delay:0.0
+                                 options:UIViewAnimationOptionCurveEaseInOut
+                              animations:^
+              {
+                  self.frame = CGRectMake(self.frame.origin.x + 10, self.frame.origin.y + 10, self.frame.size.width - 20, self.frame.size.height - 20);
+              }
+                              completion:nil];
+         }];
     }
 }
 
