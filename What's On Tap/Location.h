@@ -16,11 +16,13 @@
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSString * address;
 @property (nonatomic, retain) NSString * type;
+@property (nonatomic, retain) NSString * inventory;
+@property (nonatomic, retain) NSString * distanceAway;
 @property (nonatomic, retain) NSString * lID;
 @property (nonatomic, retain) NSSet *menus;
 
 + (NSArray *)fetch;
-+ (void)fetchFromServer:(void (^)(NSArray *))action failedWithError:(void (^)(NSError *))errorAction;
++ (void)fetchFromServerForLat: (float)latitude andLong:(float)longitude success:(void (^)(NSArray *))action failedWithError:(void (^)(NSError *))errorAction;
 + (Location *)findByLocationId:(NSString *)locationId;
 
 @end

@@ -36,7 +36,7 @@
 + (void)refreshForLocation:(NSString *)location success:(void (^)(Menu *menu))action failedWithError:(void (^)(NSError *))errorAction;
 
 // Parses the menu from JSON
-+ (Menu *)menuFromJSON:(NSData *)objectNotation;
++ (Menu *)menuFromJSON:(NSDictionary *)results;
 
 // Gets all beers grouped in their beer style category for a serve type
 - (NSDictionary *)getBeersGroupedByStyleForServeType:(NSString *)serveType;

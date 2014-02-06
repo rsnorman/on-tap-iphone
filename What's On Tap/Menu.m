@@ -69,7 +69,15 @@ NSManagedObjectContext *managedObjectContext;
                 errorAction(error);
             } else {
                 NSLog(@"Grabbed Menu From Server");
-                action([self menuFromJSON:data]);
+                
+                NSError *localError = nil;
+                NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:1 error:&localError];
+                
+                if (localError != nil) {
+                    errorAction(localError);
+                }
+                
+                action([self menuFromJSON:results]);
             }
         }];
     }
@@ -89,20 +97,22 @@ NSManagedObjectContext *managedObjectContext;
             errorAction(error);
         } else {
             NSLog(@"Refreshed Menu from Server");
-            action([self menuFromJSON:data]);
+            
+            NSError *localError = nil;
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:1 error:&localError];
+            
+            if (localError != nil) {
+                errorAction(localError);
+            }
+            
+            action([self menuFromJSON:results]);
         }
     }];
 }
 
-+ (Menu *)menuFromJSON:(NSData *)objectNotation
++ (Menu *)menuFromJSON:(NSDictionary *)results
 {
-    NSError *localError = nil;
-    NSDictionary *results = [NSJSONSerialization JSONObjectWithData:objectNotation options:1 error:&localError];
     
-    if (localError != nil) {
-        //        *error = localError;
-        return nil;
-    }
     
     NSArray *jsonBeers = [results objectForKey:@"beers"];
     
@@ -132,7 +142,16 @@ NSManagedObjectContext *managedObjectContext;
         beer.abv = [beerDic objectForKey:@"abv"];
         beer.breweryLink = [beerDic objectForKey:@"breweryLink"];
         beer.breweryName = [beerDic objectForKey:@"breweryName"];
-        beer.price = [beerDic objectForKey:@"price"];
+        
+        @try
+        {
+            beer.price = [beerDic objectForKey:@"price"];
+        }
+        @catch(NSException* ex)
+        {
+            beer.price = nil;
+        }
+        
         beer.summary = [beerDic objectForKey:@"description"];
         beer.servedIn = [beerDic objectForKey:@"servedIn"];
         beer.serveType = [beerDic objectForKey:@"serveType"];

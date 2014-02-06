@@ -20,10 +20,15 @@
         [self.nameLabel setFont:[UIFont boldSystemFontOfSize:20.0]];
         [self addSubview:self.nameLabel];
         
-        self.addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 20, 250, 45)];
-        [self.addressLabel setTextColor:[UIColor lightGrayColor]];
-        [self.addressLabel setFont:[UIFont systemFontOfSize:15.0]];
-        [self addSubview:self.addressLabel];
+        self.inventoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 250, 35)];
+        [self.inventoryLabel setTextColor:[UIColor lightGrayColor]];
+        [self.inventoryLabel setFont:[UIFont systemFontOfSize:15.0]];
+        [self addSubview:self.inventoryLabel];
+        
+        self.distanceAwayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 45, 250, 35)];
+        [self.distanceAwayLabel setTextColor:[UIColor lightGrayColor]];
+        [self.distanceAwayLabel setFont:[UIFont systemFontOfSize:15.0]];
+        [self addSubview:self.distanceAwayLabel];
         
         [[self contentView] setBackgroundColor:[UIColor clearColor]];
         [[self backgroundView] setBackgroundColor:[UIColor clearColor]];
@@ -36,7 +41,8 @@
 - (void) displayLabel
 {
     [self.nameLabel setText:self.location.name];
-    [self.addressLabel setText: self.location.address];
+    [self.inventoryLabel setText: self.location.inventory];
+    [self.distanceAwayLabel setText: self.location.distanceAway];
     
 }
 

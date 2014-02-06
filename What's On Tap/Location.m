@@ -13,6 +13,8 @@
 @implementation Location
 
 @dynamic name;
+@dynamic inventory;
+@dynamic distanceAway;
 @dynamic address;
 @dynamic type;
 @dynamic lID;
@@ -33,9 +35,10 @@ NSManagedObjectContext *managedObjectContext;
     return [managedObjectContext executeFetchRequest:fetchRequest error:&error];
 }
 
-+ (void)fetchFromServer:(void (^)(NSArray *))action failedWithError:(void (^)(NSError *))errorAction
++ (void)fetchFromServerForLat: (float)latitude andLong:(float)longitude success:(void (^)(NSArray *))action failedWithError:(void (^)(NSError *))errorAction;
 {
-    NSString *urlAsString = @"http://whatisontap.herokuapp.com/locations";
+    NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations?latlong=%f,%f", latitude, longitude];
+//    NSString *urlAsString = [NSString stringWithFormat:@"http://localhost:3000/locations?latlong=%f,%f", latitude, longitude];
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
     
@@ -46,21 +49,23 @@ NSManagedObjectContext *managedObjectContext;
                  errorAction(error);
             }
         } else {
-            action([self locationsFromJSON:data]);
+            
+            NSError *localError = nil;
+            NSArray *results = [NSJSONSerialization JSONObjectWithData:data options:1 error:&localError];
+            
+            if (localError != nil) {
+                if (errorAction != nil) {
+                    errorAction(error);
+                }
+            }
+            
+            action([self locationsFromJSON:results]);
         }
     }];
 }
 
-+ (NSArray *)locationsFromJSON:(NSData *)objectNotation
++ (NSArray *)locationsFromJSON:(NSArray *)results
 {
-    NSError *localError = nil;
-    NSArray *results = [NSJSONSerialization JSONObjectWithData:objectNotation options:1 error:&localError];
-    
-    if (localError != nil) {
-        //        *error = localError;
-        return nil;
-    }
-    
     NSMutableArray *locations = [[NSMutableArray alloc] init];
     NSArray *locationsJSON = results;
     
@@ -72,9 +77,11 @@ NSManagedObjectContext *managedObjectContext;
         location.name = (NSString *)[locationDic objectForKey:@"name"];
         location.address = [locationDic objectForKey:@"address"];
         location.type = [locationDic objectForKey:@"type"];
+        location.inventory = [locationDic objectForKey:@"inventory"];
+        location.distanceAway = [locationDic objectForKey:@"distance_away"];
         
         [locations addObject:location];
-        [managedObjectContext save:nil];
+//        [managedObjectContext save:nil];
     }
     
     return locations;

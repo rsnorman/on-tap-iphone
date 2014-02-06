@@ -19,6 +19,8 @@
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES">
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="distanceAway" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="inventory" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>

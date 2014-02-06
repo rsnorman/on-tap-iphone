@@ -13,7 +13,8 @@
 
 @property NormLocation *location;
 @property UILabel *nameLabel;
-@property UILabel *addressLabel;
+@property UILabel *inventoryLabel;
+@property UILabel *distanceAwayLabel;
 
 - (void) displayLabel;
 @end

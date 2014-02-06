@@ -27,9 +27,13 @@
     return self;
 }
 
-- (void)setPrice:(CGFloat)price
+- (void)setPrice:(float)price
 {
-    [self setText:[NSString stringWithFormat:@"$%g", price]];
+    if (price != 0.0) {
+        [self setText:[NSString stringWithFormat:@"$%g", price]];
+    } else {
+        [self setText:@"?"];
+    }
 }
 
 

@@ -14,8 +14,11 @@
 #import "NormIndicatorView.h"
 #import "NormLocationFinderDelegate.h"
 #import "constants.h"
+#import <CoreLocation/CoreLocation.h>
 
-@interface NormLocationFinderController () <NormModalControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface NormLocationFinderController () <NormModalControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
+
+@property (nonatomic, strong) CLLocationManager *myLocationManager;
 
 @end
 
@@ -75,32 +78,35 @@ NormIndicatorView *_spinner;
     
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
     
-    _locations = [Location fetch];
-    
-    if (_locations.count != 0 && false) {
-        [_spinner setHidden:YES];
-        [_tableView reloadData];
-    } else {
-        for (Location *location in _locations) {
-            NSLog(@"Name: %@", location.name);
-        }
+    if ([CLLocationManager locationServicesEnabled]) {
+        self.myLocationManager = [[CLLocationManager alloc] init];
+        self.myLocationManager.delegate = self;
         
-        [Location fetchFromServer:^(NSArray *locations){
-            [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
-            
-        } failedWithError:^(NSError *error){
-            NSLog(@"There was an error: %@", error);
-            [self performSelectorOnMainThread:@selector(showError) withObject:error waitUntilDone:NO];
-        }];
+        NSLog(@"Start updating location");
+        
+        [self.myLocationManager startUpdatingLocation];
     }
+
 }
+
+//- (void)viewDidAppear:(BOOL)animated
+//{
+//    [super viewDidAppear:animated];
+//    
+//    _locations = [Location fetch];
+//    
+//    if (_locations.count != 0 && false) {
+//        [_spinner setHidden:YES];
+//        [_tableView reloadData];
+//    } else {
+//        for (Location *location in _locations) {
+//            NSLog(@"Name: %@", location.name);
+//        }
+//        
+//        
+//    }
+//}
 
 - (void) showError
 {
@@ -169,7 +175,25 @@ NormIndicatorView *_spinner;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    return 75;
+}
+
+- (void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
+{
+    NSLog(@"Latitude = %f", newLocation.coordinate.latitude);
+    NSLog(@"Latitude = %f", newLocation.coordinate.longitude);
+    
+    [self.myLocationManager stopUpdatingLocation];
+    
+    [Location fetchFromServerForLat: newLocation.coordinate.latitude andLong: newLocation.coordinate.longitude success:^(NSArray *locations){
+        
+        NSLog(@"locations found");
+        [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
+        
+    } failedWithError:^(NSError *error){
+        NSLog(@"There was an error: %@", error);
+        [self performSelectorOnMainThread:@selector(showError) withObject:error waitUntilDone:NO];
+    }];
 }
 
 @end
