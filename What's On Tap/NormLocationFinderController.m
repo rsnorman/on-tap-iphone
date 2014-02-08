@@ -42,10 +42,10 @@ NormIndicatorView *_spinner;
         
         _locations = [[NSMutableArray alloc] init];
 
-        _spinner = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 125)];
+        _spinner = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
         _spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
         [_spinner startAnimating];
-        [_spinner setMessage:@"Fetching nearby locations"];
+        [_spinner setMessage:@"Grabbing nearby locations"];
         [_spinner.spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
         [_spinner.spinner setBackgroundColor:[UIColor clearColor]];
         [_spinner.messageLabel setTextColor:[UIColor whiteColor]];
@@ -79,12 +79,22 @@ NormIndicatorView *_spinner;
     if ([CLLocationManager locationServicesEnabled]) {
         self.myLocationManager = [[CLLocationManager alloc] init];
         self.myLocationManager.delegate = self;
-        
-        NSLog(@"Start updating location");
-        
         [self.myLocationManager startUpdatingLocation];
+    } else {
+        [_spinner stopAnimating];
+        [_spinner setMessage:@"Please turn on location services in Settings"];
+        [_tableView setHidden:YES];
     }
 
+}
+
+- (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
+{
+    if (status == kCLAuthorizationStatusDenied) {
+        [_spinner stopAnimating];
+        [_spinner setMessage:@"Please turn on location services in Settings"];
+        [_tableView setHidden:YES];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -115,7 +125,6 @@ NormIndicatorView *_spinner;
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     CGContextSaveGState(context);
-    CGContextClip(context);
     
     CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
     CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
@@ -145,48 +154,16 @@ NormIndicatorView *_spinner;
     [self.view addSubview:titleLabel];
 }
 
-- (void) drawGradient:(CGRect)rect
-{
-    // Create a gradient from white to red
-    CGFloat colors [] = {
-        1.0, 1.0, 1.0, 1.0,
-        1.0, 0.0, 0.0, 1.0
-    };
-    
-    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
-    CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
-    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
-    
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    CGContextSaveGState(context);
-    CGContextAddEllipseInRect(context, rect);
-    CGContextClip(context);
-    
-    CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
-    CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
-    
-    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
-    CGGradientRelease(gradient), gradient = NULL;
-    
-    CGContextRestoreGState(context);
-    
-    CGContextAddEllipseInRect(context, rect);
-    CGContextDrawPath(context, kCGPathStroke);
-}
-
 
 - (void) showError
 {
-    NSLog(@"Show Error");
     [_spinner stopAnimating];
-    [_spinner setMessage:@"There was an error fetching locations"];
+    [_spinner setMessage:@"There was a problem finding nearby locations.\nAre you in a dry county?"];
     [_tableView setHidden:YES];
 }
 
 - (void) loadLocations:(NSArray *)locations
 {
-    
     _locations = locations;
     
     if (_locations.count > 0) {
@@ -196,11 +173,9 @@ NormIndicatorView *_spinner;
         [_tableView reloadData];
         
         [self performSelector:@selector(setDelayCellDisplay:) withObject:NO afterDelay:1.0];
-        
-        NSLog(@"Found Locations");
     } else {
         [_spinner stopAnimating];
-        [_spinner setMessage:@"No locations could be found"];
+        [_spinner setMessage:@"Couldn't find any nearby locations.\nAre you in a dry county?"];
         [_tableView setHidden:YES];
     }
 }
@@ -214,6 +189,7 @@ NormIndicatorView *_spinner;
 - (void)modalShouldBeDismissed
 {
     
+    // Slide out table view before dismissing modal controller
     _tableView.layer.opacity = 1.0;
     [UIView animateWithDuration:0.3
                           delay:0.0
@@ -225,7 +201,10 @@ NormIndicatorView *_spinner;
      }
                      completion:^(BOOL finished) {
                          [[self presentingViewController] dismissViewControllerAnimated:YES completion:^() {
-                             [self.delegate setLocation:self.selectedLocation];
+                             NSLog(@"Set Location: %@", self.selectedLocation.lID);
+                             if (self.selectedLocation != nil) {
+                                 [self.delegate setLocation:self.selectedLocation];
+                             }
                          }];
                      }];
     
@@ -263,13 +242,11 @@ NormIndicatorView *_spinner;
 -(void)tableView:(UITableView *)tableView willDisplayCell:(NormLocationCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSLog(@"Display Cell: %d", self.displayCount);
+    // Only slide in cells one time to keep cool animation from becoming annoying
     if (self.displayCount > indexPath.row) {
         return;
     }
-    
-//    NSLog(@"Translate: %@", cell.layer.transform);
-    
+ 
     self.displayCount = self.displayCount + 1;
     
     NSTimeInterval delay;
@@ -294,8 +271,6 @@ NormIndicatorView *_spinner;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-//    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
-    
     self.selectedLocation = [_locations objectAtIndex:indexPath.row];
     
     [self modalShouldBeDismissed];
@@ -308,20 +283,15 @@ NormIndicatorView *_spinner;
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
-    NSLog(@"Latitude = %f", newLocation.coordinate.latitude);
-    NSLog(@"Latitude = %f", newLocation.coordinate.longitude);
-    
     [self.myLocationManager stopUpdatingLocation]; 
     
     if (!self.isUpdatingLocations) {
         self.isUpdatingLocations = YES;
         [Location fetchFromServerForLat: newLocation.coordinate.latitude andLong: newLocation.coordinate.longitude success:^(NSArray *locations){
             
-            NSLog(@"locations found");
             [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
             
         } failedWithError:^(NSError *error){
-            NSLog(@"There was an error: %@", error);
             [self performSelectorOnMainThread:@selector(showError) withObject:error waitUntilDone:NO];
         }];
     }

@@ -22,7 +22,6 @@
 
 @synthesize serveTypeKeys;
 @synthesize serveTypes;
-@synthesize filter;
 
 NSMutableDictionary *beerStyles;
 NSMutableDictionary *groupedBeers;
@@ -59,8 +58,10 @@ NSManagedObjectContext *managedObjectContext;
         NSLog(@"Grabbed Menu From DB, created on: %@", menu.createdOn);
         action(menu);
     } else {
-//        NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
-        NSString *urlAsString = @"http://whatisontap.herokuapp.com/locations/11580/menus/today";
+        NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
+        
+        // Local brewery
+//        NSString *urlAsString = @"http://whatisontap.herokuapp.com/locations/11580/menus/today";
         
         NSURL *url = [[NSURL alloc] initWithString:urlAsString];
         NSLog(@"Grab From: %@", urlAsString);
@@ -69,14 +70,16 @@ NSManagedObjectContext *managedObjectContext;
             
             if (error) {
                 errorAction(error);
-            } else {
-                NSLog(@"Grabbed Menu From Server");
-                
+            } else {                
                 NSError *localError = nil;
                 NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:1 error:&localError];
                 
+                NSLog(@"%@", results);
+                
                 if (localError != nil) {
                     errorAction(localError);
+                    
+                    return;
                 }
                 
                 action([self menuFromJSON:results]);
@@ -99,13 +102,13 @@ NSManagedObjectContext *managedObjectContext;
         if (error) {
             errorAction(error);
         } else {
-            NSLog(@"Refreshed Menu from Server");
-            
             NSError *localError = nil;
             NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:1 error:&localError];
             
             if (localError != nil) {
                 errorAction(localError);
+                
+                return;
             }
             
             action([self menuFromJSON:results]);
@@ -125,10 +128,6 @@ NSManagedObjectContext *managedObjectContext;
     menu.mID = [results objectForKey:@"_id"];
     menu.locationId = (NSString *)[results objectForKey:@"locationId"];
     menu.location = [Location findByLocationId:menu.locationId];
-    
-//    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-//    [dateFormatter setDateFormat:@"E MMM dd yy"];
-//    NSDate *dateFromString = [dateFormatter dateFromString:[results objectForKey:@"createdOn"]];
     
     menu.createdOn = [NSDate date];
     [managedObjectContext save:nil];
@@ -166,8 +165,8 @@ NSManagedObjectContext *managedObjectContext;
         if (beer.style.length == 0) {
             beer.style = @"Special";
         }
-//
-        // Add special category is none found
+
+        // Add special category if none found
         if (beer.styleCategory.length == 0) {
             beer.styleCategory = @"Special";
         }
@@ -186,7 +185,6 @@ NSManagedObjectContext *managedObjectContext;
 {
     self.serveTypeKeys = [[NSMutableArray alloc] init];
     self.serveTypes = [[NSMutableDictionary alloc] init];
-    self.filter = @"";
     
     beerStyles = [[NSMutableDictionary alloc] init];
     groupedBeers = [[NSMutableDictionary alloc] init];
@@ -223,31 +221,25 @@ NSManagedObjectContext *managedObjectContext;
 {
     NSMutableDictionary *groupedBeersForServeType;
     
-    if ([groupedBeers objectForKey:serveType] == nil || self.filter.length > 0) {
+    if ([groupedBeers objectForKey:serveType] == nil) {
         groupedBeersForServeType = [[NSMutableDictionary alloc] init];
         
         NSArray *serveTypeBeers = [self.serveTypes objectForKey:serveType];
         
         for (NormBeer* beer in serveTypeBeers)
         {
-            if (self.filter.length == 0 || [beer.name rangeOfString:self.filter options:NSCaseInsensitiveSearch].location != NSNotFound ) {
-                if ([groupedBeersForServeType objectForKey:beer.styleCategory] == nil) {
-                    [groupedBeersForServeType setObject:[[NSMutableArray alloc] init] forKey:beer.styleCategory];
-                }
-                
-                [[groupedBeersForServeType objectForKey:beer.styleCategory] addObject:beer];
+            if ([groupedBeersForServeType objectForKey:beer.styleCategory] == nil) {
+                [groupedBeersForServeType setObject:[[NSMutableArray alloc] init] forKey:beer.styleCategory];
             }
             
+            [[groupedBeersForServeType objectForKey:beer.styleCategory] addObject:beer];
         }
         
-        if (self.filter.length == 0) {
-            [groupedBeers setObject:groupedBeersForServeType forKey:serveType];
-        }
+        [groupedBeers setObject:groupedBeersForServeType forKey:serveType];
         
     } else {
         groupedBeersForServeType = [groupedBeers objectForKey:serveType];
     }
-    
     
     return groupedBeersForServeType;
 }
@@ -256,40 +248,25 @@ NSManagedObjectContext *managedObjectContext;
 {
     NSArray *orderedBeerStyles;
     
-    if ([beerStyles objectForKey:serveType] == nil || self.filter.length > 0) {
+    if ([beerStyles objectForKey:serveType] == nil) {
         NSMutableArray * unOrderedStyleKeys = [[NSMutableArray alloc] init];
         
         for (NormBeer* beer in [self.serveTypes objectForKey:serveType])
         {
-            if (self.filter == nil || self.filter.length == 0 || [beer.name rangeOfString:self.filter options:NSCaseInsensitiveSearch].location != NSNotFound ) {
-                if (![unOrderedStyleKeys containsObject:beer.styleCategory]){
-                    [unOrderedStyleKeys addObject:beer.styleCategory];
-                }
+            if (![unOrderedStyleKeys containsObject:beer.styleCategory]){
+                [unOrderedStyleKeys addObject:beer.styleCategory];
             }
             
         }
         
         orderedBeerStyles = [unOrderedStyleKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
         
-        if (self.filter.length == 0) {
-            [beerStyles setObject:orderedBeerStyles forKey:serveType];
-        }
-        
+        [beerStyles setObject:orderedBeerStyles forKey:serveType];
     } else {
         orderedBeerStyles = [beerStyles objectForKey:serveType];
     }
     
     return orderedBeerStyles;
-}
-
-- (void)applyFilter:(NSString *)_filter
-{
-    self.filter = _filter;
-}
-
-- (void)removeFilter
-{
-    self.filter = nil;
 }
 
 @end

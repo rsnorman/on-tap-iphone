@@ -20,11 +20,11 @@
         [self.spinner setCenter: CGPointMake(frame.size.width / 2, frame.size.height / 2)];
         [self addSubview:self.spinner];
         
-        self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 50)];
+        self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, frame.size.width, 90)];
         [self.messageLabel setText:@"Loading…"];
         [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
         [self.messageLabel setFont:[UIFont systemFontOfSize:14.0f]];
-        [self.messageLabel setNumberOfLines:2];
+        [self.messageLabel setNumberOfLines:4];
         [self addSubview:self.messageLabel];
     }
     return self;

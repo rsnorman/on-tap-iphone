@@ -20,9 +20,6 @@
 @property (nonatomic, retain) NSSet *beers;
 @property (nonatomic, retain) Location *location;
 
-// Filter string for searching menu
-@property NSString *filter;
-
 // Holds all the beers grouped by serve types
 @property NSMutableDictionary *serveTypes;
 
@@ -43,12 +40,6 @@
 
 // Gets all the style categories of beer for serve type
 - (NSArray *)getBeerStylesForServeType:(NSString *)serveType;
-
-// Adds a filter to the menu
-- (void)applyFilter:(NSString *)filter;
-
-// Removes the filter from the menu
-- (void)removeFilter;
 @end
 
 @interface Menu (CoreDataGeneratedAccessors)

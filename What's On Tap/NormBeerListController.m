@@ -64,17 +64,22 @@ User *_currentUser;
     self.internetReachability = [Reachability reachabilityForInternetConnection];
     [self.internetReachability startNotifier];
     
-    
-    if ([self connectedToNetwork] || true) {
+    // Check to make sure there is a internet connection
+    if ([self connectedToNetwork]) {
+        
+        // Load users last location
         if (_currentLocation != nil) {
-            NSLog(@"Create Location Menu");
             [self createLocationMenu];
-            NSLog(@"Loading User's Last Location: %@", _currentLocation.name);
+            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
             [self startFetchingAvailableMenu];
-        } else {
+        }
+        // Allow user to select a location nearby
+        else {
             [self showSelectLocationModal];
         }
-    } else {
+    }
+    // Let user know they need to connect to the internet
+    else {
         [self.spinnerView stopAnimating];
         [self.spinnerView setMessage:@"Please connect to the Internet"];
     }
@@ -85,15 +90,10 @@ User *_currentUser;
  */
 - (void) reachabilityChanged:(NSNotification *)note
 {
-//    Reachability* curReach = [note object];
-//    NSParameterAssert([curReach isKindOfClass:[Reachability class]]);
-    
     if ([self connectedToNetwork]) {
         if (_currentLocation != nil) {
-            NSLog(@"Create Location Menu");
             [self createLocationMenu];
-            NSLog(@"Loading User's Last Location: %@", _currentLocation.name);
-            [self.spinnerView setMessage:[NSString stringWithFormat:@"Fetching menu for\n%@", _currentLocation.name]];
+            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
             [self.spinnerView startAnimating];
             [self startFetchingAvailableMenu];
         } else {
@@ -116,7 +116,7 @@ User *_currentUser;
 
 - (void) setLocation:(Location *)location
 {
-    if (_currentLocation.lID != location.lID) {
+    if (![_currentLocation.lID isEqualToString: location.lID]) {
         
         if (_currentLocation != nil) {
             self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height + 1);
@@ -130,10 +130,7 @@ User *_currentUser;
              {
                  self.tableView.frame = CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height);
              }
-                             completion:^(BOOL finished)
-             {
-
-             }];
+                             completion:nil];
             
             [UIView animateWithDuration:0.5
                                   delay:0.5
@@ -154,10 +151,12 @@ User *_currentUser;
         [_currentUser setCurrentLocation:location];
         [_currentUser save];
         
-        NSLog(@"Create Location Menu");
         [self createLocationMenu];
         
-        [self.spinnerView setMessage:[NSString stringWithFormat:@"Fetching menu for\n%@", _currentLocation.name]];
+        if (_currentLocation != nil) {
+            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
+        }
+        
         [self performSelector:@selector(startFetchingAvailableMenu) withObject:nil afterDelay:1.0];
     }
 }
@@ -175,10 +174,7 @@ User *_currentUser;
      {
          self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
      }
-                     completion:^(BOOL finished)
-     {
-         //         self.isAnimating = NO;
-     }];
+                     completion:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -189,21 +185,27 @@ User *_currentUser;
 
 - (void)startFetchingAvailableMenu
 {
-    NSLog(@"Start fetching menu");
+    if (_currentLocation == nil) {
+        [self showErrorWithMessage:@"Select a location from the menu"];
+        return;
+    }
     // Fetch beers from server
-    
     [Menu fetchForLocation:_currentLocation.lID success: ^(Menu *beerMenu) {
         self.beerMenu = beerMenu;
         
         if (self.currentServeType == nil){
-            self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];          
+            self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
             [self performSelectorOnMainThread:@selector(setMenuButton) withObject:nil waitUntilDone:NO];
         }
         
+        self.currentBeerStyles = [self.beerMenu getBeerStylesForServeType:self.currentServeType];
+        self.currentBeersGroupedByStyle = [self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType];
+        
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
     } failedWithError:^(NSError *error) {
-        NSLog(@"There was an error grabbing the new menu");
-        [self performSelectorOnMainThread:@selector(showErrorWithMessage:) withObject:@"There was an error fetching the menu" waitUntilDone:NO];
+        
+       NSString *errorMessage = [NSString stringWithFormat: @"Sorry, there was a problem grabbing the menu for \n%@. \nKegs must be tapped.", _currentLocation.name];
+        [self performSelectorOnMainThread:@selector(showErrorWithMessage:) withObject: errorMessage waitUntilDone:NO];
     }];
 }
 
@@ -215,7 +217,6 @@ User *_currentUser;
 
 - (void)refreshMenu
 {
-    NSLog(@"Start updating menu");
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Updating Menu..."];
     
     // Fetch beers from server
@@ -227,10 +228,11 @@ User *_currentUser;
             [self performSelectorOnMainThread:@selector(setMenuButton) withObject:nil waitUntilDone:NO];
         }
         
+        self.currentBeerStyles = [self.beerMenu getBeerStylesForServeType:self.currentServeType];
+        self.currentBeersGroupedByStyle = [self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType];
+        
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
     } failedWithError:^(NSError *error) {
-        NSLog(@"Failed refreshing menu");
-        
         [self performSelectorOnMainThread:@selector(showErrorRefresh) withObject:nil waitUntilDone:NO];
     }];
 }
@@ -261,10 +263,7 @@ User *_currentUser;
      {
          self.tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
      }
-                     completion:^(BOOL finished)
-     {
-         //         self.isAnimating = NO;
-     }];
+                     completion:nil];
 }
 
 
@@ -421,6 +420,8 @@ User *_currentUser;
                                                                  
                                                                  if (![weakSelf.currentServeType isEqualToString:item.title]){
                                                                      weakSelf.currentServeType = item.title;
+                                                                     weakSelf.currentBeerStyles = [weakSelf.beerMenu getBeerStylesForServeType:weakSelf.currentServeType];
+                                                                     weakSelf.currentBeersGroupedByStyle = [weakSelf.beerMenu getBeersGroupedByStyleForServeType:weakSelf.currentServeType];
                                                                      
                                                                      [weakSelf setMenuButton];
                                                                      
@@ -430,7 +431,7 @@ User *_currentUser;
                                                              }];
         
         
-        NSArray *beers = [self.beerMenu.serveTypes objectForKey:serveType];
+        NSDictionary *beers = [self.beerMenu.serveTypes objectForKey:serveType];
         [menuItem setBadge:[NSString stringWithFormat:@"%lu", (unsigned long)beers.count]];
 
         [menuItems addObject:menuItem];
@@ -444,7 +445,10 @@ User *_currentUser;
                                                       }];
     
     
-    [locationMenuItem setSubtitle:_currentLocation.name];
+    if (_currentLocation != nil) {
+        [locationMenuItem setSubtitle:_currentLocation.name];
+    }
+
     [menuItems addObject:locationMenuItem];
     
     [self.menu setItems:menuItems];
@@ -464,12 +468,14 @@ User *_currentUser;
                                                               }];
     
     
-    [locationMenuItem setSubtitle:_currentLocation.name];
+    if (_currentLocation != nil) {
+        [locationMenuItem setSubtitle:_currentLocation.name];
+    }
+    
     [menuItems addObject:locationMenuItem];
     
     [self.menu setItems:menuItems];
 }
-
 
 
 - (void)setMenuButton
@@ -506,18 +512,16 @@ User *_currentUser;
 }
 
 
-
 // Table View Delegate
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return [self.beerMenu getBeerStylesForServeType:self.currentServeType].count;
+    return self.currentBeerStyles.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] valueForKey:[[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:section]] count];
+    return [[self.currentBeersGroupedByStyle valueForKey:[self.currentBeerStyles objectAtIndex:section]] count];
 }
 
 
@@ -526,17 +530,18 @@ User *_currentUser;
     static NSString *normTableCellIdentifier = @"NormBeerTableCell";
     
     NormBeerTableCell *cell = (NormBeerTableCell *)[tableView dequeueReusableCellWithIdentifier:normTableCellIdentifier];
+    NSString *beerStyle;
+    Beer *beer;
+        
     if (cell == nil)
     {
         cell = [[NormBeerTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:normTableCellIdentifier];
     }
     
-    NSInteger sectionIndex = indexPath.section;
-    NSArray *currentBeerStyles = [self.beerMenu getBeerStylesForServeType:self.currentServeType];
+    beerStyle = [self.currentBeerStyles objectAtIndex:indexPath.section];
+    beer = [[self.currentBeersGroupedByStyle objectForKey: beerStyle] objectAtIndex:indexPath.row];
+    [cell setBeer:beer];
     
-    NSArray *beerStyles = [currentBeerStyles objectAtIndex:sectionIndex];
-    
-    [cell setBeer:[[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: beerStyles] objectAtIndex:indexPath.row]];
     return cell;
 }
 
@@ -548,7 +553,9 @@ User *_currentUser;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    Beer *beer = [[[self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType] objectForKey: [[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:indexPath.section]] objectAtIndex:indexPath.row];
+    NSString *beerStyle = [self.currentBeerStyles objectAtIndex:indexPath.section];
+    
+    Beer *beer = [[self.currentBeersGroupedByStyle objectForKey: beerStyle] objectAtIndex:indexPath.row];
     
     NormBeerViewController *nbvc = [[NormBeerViewController alloc] init];
     [nbvc setBeer:beer];
@@ -575,7 +582,7 @@ User *_currentUser;
     headerLabel.frame = CGRectMake(5.0, 0.0, 300.0, 35.0);
 
     
-    headerLabel.text = [[self.beerMenu getBeerStylesForServeType:self.currentServeType] objectAtIndex:section];
+    headerLabel.text = [self.currentBeerStyles objectAtIndex:section];
     [customView addSubview:headerLabel];
     
     UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 0.5)];
@@ -603,13 +610,37 @@ User *_currentUser;
 // Applies a filter to the menu and reloads the table
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
-    [self.beerMenu applyFilter:searchString];
+    
+    if (searchString.length > 0) {
+        NSMutableDictionary *filteredBeersGroupedByStyle = [[NSMutableDictionary alloc] init];
+        for (NSString *style in self.currentBeerStyles)
+        {
+            NSMutableArray * matchingBeers = [[NSMutableArray alloc] init];
+            for (Beer *beer in [self.currentBeersGroupedByStyle objectForKey:style]) {
+            
+                if ([beer.name rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound ) {
+                    [matchingBeers addObject:beer];
+                }
+            }
+            
+            if (matchingBeers.count > 0) {
+                [filteredBeersGroupedByStyle setValue:matchingBeers forKey:style];
+            }
+        }
+        self.currentBeersGroupedByStyle = filteredBeersGroupedByStyle;
+        self.currentBeerStyles = [self.currentBeersGroupedByStyle allKeys];
+    } else {
+        self.currentBeerStyles = [self.beerMenu getBeerStylesForServeType:self.currentServeType];
+        self.currentBeersGroupedByStyle = [self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType];
+    }
+    
     return YES;
 }
 
 //  Removes the filter from the menu
-- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
-    [self.beerMenu removeFilter];
+- (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller{
+    self.currentBeerStyles = [self.beerMenu getBeerStylesForServeType:self.currentServeType];
+    self.currentBeersGroupedByStyle = [self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType];
 }
 
 // Sets the cell height for the search results
@@ -638,13 +669,5 @@ User *_currentUser;
     }
     return isInternet;
 }
-
-//- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(NormBeerTableCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-//{
-//    if ([tableView.indexPathsForVisibleRows indexOfObject:indexPath] == NSNotFound)
-//    {
-//        cell.imageView.stopDisplayDownloadedImage = YES;
-//    }
-//}
 
 @end

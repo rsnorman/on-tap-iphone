@@ -26,6 +26,9 @@
 // Current serve type that is being displayed
 @property NSString *currentServeType;
 
+@property NSArray *currentBeerStyles;
+@property NSDictionary *currentBeersGroupedByStyle;
+
 // Table view that has the menu beers as a data source
 @property (nonatomic) UITableView *tableView;
 

@@ -63,7 +63,6 @@ NSManagedObjectContext *managedObjectContext;
                 return;
             }
             
-            NSLog(@"Call Action");
             action([self locationsFromJSON:results]);
         }
     }];
