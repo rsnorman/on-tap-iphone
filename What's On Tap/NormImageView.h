@@ -17,6 +17,8 @@
 // The max aspect ratio allowed for scaling the image to fit completely in the view
 // Once max is passed content mode UIViewContentModeScaleToFill is used
 @property float scaleToFillAspectRatioMax;
+@property NSString *URL;
+@property UIImage *defaultImage;
 
 // Sets the URL for this image view while supplying a default image to use while image is downloaded or
 // if image cannot be found

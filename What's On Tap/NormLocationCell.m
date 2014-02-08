@@ -7,6 +7,7 @@
 //
 
 #import "NormLocationCell.h"
+#import "QuartzCore/CALayer.h"
 
 @implementation NormLocationCell
 
@@ -14,18 +15,18 @@
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     
-    if (self) {
-        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 250, 45)];
+    if (self) {     
+        self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 0, self.frame.size.width - 30, 45)];
         [self.nameLabel setTextColor:[UIColor whiteColor]];
         [self.nameLabel setFont:[UIFont boldSystemFontOfSize:20.0]];
         [self addSubview:self.nameLabel];
         
-        self.inventoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 25, 250, 35)];
+        self.inventoryLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 25, self.frame.size.width - 30, 35)];
         [self.inventoryLabel setTextColor:[UIColor lightGrayColor]];
         [self.inventoryLabel setFont:[UIFont systemFontOfSize:15.0]];
         [self addSubview:self.inventoryLabel];
         
-        self.distanceAwayLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 45, 250, 35)];
+        self.distanceAwayLabel = [[UILabel alloc] initWithFrame:CGRectMake(15, 45, self.frame.size.width - 30, 35)];
         [self.distanceAwayLabel setTextColor:[UIColor lightGrayColor]];
         [self.distanceAwayLabel setFont:[UIFont systemFontOfSize:15.0]];
         [self addSubview:self.distanceAwayLabel];

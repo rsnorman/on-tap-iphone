@@ -91,6 +91,8 @@ UIView *borderView;
     
     [self.animationView addSubview:self.toVC.view];
     [self.animationView addSubview:borderView];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void) addShowAnimations
@@ -133,6 +135,8 @@ UIView *borderView;
     [borderView addSubview:bgBlurredImageView];
     
     [self.animationView addSubview:borderView];
+    
+    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
 - (void) addHideAnimations
@@ -145,7 +149,7 @@ UIView *borderView;
 
 - (void) didAnimateHideTransition
 {
-    
+
 }
 
 @end

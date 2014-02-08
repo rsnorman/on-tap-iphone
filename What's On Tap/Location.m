@@ -39,6 +39,8 @@ NSManagedObjectContext *managedObjectContext;
 {
     NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations?latlong=%f,%f", latitude, longitude];
 //    NSString *urlAsString = [NSString stringWithFormat:@"http://localhost:3000/locations?latlong=%f,%f", latitude, longitude];
+//    NSString *urlAsString = @"http://localhost:3000/locations?latlong=43.613426,-84.231544";
+    
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
     NSLog(@"%@", urlAsString);
     
@@ -57,8 +59,11 @@ NSManagedObjectContext *managedObjectContext;
                 if (errorAction != nil) {
                     errorAction(error);
                 }
+                
+                return;
             }
             
+            NSLog(@"Call Action");
             action([self locationsFromJSON:results]);
         }
     }];
@@ -82,6 +87,8 @@ NSManagedObjectContext *managedObjectContext;
         
         [locations addObject:location];
 //        [managedObjectContext save:nil];
+        
+        [managedObjectContext obtainPermanentIDsForObjects:[[managedObjectContext insertedObjects] allObjects] error:nil];
     }
     
     return locations;

@@ -38,6 +38,8 @@ User *_currentUser;
 {
     [super viewDidLoad];
     
+    [self setNeedsStatusBarAppearanceUpdate];
+    
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     self.managedObjectContext = [appDelegate managedObjectContext];
     
@@ -122,7 +124,7 @@ User *_currentUser;
             [self.spinnerView setHidden:NO];
             
             [UIView animateWithDuration:0.3
-                                  delay:0.2
+                                  delay:0.0
                                 options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                              animations:^
              {
@@ -142,10 +144,7 @@ User *_currentUser;
              {
                  self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
              }
-                             completion:^(BOOL finished)
-             {
-                 //         self.isAnimating = NO;
-             }];
+                             completion:nil];
             
         }
         
@@ -532,7 +531,7 @@ User *_currentUser;
         cell = [[NormBeerTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:normTableCellIdentifier];
     }
     
-    int sectionIndex = indexPath.section;
+    NSInteger sectionIndex = indexPath.section;
     NSArray *currentBeerStyles = [self.beerMenu getBeerStylesForServeType:self.currentServeType];
     
     NSArray *beerStyles = [currentBeerStyles objectAtIndex:sectionIndex];

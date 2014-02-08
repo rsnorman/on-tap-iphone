@@ -59,7 +59,9 @@ NSManagedObjectContext *managedObjectContext;
         NSLog(@"Grabbed Menu From DB, created on: %@", menu.createdOn);
         action(menu);
     } else {
-        NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
+//        NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
+        NSString *urlAsString = @"http://whatisontap.herokuapp.com/locations/11580/menus/today";
+        
         NSURL *url = [[NSURL alloc] initWithString:urlAsString];
         NSLog(@"Grab From: %@", urlAsString);
         
@@ -87,6 +89,7 @@ NSManagedObjectContext *managedObjectContext;
 {
     NSString *urlAsString;
     urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today?refresh=true", location];
+    
     
     NSURL *url = [[NSURL alloc] initWithString:urlAsString];
     NSLog(@"%@", urlAsString);

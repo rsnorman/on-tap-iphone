@@ -35,9 +35,12 @@
 
 - (void)setURLForImage:(NSString *)URL defaultImage:(UIImage *)defaultImage
 {
-    if (URL.length != 0){
+    self.URL = URL;
+    self.defaultImage = defaultImage;
+    
+    if (self.URL.length != 0){
         
-        UIImage *image = [NormImageCache imageForKey:URL];
+        UIImage *image = [NormImageCache imageForKey:self.URL];
         
         if (image) {
             self.image = image;
@@ -52,9 +55,9 @@
             self.image = defaultImage;
             
             // get the UIImage
-            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:URL]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+            [NSURLConnection sendAsynchronousRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:self.URL]] queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                 
-                if (error == nil) {
+                if ([response.URL.absoluteString isEqualToString:self.URL] && error == nil) {
                     self.image = [UIImage imageWithData:data];
                     
                     if (image.size.height / image.size.width > _MAX_IMAGE_RATIO) {
@@ -63,12 +66,14 @@
                         [self setContentMode:UIViewContentModeScaleToFill];
                     }
                     
-                    [NormImageCache setImage:self.image forKey:URL];
+                    [NormImageCache setImage:self.image forKey:self.URL];
+                } else {
+                    NSLog(@"Error: %@", error);
                 }
             }];
         }
     } else {
-        self.image = defaultImage;
+        self.image = self.defaultImage;
     }
 }
 

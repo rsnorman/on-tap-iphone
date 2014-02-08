@@ -8,17 +8,19 @@
 
 #import "NormLocationFinderController.h"
 #import "NormModalControllerDelegate.h"
-#import "Location.h"
 #import "User.h"
 #import "NormLocationCell.h"
 #import "NormIndicatorView.h"
 #import "NormLocationFinderDelegate.h"
+#import "NormViewSnapshot.h"
 #import "constants.h"
 #import <CoreLocation/CoreLocation.h>
+#import <UIKit/UIKit.h>
 
 @interface NormLocationFinderController () <NormModalControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
 @property (nonatomic, strong) CLLocationManager *myLocationManager;
+
 
 @end
 
@@ -35,15 +37,10 @@ NormIndicatorView *_spinner;
     self = [super init];
     
     if (self) {
+        self.displayCount = 0;
+        self.isUpdatingLocations = NO;
+        
         _locations = [[NSMutableArray alloc] init];
-        
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 40, self.view.frame.size.width, 35)];
-        [titleLabel setFont:[UIFont fontWithName:_SECONDARY_FONT size:22.0f]];
-        [titleLabel setText:@"Select Location"];
-        [titleLabel setTextColor:[UIColor whiteColor]];
-        [titleLabel setTextAlignment:NSTextAlignmentCenter];
-        
-        [self.view addSubview:titleLabel];
 
         _spinner = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 125)];
         _spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
@@ -57,12 +54,12 @@ NormIndicatorView *_spinner;
         UITableViewController *tableViewController = [[UITableViewController alloc]init];
         [self addChildViewController:tableViewController];
         
-        _tableView = [[UITableView alloc] initWithFrame:CGRectMake(25, 100, 270, self.view.frame.size.height - self.navigationController.navigationBar.frame.size.height - 100)];
+        _tableView = [[UITableView alloc] initWithFrame:self.view.frame];
         _tableView.dataSource = self;
         _tableView.delegate = self;
         _tableView.backgroundColor = [UIColor clearColor];
         _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        
+        [_tableView setContentInset:UIEdgeInsetsMake(50,0,0,0)];
         
         tableViewController.tableView = _tableView;
         [self.view addSubview:_tableView];
@@ -90,26 +87,98 @@ NormIndicatorView *_spinner;
 
 }
 
-//- (void)viewDidAppear:(BOOL)animated
-//{
-//    [super viewDidAppear:animated];
-//    
-//    _locations = [Location fetch];
-//    
-//    if (_locations.count != 0 && false) {
-//        [_spinner setHidden:YES];
-//        [_tableView reloadData];
-//    } else {
-//        for (Location *location in _locations) {
-//            NSLog(@"Name: %@", location.name);
-//        }
-//        
-//        
-//    }
-//}
+- (void)viewDidAppear:(BOOL)animated
+{
+    
+    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, 65);
+    UIImageView *bgHeaderImageView = [[UIImageView alloc] initWithFrame:frame];
+    UIImageView *bgFooterImageView = [[UIImageView alloc] initWithFrame:CGRectOffset(frame, 0, self.view.frame.size.height - 65)];
+    
+    [self.view addSubview:bgHeaderImageView];
+    [self.view addSubview:bgFooterImageView];
+    
+    
+    CGRect rect = frame;
+    
+    // Create a gradient from white to red
+    CGFloat colors [] = {
+        0.0, 0.0, 0.0, 1.0,
+        0.0, 0.0, 0.0, 0.0
+    };
+    
+    UIGraphicsBeginImageContext(frame.size);
+    
+    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
+    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSaveGState(context);
+    CGContextClip(context);
+    
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
+    CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
+    
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    CGGradientRelease(gradient), gradient = NULL;
+    
+    CGContextRestoreGState(context);
+    
+    CGImageRef imgRef = CGBitmapContextCreateImage(context);
+    UIImage* img = [UIImage imageWithCGImage:imgRef];
+    CGImageRelease(imgRef);
+    CGContextRelease(context);
+    
+    
+    [bgHeaderImageView setImage:img];
+    UIImage *flippedImage = [[UIImage alloc] initWithCGImage:img.CGImage scale:1.0 orientation:UIImageOrientationDownMirrored];
+    [bgFooterImageView setImage:flippedImage];
+    
+    
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 35)];
+    [titleLabel setFont:[UIFont fontWithName:_SECONDARY_FONT size:22.0f]];
+    [titleLabel setText:@"Select Location"];
+    [titleLabel setTextColor:[UIColor whiteColor]];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    
+    [self.view addSubview:titleLabel];
+}
+
+- (void) drawGradient:(CGRect)rect
+{
+    // Create a gradient from white to red
+    CGFloat colors [] = {
+        1.0, 1.0, 1.0, 1.0,
+        1.0, 0.0, 0.0, 1.0
+    };
+    
+    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
+    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+    
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    CGContextSaveGState(context);
+    CGContextAddEllipseInRect(context, rect);
+    CGContextClip(context);
+    
+    CGPoint startPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMinY(rect));
+    CGPoint endPoint = CGPointMake(CGRectGetMidX(rect), CGRectGetMaxY(rect));
+    
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    CGGradientRelease(gradient), gradient = NULL;
+    
+    CGContextRestoreGState(context);
+    
+    CGContextAddEllipseInRect(context, rect);
+    CGContextDrawPath(context, kCGPathStroke);
+}
+
 
 - (void) showError
 {
+    NSLog(@"Show Error");
     [_spinner stopAnimating];
     [_spinner setMessage:@"There was an error fetching locations"];
     [_tableView setHidden:YES];
@@ -117,12 +186,23 @@ NormIndicatorView *_spinner;
 
 - (void) loadLocations:(NSArray *)locations
 {
+    
     _locations = locations;
     
-    [_spinner setHidden:YES];
-    [_tableView reloadData];
-    
-    NSLog(@"Found Locations");
+    if (_locations.count > 0) {
+        [_spinner setHidden:YES];
+        [self setIsAnimating:YES];
+        [self setDelayCellDisplay:YES];
+        [_tableView reloadData];
+        
+        [self performSelector:@selector(setDelayCellDisplay:) withObject:NO afterDelay:1.0];
+        
+        NSLog(@"Found Locations");
+    } else {
+        [_spinner stopAnimating];
+        [_spinner setMessage:@"No locations could be found"];
+        [_tableView setHidden:YES];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -133,7 +213,22 @@ NormIndicatorView *_spinner;
 
 - (void)modalShouldBeDismissed
 {
-    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+    
+    _tableView.layer.opacity = 1.0;
+    [UIView animateWithDuration:0.3
+                          delay:0.0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+         _tableView.frame = CGRectOffset(_tableView.frame, self.view.frame.size.width * -1, 0);
+         _tableView.layer.opacity = 0.0;
+     }
+                     completion:^(BOOL finished) {
+                         [[self presentingViewController] dismissViewControllerAnimated:YES completion:^() {
+                             [self.delegate setLocation:self.selectedLocation];
+                         }];
+                     }];
+    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -165,17 +260,50 @@ NormIndicatorView *_spinner;
     return cell;
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(NormLocationCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    NSLog(@"Display Cell: %d", self.displayCount);
+    if (self.displayCount > indexPath.row) {
+        return;
+    }
+    
+//    NSLog(@"Translate: %@", cell.layer.transform);
+    
+    self.displayCount = self.displayCount + 1;
+    
+    NSTimeInterval delay;
+    if (self.delayCellDisplay) {
+        delay = 0.05 * self.displayCount;
+    } else {
+        delay = 0.0;
+    }
+    
+    cell.frame = CGRectMake(320, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height);
+    [UIView animateWithDuration:0.5
+                          delay:delay
+         usingSpringWithDamping:0.6
+          initialSpringVelocity:4.0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+         cell.frame = CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.width);
+     }
+                     completion:nil];
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+//    [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
     
-    NormLocation *location = [_locations objectAtIndex:indexPath.row];
-    [self.delegate setLocation:location];
+    self.selectedLocation = [_locations objectAtIndex:indexPath.row];
+    
+    [self modalShouldBeDismissed];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 75;
+    return 80;
 }
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
@@ -183,17 +311,20 @@ NormIndicatorView *_spinner;
     NSLog(@"Latitude = %f", newLocation.coordinate.latitude);
     NSLog(@"Latitude = %f", newLocation.coordinate.longitude);
     
-    [self.myLocationManager stopUpdatingLocation];
+    [self.myLocationManager stopUpdatingLocation]; 
     
-    [Location fetchFromServerForLat: newLocation.coordinate.latitude andLong: newLocation.coordinate.longitude success:^(NSArray *locations){
-        
-        NSLog(@"locations found");
-        [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
-        
-    } failedWithError:^(NSError *error){
-        NSLog(@"There was an error: %@", error);
-        [self performSelectorOnMainThread:@selector(showError) withObject:error waitUntilDone:NO];
-    }];
+    if (!self.isUpdatingLocations) {
+        self.isUpdatingLocations = YES;
+        [Location fetchFromServerForLat: newLocation.coordinate.latitude andLong: newLocation.coordinate.longitude success:^(NSArray *locations){
+            
+            NSLog(@"locations found");
+            [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
+            
+        } failedWithError:^(NSError *error){
+            NSLog(@"There was an error: %@", error);
+            [self performSelectorOnMainThread:@selector(showError) withObject:error waitUntilDone:NO];
+        }];
+    }
 }
 
 @end

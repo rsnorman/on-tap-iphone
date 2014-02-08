@@ -45,4 +45,15 @@
     [self.messageLabel setText:message];
 }
 
+- (void)setHidden:(BOOL)hidden
+{
+    self.layer.opacity = hidden ? 1.0 : 0.0;
+    
+    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
+        self.layer.opacity = hidden ? 0.0 : 1.0;
+    } completion:^(BOOL finished) {
+        [super setHidden:hidden];
+    }];
+}
+
 @end
