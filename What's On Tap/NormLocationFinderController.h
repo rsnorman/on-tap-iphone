@@ -9,16 +9,25 @@
 #import <UIKit/UIKit.h>
 #import "NormLocationFinderDelegate.h"
 #import "Location.h"
+#import "NormIndicatorView.h"
+#import "NormConnectionManager.h"
+#import "NormLocationTableViewController.h"
+#import <CoreLocation/CoreLocation.h>
 
 
 @interface NormLocationFinderController : UIViewController
+
 @property id <NormLocationFinderDelegate> delegate;
-@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+
 @property BOOL isUpdatingLocations;
-@property BOOL isAnimating;
-@property int displayCount;
-@property BOOL delayCellDisplay;
 @property Location *selectedLocation;
 
-@property BOOL shouldHideStatusBar;
+@property NormIndicatorView *locationSearchIndicator;
+@property NormLocationTableViewController *locationsTableViewController;
+@property UITableView *locationsTableView;
+
+@property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic) NormConnectionManager *connectionManager;
+@property (nonatomic, strong) CLLocationManager *myLocationManager;
+
 @end

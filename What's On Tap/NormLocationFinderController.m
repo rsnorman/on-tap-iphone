@@ -5,95 +5,102 @@
 //  Created by Ryan Norman on 1/14/14.
 //  Copyright (c) 2014 Ryan Norman. All rights reserved.
 //
+#import "constants.h"
 
 #import "NormLocationFinderController.h"
-#import "NormModalControllerDelegate.h"
 #import "User.h"
-#import "NormLocationCell.h"
-#import "NormIndicatorView.h"
+
 #import "NormLocationFinderDelegate.h"
-#import "NormViewSnapshot.h"
-#import "constants.h"
-#import <CoreLocation/CoreLocation.h>
+#import "NormConnectionManagerDelegate.h"
+#import "NormModalControllerDelegate.h"
+#import "NormLocationTableViewControllerDelegate.h"
+
 #import <UIKit/UIKit.h>
 
-@interface NormLocationFinderController () <NormModalControllerDelegate, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate>
 
-@property (nonatomic, strong) CLLocationManager *myLocationManager;
-
-
+@interface NormLocationFinderController () <NormModalControllerDelegate, CLLocationManagerDelegate, NormConnectionManagerDelegate, NormLocationTableViewControllerDelegate>
 @end
 
 @implementation NormLocationFinderController
 
 @synthesize managedObjectContext;
 
-NSArray *_locations;
-UITableView *_tableView;
-NormIndicatorView *_spinner;
-
 - (id)init
 {
     self = [super init];
     
     if (self) {
-        self.displayCount = 0;
         self.isUpdatingLocations = NO;
-        
-        _locations = [[NSMutableArray alloc] init];
 
-        _spinner = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
-        _spinner.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
-        [_spinner startAnimating];
-        [_spinner setMessage:@"Grabbing nearby locations"];
-        [_spinner.spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-        [_spinner.spinner setBackgroundColor:[UIColor clearColor]];
-        [_spinner.messageLabel setTextColor:[UIColor whiteColor]];
-        [self.view addSubview:_spinner];
+        self.locationSearchIndicator = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
+        self.locationSearchIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+        [self.locationSearchIndicator startAnimating];
+        [self.locationSearchIndicator setMessage:@"Grabbing nearby locations"];
+        [self.locationSearchIndicator.spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
+        [self.locationSearchIndicator.spinner setBackgroundColor:[UIColor clearColor]];
+        [self.locationSearchIndicator.messageLabel setTextColor:[UIColor whiteColor]];
+        [self.view addSubview:self.locationSearchIndicator];
         
-        UITableViewController *tableViewController = [[UITableViewController alloc]init];
-        [self addChildViewController:tableViewController];
+        self.locationsTableViewController = [[NormLocationTableViewController alloc]init];
+        [self.locationsTableViewController setDelegate:self];
+        [self addChildViewController:self.locationsTableViewController];
         
-        _tableView = [[UITableView alloc] initWithFrame:self.view.frame];
-        _tableView.dataSource = self;
-        _tableView.delegate = self;
-        _tableView.backgroundColor = [UIColor clearColor];
-        _tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [_tableView setContentInset:UIEdgeInsetsMake(50,0,0,0)];
+        self.locationsTableView = [[UITableView alloc] initWithFrame:self.view.frame];
+        self.locationsTableView.dataSource = self.locationsTableViewController;
+        self.locationsTableView.delegate = self.locationsTableViewController;
+        self.locationsTableView.backgroundColor = [UIColor clearColor];
+        self.locationsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        [self.locationsTableView setContentInset:UIEdgeInsetsMake(50,0,0,0)];
         
-        tableViewController.tableView = _tableView;
-        [self.view addSubview:_tableView];
+        self.locationsTableViewController.tableView = self.locationsTableView;
+        [self.view addSubview:self.locationsTableView];
+        
+        id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+        self.managedObjectContext = [appDelegate managedObjectContext];
+        
+        
+        self.myLocationManager = [[CLLocationManager alloc] init];
+        self.myLocationManager.delegate = self;
+        
+        
+        self.connectionManager = [[NormConnectionManager alloc] init];
+        [self.connectionManager setDelegate:self];
+        
+        
+        if ([CLLocationManager locationServicesEnabled]) {
+            
+            if ([self.connectionManager connectedToNetwork]) {
+                [self.myLocationManager startUpdatingLocation];
+            } else {
+                [self.locationSearchIndicator stopAnimating];
+                [self.locationSearchIndicator setMessage:@"Please connect to the Internet"];
+                [self.locationsTableView setHidden:YES];
+            }
+            
+        } else {
+            [self.locationSearchIndicator stopAnimating];
+            [self.locationSearchIndicator setMessage:@"Please turn on location services in Settings"];
+            [self.locationsTableView setHidden:YES];
+        }
     }
     
     return self;
 }
 
-
-- (void)viewDidLoad
+- (void)didConnectToNetwork
 {
-    [super viewDidLoad];
-    
-    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-    self.managedObjectContext = [appDelegate managedObjectContext];
-    
-    if ([CLLocationManager locationServicesEnabled]) {
-        self.myLocationManager = [[CLLocationManager alloc] init];
-        self.myLocationManager.delegate = self;
-        [self.myLocationManager startUpdatingLocation];
-    } else {
-        [_spinner stopAnimating];
-        [_spinner setMessage:@"Please turn on location services in Settings"];
-        [_tableView setHidden:YES];
-    }
-
+    [self.locationSearchIndicator startAnimating];
+    [self.locationSearchIndicator setMessage:@"Grabbing nearby locations"];
+    [self.myLocationManager startUpdatingLocation];
+    [self.locationsTableView setHidden:NO];
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     if (status == kCLAuthorizationStatusDenied) {
-        [_spinner stopAnimating];
-        [_spinner setMessage:@"Please turn on location services in Settings"];
-        [_tableView setHidden:YES];
+        [self.locationSearchIndicator stopAnimating];
+        [self.locationSearchIndicator setMessage:@"Please turn on location services in Settings"];
+        [self.locationsTableView setHidden:YES];
     }
 }
 
@@ -107,16 +114,29 @@ NormIndicatorView *_spinner;
     [self.view addSubview:bgHeaderImageView];
     [self.view addSubview:bgFooterImageView];
     
+    UIImage *gradientImage = [self drawGradientForFrame:frame];
+    [bgHeaderImageView setImage:gradientImage];
+    UIImage *flippedImage = [[UIImage alloc] initWithCGImage:gradientImage.CGImage scale:1.0 orientation:UIImageOrientationDownMirrored];
+    [bgFooterImageView setImage:flippedImage];
     
-    CGRect rect = frame;
     
+    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 35)];
+    [titleLabel setFont:[UIFont fontWithName:_SECONDARY_FONT size:22.0f]];
+    [titleLabel setText:@"Select Location"];
+    [titleLabel setTextColor:[UIColor whiteColor]];
+    [titleLabel setTextAlignment:NSTextAlignmentCenter];
+    
+    [self.view addSubview:titleLabel];
+}
+- (UIImage *) drawGradientForFrame:(CGRect) rect
+{
     // Create a gradient from white to red
     CGFloat colors [] = {
         0.0, 0.0, 0.0, 1.0,
         0.0, 0.0, 0.0, 0.0
     };
     
-    UIGraphicsBeginImageContext(frame.size);
+    UIGraphicsBeginImageContext(rect.size);
     
     CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
     CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
@@ -139,44 +159,25 @@ NormIndicatorView *_spinner;
     CGImageRelease(imgRef);
     CGContextRelease(context);
     
-    
-    [bgHeaderImageView setImage:img];
-    UIImage *flippedImage = [[UIImage alloc] initWithCGImage:img.CGImage scale:1.0 orientation:UIImageOrientationDownMirrored];
-    [bgFooterImageView setImage:flippedImage];
-    
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 35)];
-    [titleLabel setFont:[UIFont fontWithName:_SECONDARY_FONT size:22.0f]];
-    [titleLabel setText:@"Select Location"];
-    [titleLabel setTextColor:[UIColor whiteColor]];
-    [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    
-    [self.view addSubview:titleLabel];
+    return img;
 }
-
 
 - (void) showError
 {
-    [_spinner stopAnimating];
-    [_spinner setMessage:@"There was a problem finding nearby locations.\nAre you in a dry county?"];
-    [_tableView setHidden:YES];
+    [self.locationSearchIndicator stopAnimating];
+    [self.locationSearchIndicator setMessage:@"There was a problem finding nearby locations.\nAre you in a dry county?"];
+    [self.locationsTableView setHidden:YES];
 }
 
 - (void) loadLocations:(NSArray *)locations
 {
-    _locations = locations;
-    
-    if (_locations.count > 0) {
-        [_spinner setHidden:YES];
-        [self setIsAnimating:YES];
-        [self setDelayCellDisplay:YES];
-        [_tableView reloadData];
-        
-        [self performSelector:@selector(setDelayCellDisplay:) withObject:NO afterDelay:1.0];
+    if (locations.count > 0) {
+        [self.locationSearchIndicator setHidden:YES];
+        [self.locationsTableViewController setLocations:locations];
     } else {
-        [_spinner stopAnimating];
-        [_spinner setMessage:@"Couldn't find any nearby locations.\nAre you in a dry county?"];
-        [_tableView setHidden:YES];
+        [self.locationSearchIndicator stopAnimating];
+        [self.locationSearchIndicator setMessage:@"Couldn't find any nearby locations.\nAre you in a dry county?"];
+        [self.locationsTableView setHidden:YES];
     }
 }
 
@@ -190,18 +191,17 @@ NormIndicatorView *_spinner;
 {
     
     // Slide out table view before dismissing modal controller
-    _tableView.layer.opacity = 1.0;
+    self.locationsTableView.layer.opacity = 1.0;
     [UIView animateWithDuration:0.3
                           delay:0.0
                         options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                      animations:^
      {
-         _tableView.frame = CGRectOffset(_tableView.frame, self.view.frame.size.width * -1, 0);
-         _tableView.layer.opacity = 0.0;
+         self.locationsTableView.frame = CGRectOffset(self.locationsTableView.frame, self.view.frame.size.width * -1, 0);
+         self.locationsTableView.layer.opacity = 0.0;
      }
                      completion:^(BOOL finished) {
                          [[self presentingViewController] dismissViewControllerAnimated:YES completion:^() {
-                             NSLog(@"Set Location: %@", self.selectedLocation.lID);
                              if (self.selectedLocation != nil) {
                                  [self.delegate setLocation:self.selectedLocation];
                              }
@@ -210,75 +210,10 @@ NormIndicatorView *_spinner;
     
 }
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+- (void) didSelectLocation:(Location *)selectedLocation
 {
-    return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
-    // Return the number of rows in the section.
-    return [_locations count];
-}
-
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    static NSString *normTableCellIdentifier = @"NormLocationCell";
-
-    NormLocationCell *cell = (NormLocationCell *)[tableView dequeueReusableCellWithIdentifier:normTableCellIdentifier];
-    if (cell == nil)
-    {
-        cell = [[NormLocationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:normTableCellIdentifier];
-    }
-    
-    [cell setLocation:[_locations objectAtIndex:indexPath.row]];
-    
-    [cell displayLabel];
-    
-    return cell;
-}
-
--(void)tableView:(UITableView *)tableView willDisplayCell:(NormLocationCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    
-    // Only slide in cells one time to keep cool animation from becoming annoying
-    if (self.displayCount > indexPath.row) {
-        return;
-    }
- 
-    self.displayCount = self.displayCount + 1;
-    
-    NSTimeInterval delay;
-    if (self.delayCellDisplay) {
-        delay = 0.05 * self.displayCount;
-    } else {
-        delay = 0.0;
-    }
-    
-    cell.frame = CGRectMake(320, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.height);
-    [UIView animateWithDuration:0.5
-                          delay:delay
-         usingSpringWithDamping:0.6
-          initialSpringVelocity:4.0
-                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
-                     animations:^
-     {
-         cell.frame = CGRectMake(0, cell.frame.origin.y, cell.frame.size.width, cell.frame.size.width);
-     }
-                     completion:nil];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    self.selectedLocation = [_locations objectAtIndex:indexPath.row];
-    
+    self.selectedLocation = selectedLocation;
     [self modalShouldBeDismissed];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 80;
 }
 
 - (void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation

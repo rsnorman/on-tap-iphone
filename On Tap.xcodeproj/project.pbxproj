@@ -19,7 +19,6 @@
 		5938104C18861AC300D88215 /* Rhino Raja.otf in Resources */ = {isa = PBXBuildFile; fileRef = 5938103D188619C000D88215 /* Rhino Raja.otf */; };
 		5938104F188623E100D88215 /* NormLocationFinderController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5938104E188623E100D88215 /* NormLocationFinderController.m */; };
 		59381052188627A900D88215 /* NormLocationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 59381051188627A900D88215 /* NormLocationCell.m */; };
-		59381055188627C000D88215 /* NormLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 59381054188627C000D88215 /* NormLocation.m */; };
 		59656042189426D400ED2E9A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 59656040189426D400ED2E9A /* Model.xcdatamodeld */; };
 		5965605D189440E400ED2E9A /* Location.m in Sources */ = {isa = PBXBuildFile; fileRef = 5965605C189440E400ED2E9A /* Location.m */; };
 		596560601894410300ED2E9A /* Menu.m in Sources */ = {isa = PBXBuildFile; fileRef = 5965605F1894410300ED2E9A /* Menu.m */; };
@@ -29,8 +28,9 @@
 		596661AF18860997003E755E /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661A818860997003E755E /* REMenuContainerView.m */; };
 		596661B018860997003E755E /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661AA18860997003E755E /* REMenuItem.m */; };
 		596661B118860997003E755E /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661AC18860997003E755E /* REMenuItemView.m */; };
+		59F83D0B18A6F1870089BC4F /* NormConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F83D0A18A6F1870089BC4F /* NormConnectionManager.m */; };
+		59F83D1218A6FAAC0089BC4F /* NormLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F83D1118A6FAAC0089BC4F /* NormLocationTableViewController.m */; };
 		941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 941102A4186B4B0500B61F57 /* NormPriceLabel.m */; };
-		94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94190C5C185FE6F0002704F2 /* NormMenu.m */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
 		943D938918977CB800634229 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938818977CB800634229 /* User.m */; };
 		943D938C189B02D200634229 /* NormIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938B189B02D200634229 /* NormIndicatorView.m */; };
@@ -73,7 +73,6 @@
 		94BA82C91847AC2200D60EDC /* What_s_On_TapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82C81847AC2200D60EDC /* What_s_On_TapTests.m */; };
 		94BA82D31847B01200D60EDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BA82D21847B01200D60EDC /* Main.storyboard */; };
 		94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82D81847E80D00D60EDC /* NormBeerListController.m */; };
-		94BA82DF18484C2B00D60EDC /* NormBeer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82DE18484C2B00D60EDC /* NormBeer.m */; };
 		94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */; };
 /* End PBXBuildFile section */
 
@@ -102,8 +101,6 @@
 		5938104E188623E100D88215 /* NormLocationFinderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocationFinderController.m; sourceTree = "<group>"; };
 		59381050188627A900D88215 /* NormLocationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormLocationCell.h; sourceTree = "<group>"; };
 		59381051188627A900D88215 /* NormLocationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocationCell.m; sourceTree = "<group>"; };
-		59381053188627C000D88215 /* NormLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormLocation.h; sourceTree = "<group>"; };
-		59381054188627C000D88215 /* NormLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocation.m; sourceTree = "<group>"; };
 		59656041189426D400ED2E9A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		5965605B189440E400ED2E9A /* Location.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Location.h; sourceTree = "<group>"; };
 		5965605C189440E400ED2E9A /* Location.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Location.m; sourceTree = "<group>"; };
@@ -121,10 +118,14 @@
 		596661AA18860997003E755E /* REMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItem.m; sourceTree = "<group>"; };
 		596661AB18860997003E755E /* REMenuItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMenuItemView.h; sourceTree = "<group>"; };
 		596661AC18860997003E755E /* REMenuItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMenuItemView.m; sourceTree = "<group>"; };
+		59F83D0918A6F1870089BC4F /* NormConnectionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormConnectionManager.h; sourceTree = "<group>"; };
+		59F83D0A18A6F1870089BC4F /* NormConnectionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormConnectionManager.m; sourceTree = "<group>"; };
+		59F83D0C18A6F25B0089BC4F /* NormConnectionManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormConnectionManagerDelegate.h; sourceTree = "<group>"; };
+		59F83D1018A6FAAC0089BC4F /* NormLocationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormLocationTableViewController.h; sourceTree = "<group>"; };
+		59F83D1118A6FAAC0089BC4F /* NormLocationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormLocationTableViewController.m; sourceTree = "<group>"; };
+		59F83D1318A6FBB10089BC4F /* NormLocationTableViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormLocationTableViewControllerDelegate.h; sourceTree = "<group>"; };
 		941102A3186B4B0500B61F57 /* NormPriceLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormPriceLabel.h; sourceTree = "<group>"; };
 		941102A4186B4B0500B61F57 /* NormPriceLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormPriceLabel.m; sourceTree = "<group>"; };
-		94190C5B185FE6F0002704F2 /* NormMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormMenu.h; sourceTree = "<group>"; };
-		94190C5C185FE6F0002704F2 /* NormMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormMenu.m; sourceTree = "<group>"; };
 		941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerViewController.h; path = ../NormBeerViewController.h; sourceTree = "<group>"; };
 		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerViewController.m; path = ../NormBeerViewController.m; sourceTree = "<group>"; };
 		943D938718977CB800634229 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
@@ -190,8 +191,6 @@
 		94BA82D21847B01200D60EDC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		94BA82D71847E80D00D60EDC /* NormBeerListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBeerListController.h; sourceTree = "<group>"; };
 		94BA82D81847E80D00D60EDC /* NormBeerListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBeerListController.m; sourceTree = "<group>"; };
-		94BA82DD18484C2B00D60EDC /* NormBeer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBeer.h; sourceTree = "<group>"; };
-		94BA82DE18484C2B00D60EDC /* NormBeer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBeer.m; sourceTree = "<group>"; };
 		94BA82E41848FF9800D60EDC /* NormBeerTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerTableCell.h; path = ../NormBeerTableCell.h; sourceTree = "<group>"; };
 		94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerTableCell.m; path = ../NormBeerTableCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -315,6 +314,8 @@
 				94BA82D81847E80D00D60EDC /* NormBeerListController.m */,
 				5938104D188623E100D88215 /* NormLocationFinderController.h */,
 				5938104E188623E100D88215 /* NormLocationFinderController.m */,
+				59F83D1018A6FAAC0089BC4F /* NormLocationTableViewController.h */,
+				59F83D1118A6FAAC0089BC4F /* NormLocationTableViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -345,14 +346,10 @@
 				9460833818834BE5005EF155 /* NormViewSnapshot.m */,
 				94A91D65185E5F90006FEA65 /* NormImageCache.h */,
 				94A91D66185E5F90006FEA65 /* NormImageCache.m */,
-				94BA82DD18484C2B00D60EDC /* NormBeer.h */,
-				94BA82DE18484C2B00D60EDC /* NormBeer.m */,
-				94190C5B185FE6F0002704F2 /* NormMenu.h */,
-				94190C5C185FE6F0002704F2 /* NormMenu.m */,
-				59381053188627C000D88215 /* NormLocation.h */,
-				59381054188627C000D88215 /* NormLocation.m */,
 				943D938D189B258C00634229 /* Reachability.h */,
 				943D938E189B25B400634229 /* Reachability.m */,
+				59F83D0918A6F1870089BC4F /* NormConnectionManager.h */,
+				59F83D0A18A6F1870089BC4F /* NormConnectionManager.m */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -367,6 +364,8 @@
 				946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */,
 				9460833E1884DBBF005EF155 /* NormModalControllerDelegate.h */,
 				9484BE3B18863C3300902CEE /* NormLocationFinderDelegate.h */,
+				59F83D0C18A6F25B0089BC4F /* NormConnectionManagerDelegate.h */,
+				59F83D1318A6FBB10089BC4F /* NormLocationTableViewControllerDelegate.h */,
 			);
 			name = Delegates;
 			sourceTree = "<group>";
@@ -576,18 +575,18 @@
 			files = (
 				5938104F188623E100D88215 /* NormLocationFinderController.m in Sources */,
 				9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */,
-				94BA82DF18484C2B00D60EDC /* NormBeer.m in Sources */,
 				596661B018860997003E755E /* REMenuItem.m in Sources */,
 				5965605D189440E400ED2E9A /* Location.m in Sources */,
 				9460833C1884DA27005EF155 /* NormModalShowTransitioning.m in Sources */,
 				9460833918834BE5005EF155 /* NormViewSnapshot.m in Sources */,
-				59381055188627C000D88215 /* NormLocation.m in Sources */,
 				94BA82B31847AC2200D60EDC /* What_s_On_Tap.xcdatamodeld in Sources */,
 				946083471885B4BA005EF155 /* NormEnlargeImage.m in Sources */,
 				596661B118860997003E755E /* REMenuItemView.m in Sources */,
 				9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */,
 				596560631894411600ED2E9A /* Beer.m in Sources */,
+				59F83D0B18A6F1870089BC4F /* NormConnectionManager.m in Sources */,
 				94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */,
+				59F83D1218A6FAAC0089BC4F /* NormLocationTableViewController.m in Sources */,
 				94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */,
 				596661AF18860997003E755E /* REMenuContainerView.m in Sources */,
 				94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */,
@@ -605,7 +604,6 @@
 				94851F64186DD81D00668E77 /* NormImageView.m in Sources */,
 				94608333188023B6005EF155 /* NormBlurImage.m in Sources */,
 				941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */,
-				94190C5D185FE6F0002704F2 /* NormMenu.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,
 				943D938C189B02D200634229 /* NormIndicatorView.m in Sources */,
 				59656042189426D400ED2E9A /* Model.xcdatamodeld in Sources */,

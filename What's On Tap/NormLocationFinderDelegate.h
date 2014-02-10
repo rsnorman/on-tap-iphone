@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NormLocation.h"
+#import "Location.h"
 
 @protocol NormLocationFinderDelegate <NSObject>
 

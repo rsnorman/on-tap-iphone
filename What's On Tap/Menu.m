@@ -9,8 +9,6 @@
 #import "Menu.h"
 #import "Beer.h"
 #import "Location.h"
-#import "NormBeer.h"
-
 
 @implementation Menu
 
@@ -55,7 +53,7 @@ NSManagedObjectContext *managedObjectContext;
     if ( [menus count] > 0) {
         Menu * menu = [menus objectAtIndex:[menus count] - 1];
         [menu setup];
-        NSLog(@"Grabbed Menu From DB, created on: %@", menu.createdOn);
+
         action(menu);
     } else {
         NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
@@ -73,8 +71,6 @@ NSManagedObjectContext *managedObjectContext;
             } else {                
                 NSError *localError = nil;
                 NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:1 error:&localError];
-                
-                NSLog(@"%@", results);
                 
                 if (localError != nil) {
                     errorAction(localError);
@@ -192,7 +188,7 @@ NSManagedObjectContext *managedObjectContext;
     [self.serveTypes setObject:[[NSMutableArray alloc] init] forKey:@"On Tap"];
     [self.serveTypeKeys addObject: @"On Tap"];
     
-    for (NormBeer* beer in [self.beers allObjects])
+    for (Beer* beer in [self.beers allObjects])
     {
         
         if ([self.serveTypes objectForKey:beer.serveType] == nil){
@@ -226,7 +222,7 @@ NSManagedObjectContext *managedObjectContext;
         
         NSArray *serveTypeBeers = [self.serveTypes objectForKey:serveType];
         
-        for (NormBeer* beer in serveTypeBeers)
+        for (Beer* beer in serveTypeBeers)
         {
             if ([groupedBeersForServeType objectForKey:beer.styleCategory] == nil) {
                 [groupedBeersForServeType setObject:[[NSMutableArray alloc] init] forKey:beer.styleCategory];
@@ -251,7 +247,7 @@ NSManagedObjectContext *managedObjectContext;
     if ([beerStyles objectForKey:serveType] == nil) {
         NSMutableArray * unOrderedStyleKeys = [[NSMutableArray alloc] init];
         
-        for (NormBeer* beer in [self.serveTypes objectForKey:serveType])
+        for (Beer* beer in [self.serveTypes objectForKey:serveType])
         {
             if (![unOrderedStyleKeys containsObject:beer.styleCategory]){
                 [unOrderedStyleKeys addObject:beer.styleCategory];

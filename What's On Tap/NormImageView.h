@@ -19,6 +19,7 @@
 @property float scaleToFillAspectRatioMax;
 @property NSString *URL;
 @property UIImage *defaultImage;
+@property UIImageView *defaultImageView;
 
 // Sets the URL for this image view while supplying a default image to use while image is downloaded or
 // if image cannot be found

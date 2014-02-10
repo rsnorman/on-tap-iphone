@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NormLocation.h"
+#import "Location.h"
 
 @interface NormLocationCell : UITableViewCell
 
-@property NormLocation *location;
+@property Location *location;
 @property UILabel *nameLabel;
 @property UILabel *inventoryLabel;
 @property UILabel *distanceAwayLabel;

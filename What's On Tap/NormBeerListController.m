@@ -10,12 +10,12 @@
 #import "NormLocationFinderController.h"
 #import "NormModalTransitionDelegate.h"
 #import "NormLocationFinderDelegate.h"
-#import "Reachability.h"
 #import "Location.h"
 #import "User.h"
+#import "NormConnectionManagerDelegate.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface NormBeerListController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate, NormLocationFinderDelegate>
+@interface NormBeerListController () <UITableViewDataSource, UITableViewDelegate, UITabBarDelegate, UISearchDisplayDelegate, UISearchBarDelegate, NormLocationFinderDelegate, NormConnectionManagerDelegate>
 @end
 
 @implementation NormBeerListController
@@ -56,16 +56,11 @@ User *_currentUser;
     _currentUser = [User current];
     _currentLocation = _currentUser.currentLocation;
     
-    /*
-     Observe the kNetworkReachabilityChangedNotification. When that notification is posted, the method reachabilityChanged will be called.
-     */
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reachabilityChanged:) name:kReachabilityChangedNotification object:nil];
-    
-    self.internetReachability = [Reachability reachabilityForInternetConnection];
-    [self.internetReachability startNotifier];
+    self.connectionManager = [[NormConnectionManager alloc] init];
+    [self.connectionManager setDelegate:self];
     
     // Check to make sure there is a internet connection
-    if ([self connectedToNetwork]) {
+    if ([self.connectionManager connectedToNetwork]) {
         
         // Load users last location
         if (_currentLocation != nil) {
@@ -88,17 +83,15 @@ User *_currentUser;
 /*!
  * Called by Reachability whenever status changes.
  */
-- (void) reachabilityChanged:(NSNotification *)note
+- (void) didConnectToNetwork
 {
-    if ([self connectedToNetwork]) {
-        if (_currentLocation != nil) {
-            [self createLocationMenu];
-            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
-            [self.spinnerView startAnimating];
-            [self startFetchingAvailableMenu];
-        } else {
-            [self showSelectLocationModal];
-        }
+    if (_currentLocation != nil) {
+        [self createLocationMenu];
+        [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
+        [self.spinnerView startAnimating];
+        [self startFetchingAvailableMenu];
+    } else {
+        [self showSelectLocationModal];
     }
 }
 
@@ -204,7 +197,7 @@ User *_currentUser;
         [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
     } failedWithError:^(NSError *error) {
         
-       NSString *errorMessage = [NSString stringWithFormat: @"Sorry, there was a problem grabbing the menu for \n%@. \nKegs must be tapped.", _currentLocation.name];
+       NSString *errorMessage = [NSString stringWithFormat: @"Sorry, there was a problem grabbing the menu for \n%@. \nKegs must be busted.", _currentLocation.name];
         [self performSelectorOnMainThread:@selector(showErrorWithMessage:) withObject: errorMessage waitUntilDone:NO];
     }];
 }
@@ -647,27 +640,6 @@ User *_currentUser;
 - (void)searchDisplayController:(UISearchDisplayController *)controller didLoadSearchResultsTableView:(UITableView *)tableView
 {
     self.tableView.rowHeight = 75.0f; // or some other height
-}
-
-- (BOOL) connectedToNetwork
-{
-    BOOL isInternet = NO;
-    Reachability* reachability = [Reachability reachabilityWithHostName:@"google.com"];
-    NetworkStatus remoteHostStatus = [reachability currentReachabilityStatus];
-    
-    if(remoteHostStatus == NotReachable)
-    {
-        isInternet = NO;
-    }
-    else if (remoteHostStatus == ReachableViaWWAN)
-    {
-        isInternet = YES;
-    }
-    else if (remoteHostStatus == ReachableViaWiFi)
-    {
-        isInternet = YES;
-    }
-    return isInternet;
 }
 
 @end
