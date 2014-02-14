@@ -14,6 +14,9 @@
 #import "NormConnectionManagerDelegate.h"
 #import "NormModalControllerDelegate.h"
 #import "NormLocationTableViewControllerDelegate.h"
+#import "NormBeerTableViewController.h"
+#import "NormLocationMapViewController.h"
+#import "TestFlight.h"
 
 #import <UIKit/UIKit.h>
 
@@ -24,6 +27,7 @@
 @implementation NormLocationFinderController
 
 @synthesize managedObjectContext;
+BOOL locationsLoaded;
 
 - (id)init
 {
@@ -50,9 +54,10 @@
         self.locationsTableView.delegate = self.locationsTableViewController;
         self.locationsTableView.backgroundColor = [UIColor clearColor];
         self.locationsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self.locationsTableView setContentInset:UIEdgeInsetsMake(50,0,0,0)];
+        [self.locationsTableView setContentInset:UIEdgeInsetsMake(50,0,50,0)];
         
         self.locationsTableViewController.tableView = self.locationsTableView;
+        [self.locationsTableView setHidden:YES];
         [self.view addSubview:self.locationsTableView];
         
         id appDelegate = (id)[[UIApplication sharedApplication] delegate];
@@ -65,34 +70,72 @@
         
         self.connectionManager = [[NormConnectionManager alloc] init];
         [self.connectionManager setDelegate:self];
+        [self.connectionManager performSelectorInBackground:@selector(checkForConnection) withObject:nil];
         
         
-        if ([CLLocationManager locationServicesEnabled]) {
-            
-            if ([self.connectionManager connectedToNetwork]) {
-                [self.myLocationManager startUpdatingLocation];
-            } else {
-                [self.locationSearchIndicator stopAnimating];
-                [self.locationSearchIndicator setMessage:@"Please connect to the Internet"];
-                [self.locationsTableView setHidden:YES];
-            }
-            
-        } else {
-            [self.locationSearchIndicator stopAnimating];
-            [self.locationSearchIndicator setMessage:@"Please turn on location services in Settings"];
-            [self.locationsTableView setHidden:YES];
-        }
+        CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, 65);
+        UIImageView *bgHeaderImageView = [[UIImageView alloc] initWithFrame:frame];
+        UIImageView *bgFooterImageView = [[UIImageView alloc] initWithFrame:CGRectOffset(frame, 0, self.view.frame.size.height - 65)];
+        
+        [self.view addSubview:bgHeaderImageView];
+        [self.view addSubview:bgFooterImageView];
+        
+        UIImage *gradientImage = [self drawGradientForFrame:frame];
+        [bgHeaderImageView setImage:gradientImage];
+        UIImage *flippedImage = [[UIImage alloc] initWithCGImage:gradientImage.CGImage scale:1.0 orientation:UIImageOrientationDownMirrored];
+        [bgFooterImageView setImage:flippedImage];
+        
+        
+        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 35)];
+        [titleLabel setFont:[UIFont fontWithName:_TERTIARY_FONT size:22.0f]];
+        [titleLabel setText:@"Select Location"];
+        [titleLabel setTextColor:[UIColor whiteColor]];
+        [titleLabel setTextAlignment:NSTextAlignmentCenter];
+        
+        [self.view addSubview:titleLabel];
+        
+        
+        self.viewAllLocationsButton = [[UIButton alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height + 45, 45, 45)];
+        [_viewAllLocationsButton setImage:[UIImage imageNamed:@"map-marker"] forState:UIControlStateNormal];
+        [_viewAllLocationsButton setBackgroundColor:_MAIN_COLOR];
+        [_viewAllLocationsButton.layer setCornerRadius:22.5];
+        [_viewAllLocationsButton addTarget:self action:@selector(showAllLocationsOnMap) forControlEvents:UIControlEventTouchUpInside];
+        
+        [self.view addSubview:_viewAllLocationsButton];
+        
+        locationsLoaded = NO;
     }
     
     return self;
 }
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+}
+
 - (void)didConnectToNetwork
 {
     [self.locationSearchIndicator startAnimating];
-    [self.locationSearchIndicator setMessage:@"Grabbing nearby locations"];
-    [self.myLocationManager startUpdatingLocation];
+    [self.locationSearchIndicator setMessage:@"Finding nearby locations"];
     [self.locationsTableView setHidden:NO];
+    
+    if ([CLLocationManager locationServicesEnabled]) {
+        [self.myLocationManager startUpdatingLocation];
+    } else {
+        [self.locationSearchIndicator stopAnimating];
+        [self.locationSearchIndicator setMessage:@"Please turn on location services in Settings"];
+        [self.locationsTableView setHidden:YES];
+    }
+}
+
+- (void)didDisconnectFromNetwork
+{
+    if (!locationsLoaded) {
+        [self.locationSearchIndicator stopAnimating];
+        [self.locationSearchIndicator setMessage:@"Please connect to the Internet"];
+        [self.locationsTableView setHidden:YES];
+    }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
@@ -101,33 +144,11 @@
         [self.locationSearchIndicator stopAnimating];
         [self.locationSearchIndicator setMessage:@"Please turn on location services in Settings"];
         [self.locationsTableView setHidden:YES];
+        
+        [TestFlight passCheckpoint:@"Would Not Turn On Location Services"];
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    
-    CGRect frame = CGRectMake(0, 0, self.view.frame.size.width, 65);
-    UIImageView *bgHeaderImageView = [[UIImageView alloc] initWithFrame:frame];
-    UIImageView *bgFooterImageView = [[UIImageView alloc] initWithFrame:CGRectOffset(frame, 0, self.view.frame.size.height - 65)];
-    
-    [self.view addSubview:bgHeaderImageView];
-    [self.view addSubview:bgFooterImageView];
-    
-    UIImage *gradientImage = [self drawGradientForFrame:frame];
-    [bgHeaderImageView setImage:gradientImage];
-    UIImage *flippedImage = [[UIImage alloc] initWithCGImage:gradientImage.CGImage scale:1.0 orientation:UIImageOrientationDownMirrored];
-    [bgFooterImageView setImage:flippedImage];
-    
-    
-    UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 35)];
-    [titleLabel setFont:[UIFont fontWithName:_SECONDARY_FONT size:22.0f]];
-    [titleLabel setText:@"Select Location"];
-    [titleLabel setTextColor:[UIColor whiteColor]];
-    [titleLabel setTextAlignment:NSTextAlignmentCenter];
-    
-    [self.view addSubview:titleLabel];
-}
 - (UIImage *) drawGradientForFrame:(CGRect) rect
 {
     // Create a gradient from white to red
@@ -167,6 +188,8 @@
     [self.locationSearchIndicator stopAnimating];
     [self.locationSearchIndicator setMessage:@"There was a problem finding nearby locations.\nAre you in a dry county?"];
     [self.locationsTableView setHidden:YES];
+    
+    [TestFlight passCheckpoint:@"Error Finding Locations"];
 }
 
 - (void) loadLocations:(NSArray *)locations
@@ -174,10 +197,14 @@
     if (locations.count > 0) {
         [self.locationSearchIndicator setHidden:YES];
         [self.locationsTableViewController setLocations:locations];
+        self.locations = locations;
+        locationsLoaded = YES;
     } else {
         [self.locationSearchIndicator stopAnimating];
         [self.locationSearchIndicator setMessage:@"Couldn't find any nearby locations.\nAre you in a dry county?"];
         [self.locationsTableView setHidden:YES];
+        
+        [TestFlight passCheckpoint:@"Could Not Find Locations"];
     }
 }
 
@@ -216,20 +243,55 @@
     [self modalShouldBeDismissed];
 }
 
+- (void) didSelectLocationMap:(Location *)location
+{
+    [TestFlight passCheckpoint:@"Viewed Location on Map"];
+    NormLocationMapViewController *locationMapController = [[NormLocationMapViewController alloc] init];
+    [locationMapController setLocations:@[location]];
+    [locationMapController setUserLocation:self.currentLocation];
+    [self presentViewController:locationMapController animated:YES completion:nil];
+}
+
 - (void) locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation fromLocation:(CLLocation *)oldLocation
 {
     [self.myLocationManager stopUpdatingLocation]; 
     
     if (!self.isUpdatingLocations) {
         self.isUpdatingLocations = YES;
+        self.currentLocation = newLocation;
         [Location fetchFromServerForLat: newLocation.coordinate.latitude andLong: newLocation.coordinate.longitude success:^(NSArray *locations){
             
             [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
+            
+            [self performSelectorOnMainThread:@selector(slideInLocationsMapButton) withObject:locations waitUntilDone:NO];
             
         } failedWithError:^(NSError *error){
             [self performSelectorOnMainThread:@selector(showError) withObject:error waitUntilDone:NO];
         }];
     }
 }
+
+- (void) showAllLocationsOnMap
+{
+    [TestFlight passCheckpoint:@"Viewed All Locations on Map"];
+    NormLocationMapViewController *locationMapController = [[NormLocationMapViewController alloc] init];
+    [locationMapController setLocations:self.locations];
+    [locationMapController setUserLocation:self.currentLocation];
+    [self presentViewController:locationMapController animated:YES completion:nil];
+}
+
+- (void) slideInLocationsMapButton
+{
+    [UIView animateWithDuration:1.0
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^
+     {
+         self.viewAllLocationsButton.frame = CGRectOffset(self.viewAllLocationsButton.frame, 0, -100);
+     }
+                     completion:nil];
+}
+
+
 
 @end

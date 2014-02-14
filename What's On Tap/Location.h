@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import <MapKit/MapKit.h>
 
 @class Menu;
 
@@ -18,6 +19,8 @@
 @property (nonatomic, retain) NSString * type;
 @property (nonatomic, retain) NSString * inventory;
 @property (nonatomic, retain) NSString * distanceAway;
+@property (nonatomic, retain) NSString * latitude;
+@property (nonatomic, retain) NSString * longitude;
 @property (nonatomic, retain) NSString * lID;
 @property (nonatomic, retain) NSSet *menus;
 
@@ -25,6 +28,7 @@
 + (void)fetchFromServerForLat: (float)latitude andLong:(float)longitude success:(void (^)(NSArray *))action failedWithError:(void (^)(NSError *))errorAction;
 + (Location *)findByLocationId:(NSString *)locationId;
 
+- (CLLocationCoordinate2D) getCoordinate;
 @end
 
 @interface Location (CoreDataGeneratedAccessors)

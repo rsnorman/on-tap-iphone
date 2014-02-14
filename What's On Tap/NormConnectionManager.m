@@ -22,6 +22,7 @@
         
         self.internetReachability = [Reachability reachabilityForInternetConnection];
         [self.internetReachability startNotifier];
+        
     }
     
     return self;
@@ -32,19 +33,29 @@
  */
 - (void) reachabilityChanged:(NSNotification *)note
 {
-    if ([self connectedToNetwork]) {
+    [self performSelectorInBackground:@selector(checkForConnection) withObject:nil];
+}
+
+- (void) checkForConnection
+{
+    self.isCheckingConnection = YES;
+    self.isConnectedToInternet = NO;
+    if ([self isConnected]) {
+        self.isCheckingConnection = NO;
+        self.isConnectedToInternet = YES;
         if ([self.delegate respondsToSelector:@selector(didConnectToNetwork)]) {
             [self.delegate didConnectToNetwork];
         }
     } else {
-        if ([self.delegate respondsToSelector:@selector(didDisconnectToNetwork)]) {
-            [self.delegate didDisconnectToNetwork];
+        self.isCheckingConnection = NO;
+        self.isConnectedToInternet = NO;
+        if ([self.delegate respondsToSelector:@selector(didDisconnectFromNetwork)]) {
+            [self.delegate didDisconnectFromNetwork];
         }
     }
 }
 
-- (BOOL) connectedToNetwork
-{
+- (BOOL) isConnected {
     BOOL isInternet = NO;
     Reachability* reachability = [Reachability reachabilityWithHostName:@"google.com"];
     NetworkStatus remoteHostStatus = [reachability currentReachabilityStatus];
@@ -62,6 +73,20 @@
         isInternet = YES;
     }
     return isInternet;
+}
+
+- (void) connectedToNetwork
+{
+    
+    if ([self isConnected]) {
+        if ([self.delegate respondsToSelector:@selector(didConnectToNetwork)]) {
+            [self.delegate didConnectToNetwork];
+        }
+    } else {
+        if ([self.delegate respondsToSelector:@selector(didDisconnectFromNetwork)]) {
+            [self.delegate didDisconnectFromNetwork];
+        }
+    }
 }
 
 @end

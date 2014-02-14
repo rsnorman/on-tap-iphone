@@ -10,7 +10,7 @@
 #import "NormLocationCell.h"
 #import "Location.h"
 
-@interface NormLocationTableViewController ()
+@interface NormLocationTableViewController () <NormLocationCellDelegate>
 
 @end
 
@@ -65,6 +65,7 @@ NSArray *locations;
     if (cell == nil)
     {
         cell = [[NormLocationCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:normTableCellIdentifier];
+        cell.delegate = self;
     }
     
     [cell setLocation:[locations objectAtIndex:indexPath.row]];
@@ -115,5 +116,10 @@ NSArray *locations;
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return 80;
+}
+
+- (void) didSelectLocationMap:(Location *)location
+{
+    [self.delegate didSelectLocationMap:location];
 }
 @end

@@ -14,6 +14,8 @@
 #import "NormIndicatorView.h"
 #import "constants.h"
 #import "NormConnectionManager.h"
+#import "NormBeerTableViewController.h"
+#import "NormServeTypeMenu.h"
 
 // Controller for view the list of all beers on a menu
 @interface NormBeerListController : UIViewController
@@ -24,8 +26,8 @@
 // Current serve type that is being displayed
 @property NSString *currentServeType;
 
-@property NSArray *currentBeerStyles;
-@property NSDictionary *currentBeersGroupedByStyle;
+// Controller for table view of beers
+@property (nonatomic) NormBeerTableViewController *beerTableViewController;
 
 // Table view that has the menu beers as a data source
 @property (nonatomic) UITableView *tableView;
@@ -45,7 +47,7 @@
 @property UILabel *errorLabel;
 
 // Drop down menu for selecting different serve types from the menu
-@property (strong, readwrite, nonatomic) REMenu *menu;
+@property (strong, readwrite, nonatomic) NormServeTypeMenu *menu;
 
 // Managed context for saving menu and beers
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;

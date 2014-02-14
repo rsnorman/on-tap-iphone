@@ -12,5 +12,5 @@
 
 @optional
 - (void) didConnectToNetwork;
-- (void) didDisconnectToNetwork;
+- (void) didDisconnectFromNetwork;
 @end

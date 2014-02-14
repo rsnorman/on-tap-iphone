@@ -8,6 +8,7 @@
 
 #import "NormDraggableImageView.h"
 #import "QuartzCore/CALayer.h"
+#import "TestFlight.h"
 
 @implementation NormDraggableImageView
 
@@ -186,6 +187,8 @@
                               completion:nil];
          }];
     }
+    
+    [TestFlight passCheckpoint:@"Zoomed In Beer Label With Double Tap"];
 }
 
 - (CGRect)getMaximumBounds
@@ -266,6 +269,8 @@
              {
                  [self.delegate imageShouldBeDismissed: self];
              }];
+            
+            [TestFlight passCheckpoint:@"Dismissed Beer Label with Throw"];
         } else {
             
             [UIView animateWithDuration:0.1

@@ -25,7 +25,7 @@ NSMutableDictionary *beerStyles;
 NSMutableDictionary *groupedBeers;
 NSManagedObjectContext *managedObjectContext;
 
-+ (void)fetchForLocation:(NSString *)location success:(void (^)(Menu *))action failedWithError:(void (^)(NSError *))errorAction
++ (Menu *)getCurrentForLocation: (NSString *)location
 {
     id appDelegate = (id)[[UIApplication sharedApplication] delegate];
     managedObjectContext = [appDelegate managedObjectContext];
@@ -39,9 +39,9 @@ NSManagedObjectContext *managedObjectContext;
                                     components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                     fromDate:[NSDate date]];
     NSDate *today = [[NSCalendar currentCalendar]
-                         dateFromComponents:components];
+                     dateFromComponents:components];
     
-//    NSDate *tomorrow = [NSDate dateWithTimeIntervalSinceNow: (60.0f*60.0f*24.0f)]; // For Test whether it refreshes correctly
+    //    NSDate *tomorrow = [NSDate dateWithTimeIntervalSinceNow: (60.0f*60.0f*24.0f)]; // For Test whether it refreshes correctly
     
     NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"locationId == %@ AND createdOn >= %@", location, today];
     [fetchRequest setPredicate:predicateID];
@@ -53,9 +53,44 @@ NSManagedObjectContext *managedObjectContext;
     if ( [menus count] > 0) {
         Menu * menu = [menus objectAtIndex:[menus count] - 1];
         [menu setup];
-
-        action(menu);
+        
+        return menu;
     } else {
+        return nil;
+    }
+}
+
++ (void)fetchForLocation:(NSString *)location success:(void (^)(Menu *))action failedWithError:(void (^)(NSError *))errorAction
+{
+    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+    managedObjectContext = [appDelegate managedObjectContext];
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Menu" inManagedObjectContext:managedObjectContext];
+    [fetchRequest setEntity:entity];
+    
+//    NSDateComponents *components = [[NSCalendar currentCalendar]
+//                                    components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+//                                    fromDate:[NSDate date]];
+//    NSDate *today = [[NSCalendar currentCalendar]
+//                         dateFromComponents:components];
+//    
+////    NSDate *tomorrow = [NSDate dateWithTimeIntervalSinceNow: (60.0f*60.0f*24.0f)]; // For Test whether it refreshes correctly
+//    
+//    NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"locationId == %@ AND createdOn >= %@", location, today];
+//    [fetchRequest setPredicate:predicateID];
+//    
+//    NSError *error;
+//    
+//    NSArray *menus = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    
+//    if ( [menus count] > 0) {
+//        Menu * menu = [menus objectAtIndex:[menus count] - 1];
+//        [menu setup];
+//
+//        action(menu);
+//    } else {
         NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
         
         // Local brewery
@@ -81,7 +116,7 @@ NSManagedObjectContext *managedObjectContext;
                 action([self menuFromJSON:results]);
             }
         }];
-    }
+//    }
 }
 
 + (void)refreshForLocation:(NSString *)location success:(void (^)(Menu *))action failedWithError:(void (^)(NSError *))errorAction
@@ -263,6 +298,18 @@ NSManagedObjectContext *managedObjectContext;
     }
     
     return orderedBeerStyles;
+}
+
+- (NSArray *)getBeerCountsForServeTypes
+{
+    NSMutableArray *beerCounts = [[NSMutableArray alloc] init];
+    for (NSString* serveType in self.serveTypeKeys)
+    {
+        NSDictionary *beers = [self.serveTypes objectForKey:serveType];
+        [beerCounts addObject:[NSNumber numberWithInteger:beers.count]];
+    }
+    
+    return beerCounts;
 }
 
 @end

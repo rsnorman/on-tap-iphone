@@ -17,6 +17,8 @@
 @dynamic distanceAway;
 @dynamic address;
 @dynamic type;
+@dynamic latitude;
+@dynamic longitude;
 @dynamic lID;
 @dynamic menus;
 
@@ -83,6 +85,8 @@ NSManagedObjectContext *managedObjectContext;
         location.type = [locationDic objectForKey:@"type"];
         location.inventory = [locationDic objectForKey:@"inventory"];
         location.distanceAway = [locationDic objectForKey:@"distance_away"];
+        location.longitude = [locationDic objectForKey:@"longitude"];
+        location.latitude = [locationDic objectForKey:@"latitude"];
         
         [locations addObject:location];
 //        [managedObjectContext save:nil];
@@ -107,6 +111,15 @@ NSManagedObjectContext *managedObjectContext;
     
     NSError *error;
     return [[managedObjectContext executeFetchRequest:fetchRequest error:&error] objectAtIndex:0];
+}
+
+- (CLLocationCoordinate2D) getCoordinate
+{
+    CLLocationCoordinate2D coordinate;
+    coordinate.latitude = (CGFloat)[self.latitude floatValue];
+    coordinate.longitude = (CGFloat)[self.longitude floatValue];
+    
+    return coordinate;
 }
 
 @end

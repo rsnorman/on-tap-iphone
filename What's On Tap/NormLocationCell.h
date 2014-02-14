@@ -9,12 +9,19 @@
 #import <UIKit/UIKit.h>
 #import "Location.h"
 
+@protocol NormLocationCellDelegate <NSObject>
+
+- (void)didSelectLocationMap:(Location *)location;
+
+@end
+
 @interface NormLocationCell : UITableViewCell
 
 @property Location *location;
 @property UILabel *nameLabel;
 @property UILabel *inventoryLabel;
 @property UILabel *distanceAwayLabel;
+@property id<NormLocationCellDelegate> delegate;
 
 - (void) displayLabel;
 @end

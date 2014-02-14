@@ -14,7 +14,10 @@
 
 @property (nonatomic) Reachability *internetReachability;
 @property (nonatomic) id<NormConnectionManagerDelegate> delegate;
+@property BOOL isConnectedToInternet;
+@property BOOL isCheckingConnection;
 
-- (BOOL) connectedToNetwork;
+- (void) checkForConnection;
+- (BOOL) isConnected;
 
 @end

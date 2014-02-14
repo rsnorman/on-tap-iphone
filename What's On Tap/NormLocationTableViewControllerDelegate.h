@@ -13,5 +13,5 @@
 
 @optional
 - (void)didSelectLocation:(Location *)selectedLocation;
-
+- (void)didSelectLocationMap:(Location *)location;
 @end

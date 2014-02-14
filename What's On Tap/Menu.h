@@ -26,6 +26,8 @@
 // Holds all the serve types
 @property NSMutableArray *serveTypeKeys;
 
++ (Menu *)getCurrentForLocation:(NSString *)location;
+
 // Fetches menu from server
 + (void)fetchForLocation:(NSString *)location success:(void (^)(Menu *menu))action failedWithError:(void (^)(NSError *))errorAction;
 
@@ -40,6 +42,8 @@
 
 // Gets all the style categories of beer for serve type
 - (NSArray *)getBeerStylesForServeType:(NSString *)serveType;
+
+- (NSArray *)getBeerCountsForServeTypes;
 @end
 
 @interface Menu (CoreDataGeneratedAccessors)

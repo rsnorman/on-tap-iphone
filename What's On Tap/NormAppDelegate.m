@@ -8,6 +8,7 @@
 
 #import "NormAppDelegate.h"
 #import "User.h"
+#import "TestFlight.h"
 
 @implementation NormAppDelegate
 
@@ -41,6 +42,8 @@
             NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
         }
     }
+    
+    [TestFlight takeOff:@"5fe32963-729e-4321-b07f-c8914d61cc94"];
     
     return YES;
 }

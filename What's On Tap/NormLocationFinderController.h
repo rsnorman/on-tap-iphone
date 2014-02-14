@@ -25,9 +25,13 @@
 @property NormIndicatorView *locationSearchIndicator;
 @property NormLocationTableViewController *locationsTableViewController;
 @property UITableView *locationsTableView;
+@property UIButton *viewAllLocationsButton;
+
+@property NSArray *locations;
 
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (nonatomic) NormConnectionManager *connectionManager;
 @property (nonatomic, strong) CLLocationManager *myLocationManager;
+@property (nonatomic) CLLocation *currentLocation;
 
 @end

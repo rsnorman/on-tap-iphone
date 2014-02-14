@@ -12,6 +12,8 @@
 #define _MAIN_COLOR [UIColor colorWithRed:198.0/255.0 green:56.0/255.0 blue:32.0/255.0 alpha:1.0]
 #define _DARK_COLOR [UIColor colorWithRed:42.0/255.0 green:39.0/255.0 blue:46.0/255.0 alpha:1.0]
 #define _SECONDARY_FONT @"CHAWP"
+#define _TERTIARY_FONT @"HelveticaNeue-Light"
 #define _MAX_IMAGE_RATIO 1.5
+#define METERS_PER_MILE 1609.344
 
 #endif

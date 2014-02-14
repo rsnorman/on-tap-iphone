@@ -11,6 +11,7 @@
 #import "NormEnlargeImage.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CoreImage/CoreImage.h>
+#import "TestFlight.h"
 
 @interface NormBeerViewController ()
 @property Beer *beer;
@@ -50,14 +51,14 @@
         
         
         self.nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageWidth + 20, topPadding, windowWidth - imageWidth - 25.0, 20)];
-        self.nameLabel.font = [UIFont fontWithName:_SECONDARY_FONT size:18.0];
+        self.nameLabel.font = [UIFont fontWithName:_TERTIARY_FONT size:18.0];
         [self.nameLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [self.nameLabel setNumberOfLines:0];
         self.nameLabel.textColor = [UIColor whiteColor];
         [scrollView addSubview:self.nameLabel];
         
         self.breweryLabel = [[UILabel alloc] initWithFrame:CGRectMake(imageWidth + 20, topPadding + 20, windowWidth - imageWidth - 25.0, 20)];
-        self.breweryLabel.font = [UIFont fontWithName:_SECONDARY_FONT size:15.0];
+        self.breweryLabel.font = [UIFont fontWithName:_TERTIARY_FONT size:15.0];
         [self.breweryLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [self.breweryLabel setNumberOfLines:0];
         self.breweryLabel.textColor = [UIColor lightTextColor];
@@ -106,6 +107,12 @@
 
         [scrollView addSubview:self.descriptionText];
         
+        [self.view setBackgroundColor:_DARK_COLOR];
+        
+        self.title = @"Details";
+        self.navigationItem.title = @"Details";
+        
+        [TestFlight passCheckpoint:@"Viewed Beer"];
     }
     
     return self;
@@ -115,7 +122,7 @@
 - (void)addCellLabel:(UILabel *)label frame:(CGRect)frame
 {
     label.frame = frame;
-    label.font = [UIFont fontWithName:_SECONDARY_FONT size:12.0];
+    label.font = [UIFont fontWithName:_TERTIARY_FONT size:12.0];
     label.textColor = [UIColor lightGrayColor];
     label.textAlignment = NSTextAlignmentCenter;
     [label setLineBreakMode:NSLineBreakByTruncatingTail];
@@ -149,20 +156,6 @@
     
     [self.logoImage setDelegate:self];
     [self.logoImage setLargeImageURL: self.beer.label];
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    
-	// Do any additional setup after loading the view.
-    [self.view setBackgroundColor:_DARK_COLOR];
-
-    self.title = @"Details";
-    self.navigationItem.title = @"Details";
-    
-    self.navigationController.navigationBar.barTintColor = [UIColor whiteColor];
-    self.navigationController.navigationBar.translucent = NO;
 }
 
 - (void)didReceiveMemoryWarning
