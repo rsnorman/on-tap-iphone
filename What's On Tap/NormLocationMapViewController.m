@@ -8,13 +8,16 @@
 
 #import "NormLocationMapViewController.h"
 #import "NormBarLocationView.h"
+#import "NormBarLocationItem.h"
 #import "constants.h"
 
-@interface NormLocationMapViewController ()
+@interface NormLocationMapViewController () <MKMapViewDelegate>
 
 @end
 
 @implementation NormLocationMapViewController
+
+BOOL isDoneRendering;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -45,18 +48,31 @@
         [self.view setBackgroundColor:_DARK_COLOR];
         self.mapView = [[MKMapView alloc] initWithFrame:CGRectMake(0, self.navigationBar.frame.size.height, self.view.frame.size.width, self.view.frame.size.height - self.navigationBar.frame.size.height)];
         [self.mapView setUserTrackingMode:MKUserTrackingModeFollow];
+        [self.mapView setDelegate:self];
         
         [self.view addSubview:self.mapView];
+        
+        self.locationDetailsView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height / 2)];
+        [self.locationDetailsView setBackgroundColor:[UIColor whiteColor]];
+        [self.locationDetailsView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
+        [self.locationDetailsView.layer setShadowRadius:3.0];
+        [self.locationDetailsView.layer setShadowOpacity:0.8];
+        [self.locationDetailsView.layer setOpacity:0.8];
+        
+        [self.view addSubview:self.locationDetailsView];
+        
+        isDoneRendering = NO;
     }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
 }
 
-- (void)viewDidAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
@@ -69,10 +85,18 @@
     NSMutableArray *annotations = [[NSMutableArray alloc] init];
     
     for (Location *location in self.locations) {
-        NormBarLocationView * barPlacemark = [[NormBarLocationView alloc] initWithLocation:location];
+//        NormBarLocationView * barPlacemark = [[NormBarLocationView alloc] initWithLocation:location];
+        NormBarLocationItem *barItem = [[NormBarLocationItem alloc] init];
+//        barItem.coordinate = [location getCoordinate];
+//        barItem.latitude = [[NSNumber alloc] initWithFloat: [location.latitude floatValue]];
+//        barItem.longitude = [[NSNumber alloc] initWithFloat: [location.longitude floatValue]];
+        barItem.location = location;
+//        NormBarLocationView *barPlacemark = [[NormBarLocationView alloc] initWithAnnotation:barItem reuseIdentifier:@"baritem"];
         
-        [self.mapView addAnnotation:(id)barPlacemark];
-        [annotations addObject:barPlacemark];
+        [self.mapView addAnnotation:barItem];
+        [annotations addObject:barItem];
+//        [self.mapView addAnnotation:(id)barPlacemark];
+//        [annotations addObject:barPlacemark];
         
         CLLocationCoordinate2D coordinate = [location getCoordinate];
         if (minLatitude > coordinate.latitude) {
@@ -109,6 +133,48 @@
     }
 }
 
+- (MKAnnotationView *)mapView:(MKMapView *)theMapView viewForAnnotation:(id <MKAnnotation>)annotation
+{
+    // in case it's the user location, we already have an annotation, so just return nil
+    if ([annotation isKindOfClass:[MKUserLocation class]])
+    {
+        return nil;
+    }
+    
+    // try to dequeue an existing pin view first
+    static NSString *BarAnnotationIdentifier = @"barAnnotationIdentifier";
+    
+    MKPinAnnotationView *pinView =
+    (MKPinAnnotationView *) [self.mapView dequeueReusableAnnotationViewWithIdentifier:BarAnnotationIdentifier];
+    if (pinView == nil)
+    {
+        // if an existing pin view was not available, create one
+        NormBarLocationView *customPinView = [[NormBarLocationView alloc]
+                                              initWithAnnotation:annotation reuseIdentifier:BarAnnotationIdentifier];
+
+        customPinView.canShowCallout = YES;
+//        customPinView.location = ((NormBarLocationItem *)annotation).location;
+        
+        // add a detail disclosure button to the callout which will open a new view controller page
+        //
+        // note: when the detail disclosure button is tapped, we respond to it via:
+        //       calloutAccessoryControlTapped delegate method
+        //
+        // by using "calloutAccessoryControlTapped", it's a convenient way to find out which annotation was tapped
+        //
+        UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
+        [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
+        customPinView.rightCalloutAccessoryView = rightButton;
+        
+        return customPinView;
+    }
+    else
+    {
+        pinView.annotation = annotation;
+    }
+    return pinView;
+}
+
 - (void)close
 {
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
@@ -119,6 +185,34 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+//- (void) mapView:(MKMapView *)mapView didSelectAnnotationView:(NormBarLocationView *)view
+//{
+//    self.selectedLocation = ((NormBarLocationItem *)view.annotation).location;
+//    if (isDoneRendering) {
+//        [self showMoreLocationDetails];
+//    }
+//}
+//
+//- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
+//{
+//    isDoneRendering = YES;
+//    
+//    if (self.selectedLocation) {
+//        [self showMoreLocationDetails];
+//    }
+//}
+
+- (void) showMoreLocationDetails
+{
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options:UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.locationDetailsView.frame = CGRectOffset(self.locationDetailsView.frame, 0, self.view.frame.size.height / 2 * -1);
+                     }                   completion:nil
+     ];
 }
 
 @end

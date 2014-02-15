@@ -95,10 +95,10 @@ BOOL locationsLoaded;
         [self.view addSubview:titleLabel];
         
         
-        self.viewAllLocationsButton = [[UIButton alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height + 45, 45, 45)];
+        self.viewAllLocationsButton = [[UIButton alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height, 60, 60)];
         [_viewAllLocationsButton setImage:[UIImage imageNamed:@"map-marker"] forState:UIControlStateNormal];
         [_viewAllLocationsButton setBackgroundColor:_MAIN_COLOR];
-        [_viewAllLocationsButton.layer setCornerRadius:22.5];
+        [_viewAllLocationsButton.layer setCornerRadius:30];
         [_viewAllLocationsButton addTarget:self action:@selector(showAllLocationsOnMap) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:_viewAllLocationsButton];
@@ -282,12 +282,12 @@ BOOL locationsLoaded;
 
 - (void) slideInLocationsMapButton
 {
-    [UIView animateWithDuration:1.0
+    [UIView animateWithDuration:0.7
                           delay:0.0
-                        options:UIViewAnimationOptionCurveEaseInOut
+                        options:UIViewAnimationOptionCurveEaseOut
                      animations:^
      {
-         self.viewAllLocationsButton.frame = CGRectOffset(self.viewAllLocationsButton.frame, 0, -100);
+         self.viewAllLocationsButton.frame = CGRectOffset(self.viewAllLocationsButton.frame, 0, -70);
      }
                      completion:nil];
 }

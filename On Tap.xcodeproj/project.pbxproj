@@ -84,6 +84,7 @@
 		94F0346D18ADCCA000D69526 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 94F0346718ADCCA000D69526 /* README.md */; };
 		94F0346E18ADCCA000D69526 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 94F0346818ADCCA000D69526 /* release_notes.md */; };
 		94F0347018ADCD1100D69526 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F0346F18ADCD1100D69526 /* libz.dylib */; };
+		94F0347318AF4A3800D69526 /* NormBarLocationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F0347218AF4A3800D69526 /* NormBarLocationItem.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -222,6 +223,8 @@
 		94F0346A18ADCCA000D69526 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
 		94F0346B18ADCCA000D69526 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		94F0346F18ADCD1100D69526 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		94F0347118AF4A3800D69526 /* NormBarLocationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBarLocationItem.h; sourceTree = "<group>"; };
+		94F0347218AF4A3800D69526 /* NormBarLocationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBarLocationItem.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -324,6 +327,8 @@
 				94F0343718A8981600D69526 /* NormServeTypeMenu.m */,
 				94F0346018AD04F800D69526 /* NormBarLocationView.h */,
 				94F0346118AD04F800D69526 /* NormBarLocationView.m */,
+				94F0347118AF4A3800D69526 /* NormBarLocationItem.h */,
+				94F0347218AF4A3800D69526 /* NormBarLocationItem.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -662,6 +667,7 @@
 				94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */,
 				94F0343818A8981600D69526 /* NormServeTypeMenu.m in Sources */,
 				596661AF18860997003E755E /* REMenuContainerView.m in Sources */,
+				94F0347318AF4A3800D69526 /* NormBarLocationItem.m in Sources */,
 				94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */,
 				943D938918977CB800634229 /* User.m in Sources */,
 				94BA82B01847AC2100D60EDC /* NormAppDelegate.m in Sources */,

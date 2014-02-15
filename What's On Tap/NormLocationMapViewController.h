@@ -15,5 +15,8 @@
 @property (retain, nonatomic) UINavigationBar *navigationBar;
 @property (retain, nonatomic) UILabel *navBarTitle;
 @property (retain, nonatomic) NSArray *locations;
+@property (retain, nonatomic) UIView *locationDetailsView;
 @property CLLocation *userLocation;
+@property (retain, nonatomic) Location *selectedLocation;
+
 @end

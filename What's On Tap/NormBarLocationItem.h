@@ -1,26 +1,15 @@
 //
-//  NormBarLocationView.h
+//  NormBarLocationItem.h
 //  On Tap
 //
-//  Created by Ryan Norman on 2/13/14.
+//  Created by Ryan Norman on 2/15/14.
 //  Copyright (c) 2014 Ryan Norman. All rights reserved.
 //
 
 
-
-//#import <MapKit/MapKit.h>
-#import "Location.h"
-//
-//@interface NormBarLocationView : MKAnnotationView
-//
-//- (id)initWithLocation:(Location*)location;
-//- (MKMapItem*)mapItem;
-//@property (retain, nonatomic) Location *location;
-//@end
-
 /*
- File: CustomAnnotationView.h
- Abstract: The custom MKAnnotationView object representing a generic location, displaying a title and image.
+ File: CustomMapItem.h
+ Abstract: The custom MKAnnotation object representing a generic location, hosting a title and image.
  Version: 1.4
  
  Disclaimer: IMPORTANT:  This Apple software is supplied to you by Apple
@@ -65,8 +54,23 @@
  
  */
 
+#import "Location.h"
+#import <Foundation/Foundation.h>
 #import <MapKit/MapKit.h>
 
-@interface NormBarLocationView : MKPinAnnotationView
-@property (retain, nonatomic) Location *location;
+@interface NormBarLocationItem : NSObject <MKAnnotation>
+{
+    CLLocationCoordinate2D coordinate;
+}
+
+@property (nonatomic, strong) NSString *place;
+@property (nonatomic, strong) NSString *imageName;
+
+@property (nonatomic, strong) NSNumber *latitude;
+@property (nonatomic, strong) NSNumber *longitude;
+
+@property (nonatomic, strong) Location *location;
+
+@property (nonatomic, readonly) CLLocationCoordinate2D coordinate;
+
 @end

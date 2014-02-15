@@ -126,11 +126,14 @@
              }
                              completion:nil];
         }
+        
+        [TestFlight passCheckpoint:@"Zoomed In/Out Beer Label With Pinch"];
     }
 }
 
 - (void)imageWasTapped
 {
+    [TestFlight passCheckpoint:@"Dismissed Beer Label With Tap"];
     [self.delegate imageShouldBeDismissed: self];
 }
 
@@ -152,6 +155,8 @@
          }
                          completion:nil];
         
+        [TestFlight passCheckpoint:@"Zoomed In Beer Label With Double Tap"];
+        
     } else if (self.zoomedIn) {
         
         self.zoomedIn = NO;
@@ -167,6 +172,8 @@
              
          }
                          completion:nil];
+        
+        [TestFlight passCheckpoint:@"Zoomed Out Beer Label With Double Tap"];
     } else {
         [UIView animateWithDuration:0.1
                               delay:0.0
@@ -188,7 +195,7 @@
          }];
     }
     
-    [TestFlight passCheckpoint:@"Zoomed In Beer Label With Double Tap"];
+    [TestFlight passCheckpoint:@"Tried Zooming In Small Beer Label With Double Tap"];
 }
 
 - (CGRect)getMaximumBounds
@@ -286,6 +293,8 @@
                  self.frame = frame;
              }
                              completion:nil];
+            
+            [TestFlight passCheckpoint:@"Failed Dismissing Beer Label with Throw"];
         }
         
         
