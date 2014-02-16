@@ -68,5 +68,5 @@
 #import <MapKit/MapKit.h>
 
 @interface NormBarLocationView : MKPinAnnotationView
-@property (retain, nonatomic) Location *location;
+- (Location *) getLocation;
 @end

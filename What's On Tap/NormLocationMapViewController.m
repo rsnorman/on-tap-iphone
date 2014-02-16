@@ -11,7 +11,7 @@
 #import "NormBarLocationItem.h"
 #import "constants.h"
 
-@interface NormLocationMapViewController () <MKMapViewDelegate>
+@interface NormLocationMapViewController () <MKMapViewDelegate, NormDrawerControllerDelegate, NormLocationDetailsViewDelegate>
 
 @end
 
@@ -52,20 +52,17 @@ BOOL isDoneRendering;
         
         [self.view addSubview:self.mapView];
         
-        self.locationDetailsView = [[UIView alloc] initWithFrame:CGRectMake(0, self.view.frame.size.height, self.view.frame.size.width, self.view.frame.size.height / 2)];
-        [self.locationDetailsView setBackgroundColor:[UIColor whiteColor]];
-        [self.locationDetailsView.layer setShadowColor:[UIColor darkGrayColor].CGColor];
-        [self.locationDetailsView.layer setShadowRadius:3.0];
-        [self.locationDetailsView.layer setShadowOpacity:0.8];
-        [self.locationDetailsView.layer setOpacity:0.8];
         
-        [self.view addSubview:self.locationDetailsView];
+        self.locationDetailsView = [[NormLocationDetailsView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height / 2)];
+        [self.locationDetailsView setDelegate:self];
+        
+        self.locationDetailsDrawerController = [[NormDrawerController alloc] initWithDelegate: self];
+        [self.locationDetailsDrawerController setDrawerView:self.locationDetailsView];
         
         isDoneRendering = NO;
     }
     return self;
 }
-
 
 - (void)viewDidLoad
 {
@@ -82,21 +79,7 @@ BOOL isDoneRendering;
     float maxLatitude = self.userLocation.coordinate.latitude;
     float maxLongitude = self.userLocation.coordinate.longitude;
     
-    NSMutableArray *annotations = [[NSMutableArray alloc] init];
-    
     for (Location *location in self.locations) {
-//        NormBarLocationView * barPlacemark = [[NormBarLocationView alloc] initWithLocation:location];
-        NormBarLocationItem *barItem = [[NormBarLocationItem alloc] init];
-//        barItem.coordinate = [location getCoordinate];
-//        barItem.latitude = [[NSNumber alloc] initWithFloat: [location.latitude floatValue]];
-//        barItem.longitude = [[NSNumber alloc] initWithFloat: [location.longitude floatValue]];
-        barItem.location = location;
-//        NormBarLocationView *barPlacemark = [[NormBarLocationView alloc] initWithAnnotation:barItem reuseIdentifier:@"baritem"];
-        
-        [self.mapView addAnnotation:barItem];
-        [annotations addObject:barItem];
-//        [self.mapView addAnnotation:(id)barPlacemark];
-//        [annotations addObject:barPlacemark];
         
         CLLocationCoordinate2D coordinate = [location getCoordinate];
         if (minLatitude > coordinate.latitude) {
@@ -126,6 +109,22 @@ BOOL isDoneRendering;
     
     MKCoordinateRegion _savedRegion = [_mapView regionThatFits:region];
     [_mapView setRegion:_savedRegion animated:NO];
+}
+
+- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
+{
+
+    NSMutableArray *annotations = [[NSMutableArray alloc] init];
+    
+    for (Location *location in self.locations) {
+        NormBarLocationItem *barItem = [[NormBarLocationItem alloc] init];
+        
+        barItem.location = location;
+        
+        [self.mapView addAnnotation:barItem];
+        [annotations addObject:barItem];
+        
+    }
     
     if (self.locations.count == 1) {
         [self.navBarTitle setText: ((Location *)[self.locations objectAtIndex:0]).name];
@@ -153,15 +152,8 @@ BOOL isDoneRendering;
                                               initWithAnnotation:annotation reuseIdentifier:BarAnnotationIdentifier];
 
         customPinView.canShowCallout = YES;
-//        customPinView.location = ((NormBarLocationItem *)annotation).location;
-        
-        // add a detail disclosure button to the callout which will open a new view controller page
-        //
-        // note: when the detail disclosure button is tapped, we respond to it via:
-        //       calloutAccessoryControlTapped delegate method
-        //
-        // by using "calloutAccessoryControlTapped", it's a convenient way to find out which annotation was tapped
-        //
+        customPinView.animatesDrop = YES;
+
         UIButton *rightButton = [UIButton buttonWithType:UIButtonTypeDetailDisclosure];
         [rightButton addTarget:nil action:nil forControlEvents:UIControlEventTouchUpInside];
         customPinView.rightCalloutAccessoryView = rightButton;
@@ -187,32 +179,48 @@ BOOL isDoneRendering;
     // Dispose of any resources that can be recreated.
 }
 
-//- (void) mapView:(MKMapView *)mapView didSelectAnnotationView:(NormBarLocationView *)view
-//{
-//    self.selectedLocation = ((NormBarLocationItem *)view.annotation).location;
-//    if (isDoneRendering) {
-//        [self showMoreLocationDetails];
-//    }
-//}
-//
-//- (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
-//{
-//    isDoneRendering = YES;
-//    
-//    if (self.selectedLocation) {
-//        [self showMoreLocationDetails];
-//    }
-//}
+- (void) mapView:(MKMapView *)mapView annotationView:(NormBarLocationView *)view calloutAccessoryControlTapped:(UIControl *)control
+{
+    if (self.selectedLocation != [view getLocation]) {
+        self.selectedLocation = [view getLocation];
+        [self showMoreLocationDetails];
+    } else {
+        self.selectedLocation = nil;
+        [self hideMoreLocationDetails];
+    }
+}
+
+- (void) mapView:(MKMapView *)mapView didDeselectAnnotationView:(MKAnnotationView *)view
+{
+    self.selectedLocation = nil;
+    [self.locationDetailsDrawerController close];
+}
+
+- (void) willCloseDrawer:(UIView *)drawer
+{
+    self.selectedLocation = nil;
+}
+
 
 - (void) showMoreLocationDetails
 {
-    [UIView animateWithDuration:0.5
-                          delay:0.0
-                        options:UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         self.locationDetailsView.frame = CGRectOffset(self.locationDetailsView.frame, 0, self.view.frame.size.height / 2 * -1);
-                     }                   completion:nil
-     ];
+    [self.locationDetailsView setCurrentLocation:self.userLocation];
+    [self.locationDetailsView setLocation:self.selectedLocation];
+    [self.locationDetailsDrawerController open];
+}
+
+- (void) hideMoreLocationDetails
+{
+    [self.locationDetailsDrawerController close];
+}
+
+- (void) didSelectViewLocationMenu
+{
+    [self.delegate didSelectViewLocationMenu:self.selectedLocation];
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
+        
+    }];
+    
 }
 
 @end

@@ -102,17 +102,6 @@
 #import "NormBarLocationView.h"
 #import "NormBarLocationItem.h"
 
-static CGFloat kMaxViewWidth = 150.0;
-
-static CGFloat kViewWidth = 90;
-static CGFloat kViewLength = 100;
-
-static CGFloat kLeftMargin = 15.0;
-static CGFloat kRightMargin = 5.0;
-static CGFloat kTopMargin = 5.0;
-static CGFloat kBottomMargin = 10.0;
-static CGFloat kRoundBoxLeft = 10.0;
-
 @interface NormBarLocationView ()
 @property (nonatomic, strong) UILabel *annotationLabel;
 @property (nonatomic, strong) UIImageView *annotationImage;
@@ -186,6 +175,11 @@ static CGFloat kRoundBoxLeft = 10.0;
     // for any other custom annotation view which has just contains a simple image, this won't be needed
     //
     [self setNeedsDisplay];
+}
+
+- (Location *) getLocation
+{
+    return ((NormBarLocationItem *)self.annotation).location;
 }
 
 //- (void)drawRect:(CGRect)rect

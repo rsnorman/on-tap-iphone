@@ -21,13 +21,14 @@
 #import <UIKit/UIKit.h>
 
 
-@interface NormLocationFinderController () <NormModalControllerDelegate, CLLocationManagerDelegate, NormConnectionManagerDelegate, NormLocationTableViewControllerDelegate>
+@interface NormLocationFinderController () <NormModalControllerDelegate, CLLocationManagerDelegate, NormConnectionManagerDelegate, NormLocationTableViewControllerDelegate, NormLocationMapViewControllerDelegate>
 @end
 
 @implementation NormLocationFinderController
 
 @synthesize managedObjectContext;
 BOOL locationsLoaded;
+float maxDistanceRadius;
 
 - (id)init
 {
@@ -54,7 +55,7 @@ BOOL locationsLoaded;
         self.locationsTableView.delegate = self.locationsTableViewController;
         self.locationsTableView.backgroundColor = [UIColor clearColor];
         self.locationsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self.locationsTableView setContentInset:UIEdgeInsetsMake(50,0,50,0)];
+        [self.locationsTableView setContentInset:UIEdgeInsetsMake(50,0,60,0)];
         
         self.locationsTableViewController.tableView = self.locationsTableView;
         [self.locationsTableView setHidden:YES];
@@ -87,7 +88,7 @@ BOOL locationsLoaded;
         
         
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 35)];
-        [titleLabel setFont:[UIFont fontWithName:_TERTIARY_FONT size:22.0f]];
+        [titleLabel setFont:[UIFont fontWithName:_PRIMARY_FONT size:26.0f]];
         [titleLabel setText:@"Select Location"];
         [titleLabel setTextColor:[UIColor whiteColor]];
         [titleLabel setTextAlignment:NSTextAlignmentCenter];
@@ -104,6 +105,7 @@ BOOL locationsLoaded;
         [self.view addSubview:_viewAllLocationsButton];
         
         locationsLoaded = NO;
+        maxDistanceRadius = 30.0;
     }
     
     return self;
@@ -249,6 +251,7 @@ BOOL locationsLoaded;
     NormLocationMapViewController *locationMapController = [[NormLocationMapViewController alloc] init];
     [locationMapController setLocations:@[location]];
     [locationMapController setUserLocation:self.currentLocation];
+    [locationMapController setDelegate:self];
     [self presentViewController:locationMapController animated:YES completion:nil];
 }
 
@@ -260,6 +263,10 @@ BOOL locationsLoaded;
         self.isUpdatingLocations = YES;
         self.currentLocation = newLocation;
         [Location fetchFromServerForLat: newLocation.coordinate.latitude andLong: newLocation.coordinate.longitude success:^(NSArray *locations){
+            
+            NSPredicate *distancePredicate = [NSPredicate predicateWithFormat:@"SELF.distanceAway.floatValue <= %f", maxDistanceRadius];
+            
+            locations = [locations filteredArrayUsingPredicate:distancePredicate];
             
             [self performSelectorOnMainThread:@selector(loadLocations:) withObject:locations waitUntilDone:NO];
             
@@ -277,6 +284,7 @@ BOOL locationsLoaded;
     NormLocationMapViewController *locationMapController = [[NormLocationMapViewController alloc] init];
     [locationMapController setLocations:self.locations];
     [locationMapController setUserLocation:self.currentLocation];
+    [locationMapController setDelegate:self];
     [self presentViewController:locationMapController animated:YES completion:nil];
 }
 
@@ -292,6 +300,13 @@ BOOL locationsLoaded;
                      completion:nil];
 }
 
+- (void) didSelectViewLocationMenu:(Location *)location
+{
+    
+    [[self presentingViewController] dismissViewControllerAnimated:YES completion:^() {
+        [self.delegate setLocation:location];
+    }];
+}
 
 
 @end

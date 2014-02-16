@@ -18,8 +18,8 @@
     if (self) {
         self.appearsBehindNavigationBar = NO; // Affects only iOS 7
         self.backgroundColor = _DARK_COLOR;
-        self.font = [UIFont fontWithName:_TERTIARY_FONT size:22];
-        self.subtitleFont = [UIFont fontWithName:_TERTIARY_FONT size:14];
+        self.font = [UIFont fontWithName:_PRIMARY_FONT size:22];
+        self.subtitleFont = [UIFont fontWithName:_PRIMARY_FONT size:14];
         self.textColor = [UIColor lightGrayColor];
         self.separatorColor = [UIColor darkGrayColor];
         

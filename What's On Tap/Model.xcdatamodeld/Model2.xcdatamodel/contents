@@ -21,7 +21,9 @@
         <attribute name="address" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="distanceAway" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="inventory" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="lID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="menus" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Menu" inverseName="location" inverseEntity="Menu" syncable="YES"/>
