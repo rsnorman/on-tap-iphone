@@ -22,6 +22,8 @@
 
 
 @interface NormLocationFinderController () <NormModalControllerDelegate, CLLocationManagerDelegate, NormConnectionManagerDelegate, NormLocationTableViewControllerDelegate, NormLocationMapViewControllerDelegate>
+
+@property (retain, nonatomic, readonly) UILabel *titleLabel;
 @end
 
 @implementation NormLocationFinderController
@@ -29,6 +31,7 @@
 @synthesize managedObjectContext;
 BOOL locationsLoaded;
 float maxDistanceRadius;
+
 
 - (id)init
 {
@@ -87,13 +90,13 @@ float maxDistanceRadius;
         [bgFooterImageView setImage:flippedImage];
         
         
-        UILabel *titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 15, self.view.frame.size.width, 35)];
-        [titleLabel setFont:[UIFont fontWithName:_PRIMARY_FONT size:26.0f]];
-        [titleLabel setText:@"Select Location"];
-        [titleLabel setTextColor:[UIColor whiteColor]];
-        [titleLabel setTextAlignment:NSTextAlignmentCenter];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -35, self.view.frame.size.width, 35)];
+        [self.titleLabel setFont:[UIFont fontWithName:_PRIMARY_FONT size:26.0f]];
+        [self.titleLabel setText:@"Select Location"];
+        [self.titleLabel setTextColor:[UIColor whiteColor]];
+        [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
         
-        [self.view addSubview:titleLabel];
+        [self.view addSubview:self.titleLabel];
         
         
         self.viewAllLocationsButton = [[UIButton alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height, 60, 60)];
@@ -114,6 +117,16 @@ float maxDistanceRadius;
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [UIView animateWithDuration:0.5
+                          delay:0.0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.titleLabel.frame = CGRectOffset(self.titleLabel.frame, 0, 50);
+                     }
+                     completion:^(BOOL finished) {
+        
+                     }];
 }
 
 - (void)didConnectToNetwork

@@ -28,7 +28,6 @@
 		596661AF18860997003E755E /* REMenuContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661A818860997003E755E /* REMenuContainerView.m */; };
 		596661B018860997003E755E /* REMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661AA18860997003E755E /* REMenuItem.m */; };
 		596661B118860997003E755E /* REMenuItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 596661AC18860997003E755E /* REMenuItemView.m */; };
-		59A30A9C18B03DA000CBF63E /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F0346618ADCCA000D69526 /* libTestFlight.a */; };
 		59F83D0B18A6F1870089BC4F /* NormConnectionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F83D0A18A6F1870089BC4F /* NormConnectionManager.m */; };
 		59F83D1218A6FAAC0089BC4F /* NormLocationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F83D1118A6FAAC0089BC4F /* NormLocationTableViewController.m */; };
 		59F83D1B18AFF5330089BC4F /* NormLocationDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F83D1A18AFF5330089BC4F /* NormLocationDetailsView.m */; };
@@ -87,6 +86,7 @@
 		94F0346E18ADCCA000D69526 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 94F0346818ADCCA000D69526 /* release_notes.md */; };
 		94F0347018ADCD1100D69526 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F0346F18ADCD1100D69526 /* libz.dylib */; };
 		94F0347318AF4A3800D69526 /* NormBarLocationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F0347218AF4A3800D69526 /* NormBarLocationItem.m */; };
+		94F0347718B048CF00D69526 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F0347518B048B400D69526 /* libTestFlight.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -223,7 +223,6 @@
 		94F0346018AD04F800D69526 /* NormBarLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBarLocationView.h; sourceTree = "<group>"; };
 		94F0346118AD04F800D69526 /* NormBarLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBarLocationView.m; sourceTree = "<group>"; };
 		94F0346318ADA2E600D69526 /* map-marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-marker@2x.png"; path = "Images/map-marker@2x.png"; sourceTree = SOURCE_ROOT; };
-		94F0346618ADCCA000D69526 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
 		94F0346718ADCCA000D69526 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		94F0346818ADCCA000D69526 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
 		94F0346918ADCCA000D69526 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
@@ -232,6 +231,7 @@
 		94F0346F18ADCD1100D69526 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		94F0347118AF4A3800D69526 /* NormBarLocationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBarLocationItem.h; sourceTree = "<group>"; };
 		94F0347218AF4A3800D69526 /* NormBarLocationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBarLocationItem.m; sourceTree = "<group>"; };
+		94F0347518B048B400D69526 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = ../../../Downloads/TestFlightSDK2.2.1/libTestFlight.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,7 +245,7 @@
 				94BA82A41847AC2100D60EDC /* CoreData.framework in Frameworks */,
 				94BA82A21847AC2100D60EDC /* UIKit.framework in Frameworks */,
 				94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */,
-				59A30A9C18B03DA000CBF63E /* libTestFlight.a in Frameworks */,
+				94F0347718B048CF00D69526 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,7 +526,7 @@
 		94F0346518ADCC7200D69526 /* TestFlight */ = {
 			isa = PBXGroup;
 			children = (
-				94F0346618ADCCA000D69526 /* libTestFlight.a */,
+				94F0347518B048B400D69526 /* libTestFlight.a */,
 				94F0346718ADCCA000D69526 /* README.md */,
 				94F0346818ADCCA000D69526 /* release_notes.md */,
 				94F0346918ADCCA000D69526 /* TestFlight.h */,
@@ -758,6 +758,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -777,6 +778,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Debug;
 		};
@@ -797,6 +799,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -818,7 +821,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
@@ -827,10 +830,12 @@
 					"$(inherited)",
 					"/Users/ryan/iPhoneApps/Whats\\ On\\ Tap/Whats\\ On\\ Tap",
 					"/Users/rsnorman15/iPhoneApps/ontap/Whats\\ On\\ Tap",
-					"/Users/rsnorman15/iPhoneApps/ontap/What's\\ On\\ Tap",
+					"/Users/rsnorman15/iPhoneApps/ontap/Whats\\ On\\ Tap",
+					"/Users/ryan/iPhoneApps/What's\\ On\\ Tap/What's\\ On\\ Tap",
+					/Users/ryan/Downloads/TestFlightSDK2.2.1,
 				);
 				PRODUCT_NAME = "On Tap";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B8DD1814-ABB4-42A8-BE5C-C110DC3834EA";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -841,7 +846,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
@@ -850,10 +855,12 @@
 					"$(inherited)",
 					"/Users/ryan/iPhoneApps/Whats\\ On\\ Tap/Whats\\ On\\ Tap",
 					"/Users/rsnorman15/iPhoneApps/ontap/Whats\\ On\\ Tap",
-					"/Users/rsnorman15/iPhoneApps/ontap/What's\\ On\\ Tap",
+					"/Users/rsnorman15/iPhoneApps/ontap/Whats\\ On\\ Tap",
+					"/Users/ryan/iPhoneApps/What's\\ On\\ Tap/What's\\ On\\ Tap",
+					/Users/ryan/Downloads/TestFlightSDK2.2.1,
 				);
 				PRODUCT_NAME = "On Tap";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "B8DD1814-ABB4-42A8-BE5C-C110DC3834EA";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

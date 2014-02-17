@@ -10,6 +10,7 @@
 #import "NormBarLocationView.h"
 #import "NormBarLocationItem.h"
 #import "constants.h"
+#import "TestFlight.h"
 
 @interface NormLocationMapViewController () <MKMapViewDelegate, NormDrawerControllerDelegate, NormLocationDetailsViewDelegate>
 
@@ -113,22 +114,25 @@ BOOL isDoneRendering;
 
 - (void) mapViewDidFinishRenderingMap:(MKMapView *)mapView fullyRendered:(BOOL)fullyRendered
 {
-
-    NSMutableArray *annotations = [[NSMutableArray alloc] init];
-    
-    for (Location *location in self.locations) {
-        NormBarLocationItem *barItem = [[NormBarLocationItem alloc] init];
+    if (!isDoneRendering) {
+        NSMutableArray *annotations = [[NSMutableArray alloc] init];
         
-        barItem.location = location;
+        for (Location *location in self.locations) {
+            NormBarLocationItem *barItem = [[NormBarLocationItem alloc] init];
+            
+            barItem.location = location;
+            
+            [self.mapView addAnnotation:barItem];
+            [annotations addObject:barItem];
+            
+        }
         
-        [self.mapView addAnnotation:barItem];
-        [annotations addObject:barItem];
+        if (self.locations.count == 1) {
+            [self.navBarTitle setText: ((Location *)[self.locations objectAtIndex:0]).name];
+            [self.mapView selectAnnotation:[annotations objectAtIndex:0] animated:NO];
+        }
         
-    }
-    
-    if (self.locations.count == 1) {
-        [self.navBarTitle setText: ((Location *)[self.locations objectAtIndex:0]).name];
-        [self.mapView selectAnnotation:[annotations objectAtIndex:0] animated:NO];
+        isDoneRendering = YES;
     }
 }
 
@@ -184,9 +188,12 @@ BOOL isDoneRendering;
     if (self.selectedLocation != [view getLocation]) {
         self.selectedLocation = [view getLocation];
         [self showMoreLocationDetails];
+        
+        [TestFlight passCheckpoint:@"Opened Drawer For Location"];
     } else {
         self.selectedLocation = nil;
         [self hideMoreLocationDetails];
+        [TestFlight passCheckpoint:@"Closed Drawer For Location"];
     }
 }
 
@@ -194,6 +201,8 @@ BOOL isDoneRendering;
 {
     self.selectedLocation = nil;
     [self.locationDetailsDrawerController close];
+    
+    [TestFlight passCheckpoint:@"Opened Drawer For Location By Deselecting"];
 }
 
 - (void) willCloseDrawer:(UIView *)drawer
@@ -216,6 +225,7 @@ BOOL isDoneRendering;
 
 - (void) didSelectViewLocationMenu
 {
+    [TestFlight passCheckpoint:@"Opened Menu From Map"];
     [self.delegate didSelectViewLocationMenu:self.selectedLocation];
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
         
