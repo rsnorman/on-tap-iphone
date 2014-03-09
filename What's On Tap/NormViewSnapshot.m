@@ -11,6 +11,19 @@
 
 @implementation NormViewSnapshot
 
++(UIImage*)snapshotOfWindow:(UIView *)view
+{
+    if ([[UIScreen mainScreen] respondsToSelector:@selector(scale)])
+        UIGraphicsBeginImageContextWithOptions(view.window.bounds.size, NO, [UIScreen mainScreen].scale);
+    else
+        UIGraphicsBeginImageContext(view.window.bounds.size);
+    [view.window.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
 +(UIImage *)blurredSnapshotOfView:(UIView *)view
 {
     // Create the image context

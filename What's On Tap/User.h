@@ -15,6 +15,8 @@
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) Location *currentLocation;
+@property (nonatomic, retain) NSString *groupPreference;
+@property (nonatomic, retain) NSString *sortPreference;
 
 + (User *)current;
 - (void)save;

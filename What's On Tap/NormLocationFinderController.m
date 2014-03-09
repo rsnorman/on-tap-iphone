@@ -40,14 +40,11 @@ float maxDistanceRadius;
     if (self) {
         self.isUpdatingLocations = NO;
 
-        self.locationSearchIndicator = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 150)];
-        self.locationSearchIndicator.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
-        [self.locationSearchIndicator startAnimating];
-        [self.locationSearchIndicator setMessage:@"Grabbing nearby locations"];
-        [self.locationSearchIndicator.spinner setActivityIndicatorViewStyle:UIActivityIndicatorViewStyleWhite];
-        [self.locationSearchIndicator.spinner setBackgroundColor:[UIColor clearColor]];
-        [self.locationSearchIndicator.messageLabel setTextColor:[UIColor whiteColor]];
+        self.locationSearchIndicator = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width * 0.7, 150)];
+        [self.locationSearchIndicator setCenter:CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2)];
         [self.view addSubview:self.locationSearchIndicator];
+        [self.locationSearchIndicator setMessage:@"Finding nearby locations"];
+        [self.locationSearchIndicator startAnimating];
         
         self.locationsTableViewController = [[NormLocationTableViewController alloc]init];
         [self.locationsTableViewController setDelegate:self];
@@ -58,10 +55,9 @@ float maxDistanceRadius;
         self.locationsTableView.delegate = self.locationsTableViewController;
         self.locationsTableView.backgroundColor = [UIColor clearColor];
         self.locationsTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        [self.locationsTableView setContentInset:UIEdgeInsetsMake(50,0,60,0)];
+        [self.locationsTableView setContentInset:UIEdgeInsetsMake(75,0,75,0)];
         
         self.locationsTableViewController.tableView = self.locationsTableView;
-        [self.locationsTableView setHidden:YES];
         [self.view addSubview:self.locationsTableView];
         
         id appDelegate = (id)[[UIApplication sharedApplication] delegate];
@@ -114,50 +110,33 @@ float maxDistanceRadius;
     return self;
 }
 
-- (void) viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    
-    [UIView animateWithDuration:0.5
-                          delay:0.0
-                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut
-                     animations:^{
-                         self.titleLabel.frame = CGRectOffset(self.titleLabel.frame, 0, 50);
-                     }
-                     completion:^(BOOL finished) {
-        
-                     }];
-}
 
 - (void)didConnectToNetwork
 {
-    [self.locationSearchIndicator startAnimating];
     [self.locationSearchIndicator setMessage:@"Finding nearby locations"];
-    [self.locationsTableView setHidden:NO];
+    [self.locationSearchIndicator startAnimating];
+//    [self.locationsTableView setHidden:NO];
     
     if ([CLLocationManager locationServicesEnabled]) {
         [self.myLocationManager startUpdatingLocation];
     } else {
-        [self.locationSearchIndicator stopAnimating];
-        [self.locationSearchIndicator setMessage:@"Please turn on location services in Settings"];
-        [self.locationsTableView setHidden:YES];
+        [self.locationSearchIndicator setErrorMessage:@"Please turn on location services in Settings"];
+//        [self.locationsTableView setHidden:YES];
     }
 }
 
 - (void)didDisconnectFromNetwork
 {
     if (!locationsLoaded) {
-        [self.locationSearchIndicator stopAnimating];
-        [self.locationSearchIndicator setMessage:@"Please connect to the Internet"];
-        [self.locationsTableView setHidden:YES];
+        [self.locationSearchIndicator setErrorMessage:@"Please connect to the Internet"];
+//        [self.locationsTableView setHidden:YES];
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didChangeAuthorizationStatus:(CLAuthorizationStatus)status
 {
     if (status == kCLAuthorizationStatusDenied) {
-        [self.locationSearchIndicator stopAnimating];
-        [self.locationSearchIndicator setMessage:@"Please turn on location services in Settings"];
+        [self.locationSearchIndicator setErrorMessage:@"Please turn on location services in Settings"];
         [self.locationsTableView setHidden:YES];
         
         [TestFlight passCheckpoint:@"Would Not Turn On Location Services"];
@@ -200,8 +179,7 @@ float maxDistanceRadius;
 
 - (void) showError
 {
-    [self.locationSearchIndicator stopAnimating];
-    [self.locationSearchIndicator setMessage:@"There was a problem finding nearby locations.\nAre you in a dry county?"];
+    [self.locationSearchIndicator setErrorMessage:@"There was a problem finding nearby locations.\nAre you in a dry county?"];
     [self.locationsTableView setHidden:YES];
     
     [TestFlight passCheckpoint:@"Error Finding Locations"];
@@ -210,10 +188,20 @@ float maxDistanceRadius;
 - (void) loadLocations:(NSArray *)locations
 {
     if (locations.count > 0) {
-        [self.locationSearchIndicator setHidden:YES];
+        [self.locationSearchIndicator stopAnimating];
         [self.locationsTableViewController setLocations:locations];
         self.locations = locations;
         locationsLoaded = YES;
+        
+        [UIView animateWithDuration:0.4
+                              delay:0.0
+                            options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut
+                         animations:^{
+                             self.titleLabel.frame = CGRectOffset(self.titleLabel.frame, 0, 50);
+                         }
+                         completion:^(BOOL finished) {
+                             
+                         }];
     } else {
         [self.locationSearchIndicator stopAnimating];
         [self.locationSearchIndicator setMessage:@"Couldn't find any nearby locations.\nAre you in a dry county?"];
@@ -303,7 +291,7 @@ float maxDistanceRadius;
 
 - (void) slideInLocationsMapButton
 {
-    [UIView animateWithDuration:0.7
+    [UIView animateWithDuration:0.4
                           delay:0.0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^

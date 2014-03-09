@@ -33,7 +33,11 @@
 		59F83D1B18AFF5330089BC4F /* NormLocationDetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F83D1A18AFF5330089BC4F /* NormLocationDetailsView.m */; };
 		59F83D1E18B01BEC0089BC4F /* NormDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59F83D1D18B01BEC0089BC4F /* NormDrawerController.m */; };
 		941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 941102A4186B4B0500B61F57 /* NormPriceLabel.m */; };
+		9413348318B90694001B342B /* NormSearchDisplayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9413348218B90694001B342B /* NormSearchDisplayController.m */; };
+		9416AB1718B885C700CFA651 /* NormSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 9416AB1618B885C700CFA651 /* NormSearchBar.m */; };
+		9416AB1918B8F0DF00CFA651 /* settings@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 9416AB1818B8F0DF00CFA651 /* settings@2x.png */; };
 		941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */; };
+		9434145B18C3858C00C206CD /* NormDropDownMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 9434145A18C3858C00C206CD /* NormDropDownMenu.m */; };
 		943D938918977CB800634229 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938818977CB800634229 /* User.m */; };
 		943D938C189B02D200634229 /* NormIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938B189B02D200634229 /* NormIndicatorView.m */; };
 		943D938F189B25B400634229 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938E189B25B400634229 /* Reachability.m */; };
@@ -58,6 +62,8 @@
 		94851F781872578000668E77 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6E1872578000668E77 /* icon@2x.png */; };
 		94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F8E1877B43B00668E77 /* NormDraggableImageView.m */; };
 		94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A91D66185E5F90006FEA65 /* NormImageCache.m */; };
+		94B73D8918CBF4B90056934E /* FBShimmeringLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94B73D8618CBF4B90056934E /* FBShimmeringLayer.m */; };
+		94B73D8A18CBF4B90056934E /* FBShimmeringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94B73D8818CBF4B90056934E /* FBShimmeringView.m */; };
 		94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829D1847AC2100D60EDC /* Foundation.framework */; };
 		94BA82A01847AC2100D60EDC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829F1847AC2100D60EDC /* CoreGraphics.framework */; };
 		94BA82A21847AC2100D60EDC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA82A11847AC2100D60EDC /* UIKit.framework */; };
@@ -76,6 +82,7 @@
 		94BA82D31847B01200D60EDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BA82D21847B01200D60EDC /* Main.storyboard */; };
 		94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82D81847E80D00D60EDC /* NormBeerListController.m */; };
 		94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */; };
+		94ED900118C9726900CB05CE /* NormDropDownMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94ED900018C9726900CB05CE /* NormDropDownMenuController.m */; };
 		94F0343418A8874D00D69526 /* NormBeerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F0343318A8874D00D69526 /* NormBeerTableViewController.m */; };
 		94F0343818A8981600D69526 /* NormServeTypeMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F0343718A8981600D69526 /* NormServeTypeMenu.m */; };
 		94F0345D18ABAFD700D69526 /* NormLocationMapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F0345C18ABAFD700D69526 /* NormLocationMapViewController.m */; };
@@ -144,8 +151,15 @@
 		59F83D1D18B01BEC0089BC4F /* NormDrawerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormDrawerController.m; sourceTree = "<group>"; };
 		941102A3186B4B0500B61F57 /* NormPriceLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormPriceLabel.h; sourceTree = "<group>"; };
 		941102A4186B4B0500B61F57 /* NormPriceLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormPriceLabel.m; sourceTree = "<group>"; };
+		9413348118B90694001B342B /* NormSearchDisplayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormSearchDisplayController.h; sourceTree = "<group>"; };
+		9413348218B90694001B342B /* NormSearchDisplayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormSearchDisplayController.m; sourceTree = "<group>"; };
+		9416AB1518B885C700CFA651 /* NormSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormSearchBar.h; sourceTree = "<group>"; };
+		9416AB1618B885C700CFA651 /* NormSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormSearchBar.m; sourceTree = "<group>"; };
+		9416AB1818B8F0DF00CFA651 /* settings@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings@2x.png"; sourceTree = "<group>"; };
 		941B4C8D184D6EFC0014DDAC /* NormBeerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerViewController.h; path = ../NormBeerViewController.h; sourceTree = "<group>"; };
 		941B4C8E184D6EFC0014DDAC /* NormBeerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerViewController.m; path = ../NormBeerViewController.m; sourceTree = "<group>"; };
+		9434145918C3858C00C206CD /* NormDropDownMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormDropDownMenu.h; sourceTree = "<group>"; };
+		9434145A18C3858C00C206CD /* NormDropDownMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormDropDownMenu.m; sourceTree = "<group>"; };
 		943D938718977CB800634229 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
 		943D938818977CB800634229 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		943D938A189B02D200634229 /* NormIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormIndicatorView.h; sourceTree = "<group>"; };
@@ -188,6 +202,12 @@
 		94A74BF5187C2E70009075E9 /* NormDraggableImageViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormDraggableImageViewDelegate.h; sourceTree = "<group>"; };
 		94A91D65185E5F90006FEA65 /* NormImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageCache.h; sourceTree = "<group>"; };
 		94A91D66185E5F90006FEA65 /* NormImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageCache.m; sourceTree = "<group>"; };
+		94B73D8318CBF4B90056934E /* FBShimmering-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBShimmering-Prefix.pch"; sourceTree = "<group>"; };
+		94B73D8418CBF4B90056934E /* FBShimmering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBShimmering.h; sourceTree = "<group>"; };
+		94B73D8518CBF4B90056934E /* FBShimmeringLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBShimmeringLayer.h; sourceTree = "<group>"; };
+		94B73D8618CBF4B90056934E /* FBShimmeringLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBShimmeringLayer.m; sourceTree = "<group>"; };
+		94B73D8718CBF4B90056934E /* FBShimmeringView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBShimmeringView.h; sourceTree = "<group>"; };
+		94B73D8818CBF4B90056934E /* FBShimmeringView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBShimmeringView.m; sourceTree = "<group>"; };
 		94BA829A1847AC2100D60EDC /* On Tap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On Tap.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94BA829D1847AC2100D60EDC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		94BA829F1847AC2100D60EDC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -211,6 +231,9 @@
 		94BA82D81847E80D00D60EDC /* NormBeerListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBeerListController.m; sourceTree = "<group>"; };
 		94BA82E41848FF9800D60EDC /* NormBeerTableCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NormBeerTableCell.h; path = ../NormBeerTableCell.h; sourceTree = "<group>"; };
 		94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NormBeerTableCell.m; path = ../NormBeerTableCell.m; sourceTree = "<group>"; };
+		94C1486818C2F66900503516 /* Model3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model3.xcdatamodel; sourceTree = "<group>"; };
+		94ED8FFF18C9726900CB05CE /* NormDropDownMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormDropDownMenuController.h; sourceTree = "<group>"; };
+		94ED900018C9726900CB05CE /* NormDropDownMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormDropDownMenuController.m; sourceTree = "<group>"; };
 		94F0343218A8874D00D69526 /* NormBeerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBeerTableViewController.h; sourceTree = "<group>"; };
 		94F0343318A8874D00D69526 /* NormBeerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBeerTableViewController.m; sourceTree = "<group>"; };
 		94F0343518A895A300D69526 /* NormBeerTableViewControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormBeerTableViewControllerDelegate.h; sourceTree = "<group>"; };
@@ -338,6 +361,10 @@
 				94F0347218AF4A3800D69526 /* NormBarLocationItem.m */,
 				59F83D1918AFF5330089BC4F /* NormLocationDetailsView.h */,
 				59F83D1A18AFF5330089BC4F /* NormLocationDetailsView.m */,
+				9416AB1518B885C700CFA651 /* NormSearchBar.h */,
+				9416AB1618B885C700CFA651 /* NormSearchBar.m */,
+				9434145918C3858C00C206CD /* NormDropDownMenu.h */,
+				9434145A18C3858C00C206CD /* NormDropDownMenu.m */,
 			);
 			name = Interface;
 			sourceTree = "<group>";
@@ -372,6 +399,10 @@
 				94F0345C18ABAFD700D69526 /* NormLocationMapViewController.m */,
 				59F83D1C18B01BEC0089BC4F /* NormDrawerController.h */,
 				59F83D1D18B01BEC0089BC4F /* NormDrawerController.m */,
+				9413348118B90694001B342B /* NormSearchDisplayController.h */,
+				9413348218B90694001B342B /* NormSearchDisplayController.m */,
+				94ED8FFF18C9726900CB05CE /* NormDropDownMenuController.h */,
+				94ED900018C9726900CB05CE /* NormDropDownMenuController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -379,6 +410,7 @@
 		9488C0AD18675FB70038ED51 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				9416AB1818B8F0DF00CFA651 /* settings@2x.png */,
 				94F0346318ADA2E600D69526 /* map-marker@2x.png */,
 				94851F651872578000668E77 /* bottle-button@2x.png */,
 				94851F661872578000668E77 /* bottle-menu-item@2x.png */,
@@ -429,6 +461,19 @@
 			name = Delegates;
 			sourceTree = "<group>";
 		};
+		94B73D8218CBF4B90056934E /* FBShimmering */ = {
+			isa = PBXGroup;
+			children = (
+				94B73D8318CBF4B90056934E /* FBShimmering-Prefix.pch */,
+				94B73D8418CBF4B90056934E /* FBShimmering.h */,
+				94B73D8518CBF4B90056934E /* FBShimmeringLayer.h */,
+				94B73D8618CBF4B90056934E /* FBShimmeringLayer.m */,
+				94B73D8718CBF4B90056934E /* FBShimmeringView.h */,
+				94B73D8818CBF4B90056934E /* FBShimmeringView.m */,
+			);
+			path = FBShimmering;
+			sourceTree = "<group>";
+		};
 		94BA82911847AC2100D60EDC = {
 			isa = PBXGroup;
 			children = (
@@ -465,6 +510,7 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				94B73D8218CBF4B90056934E /* FBShimmering */,
 				94F0346518ADCC7200D69526 /* TestFlight */,
 				94F0344318A9AFF300D69526 /* RefreshControl */,
 				5965603F189426A600ED2E9A /* DataModels */,
@@ -625,6 +671,7 @@
 				5938104A18861AC300D88215 /* Rhino Pata.otf in Resources */,
 				5938104B18861AC300D88215 /* Rhino Ponta.otf in Resources */,
 				5938104C18861AC300D88215 /* Rhino Raja.otf in Resources */,
+				9416AB1918B8F0DF00CFA651 /* settings@2x.png in Resources */,
 				94851F701872578000668E77 /* bottle-menu-item@2x.png in Resources */,
 				94851F751872578000668E77 /* glass-button@2x.png in Resources */,
 				94F0346D18ADCCA000D69526 /* README.md in Resources */,
@@ -662,6 +709,7 @@
 				5938104F188623E100D88215 /* NormLocationFinderController.m in Sources */,
 				9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */,
 				596661B018860997003E755E /* REMenuItem.m in Sources */,
+				9416AB1718B885C700CFA651 /* NormSearchBar.m in Sources */,
 				94F0345D18ABAFD700D69526 /* NormLocationMapViewController.m in Sources */,
 				5965605D189440E400ED2E9A /* Location.m in Sources */,
 				94F0343418A8874D00D69526 /* NormBeerTableViewController.m in Sources */,
@@ -671,6 +719,8 @@
 				946083471885B4BA005EF155 /* NormEnlargeImage.m in Sources */,
 				596661B118860997003E755E /* REMenuItemView.m in Sources */,
 				9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */,
+				9413348318B90694001B342B /* NormSearchDisplayController.m in Sources */,
+				94B73D8918CBF4B90056934E /* FBShimmeringLayer.m in Sources */,
 				596560631894411600ED2E9A /* Beer.m in Sources */,
 				59F83D0B18A6F1870089BC4F /* NormConnectionManager.m in Sources */,
 				94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */,
@@ -684,6 +734,7 @@
 				94BA82B01847AC2100D60EDC /* NormAppDelegate.m in Sources */,
 				59F83D1E18B01BEC0089BC4F /* NormDrawerController.m in Sources */,
 				941B4C8F184D6EFC0014DDAC /* NormBeerViewController.m in Sources */,
+				94B73D8A18CBF4B90056934E /* FBShimmeringView.m in Sources */,
 				94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */,
 				596661AE18860997003E755E /* REMenu.m in Sources */,
 				59381052188627A900D88215 /* NormLocationCell.m in Sources */,
@@ -691,11 +742,13 @@
 				943D938F189B25B400634229 /* Reachability.m in Sources */,
 				596560601894410300ED2E9A /* Menu.m in Sources */,
 				946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */,
+				94ED900118C9726900CB05CE /* NormDropDownMenuController.m in Sources */,
 				94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */,
 				94F0346218AD04F800D69526 /* NormBarLocationView.m in Sources */,
 				94851F64186DD81D00668E77 /* NormImageView.m in Sources */,
 				59F83D1B18AFF5330089BC4F /* NormLocationDetailsView.m in Sources */,
 				94608333188023B6005EF155 /* NormBlurImage.m in Sources */,
+				9434145B18C3858C00C206CD /* NormDropDownMenu.m in Sources */,
 				941102A5186B4B0500B61F57 /* NormPriceLabel.m in Sources */,
 				94BA82AC1847AC2100D60EDC /* main.m in Sources */,
 				943D938C189B02D200634229 /* NormIndicatorView.m in Sources */,
@@ -758,7 +811,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -799,7 +852,7 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -821,8 +874,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
 				INFOPLIST_FILE = "What's On Tap/On Tap-Info.plist";
@@ -835,7 +888,7 @@
 					/Users/ryan/Downloads/TestFlightSDK2.2.1,
 				);
 				PRODUCT_NAME = "On Tap";
-				PROVISIONING_PROFILE = "B8DD1814-ABB4-42A8-BE5C-C110DC3834EA";
+				PROVISIONING_PROFILE = "207CF5D0-EC73-4F6C-BA5C-1C5ECDE28BD4";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -846,8 +899,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
 				INFOPLIST_FILE = "What's On Tap/On Tap-Info.plist";
@@ -860,7 +913,7 @@
 					/Users/ryan/Downloads/TestFlightSDK2.2.1,
 				);
 				PRODUCT_NAME = "On Tap";
-				PROVISIONING_PROFILE = "B8DD1814-ABB4-42A8-BE5C-C110DC3834EA";
+				PROVISIONING_PROFILE = "207CF5D0-EC73-4F6C-BA5C-1C5ECDE28BD4";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -944,10 +997,11 @@
 		59656040189426D400ED2E9A /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				94C1486818C2F66900503516 /* Model3.xcdatamodel */,
 				59F83D1818AFEC0D0089BC4F /* Model2.xcdatamodel */,
 				59656041189426D400ED2E9A /* Model.xcdatamodel */,
 			);
-			currentVersion = 59F83D1818AFEC0D0089BC4F /* Model2.xcdatamodel */;
+			currentVersion = 94C1486818C2F66900503516 /* Model3.xcdatamodel */;
 			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

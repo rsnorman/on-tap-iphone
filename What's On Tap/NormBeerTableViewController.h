@@ -11,9 +11,10 @@
 
 @interface NormBeerTableViewController : UITableViewController
 
-@property NSArray *currentBeerStyles;
-@property NSDictionary *currentBeersGroupedByStyle;
+@property NSArray *currentBeerGroups;
+@property NSDictionary *currentBeersGrouped;
 @property UISearchBar *beerSearchBar;
+@property NSString *groupName;
 
 @property id<NormBeerTableViewControllerDelegate> delegate;
 

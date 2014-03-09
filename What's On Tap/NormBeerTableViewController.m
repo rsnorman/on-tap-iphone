@@ -13,18 +13,20 @@
 #import "TestFlight.h"
 
 @interface NormBeerTableViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
+@property NSDictionary *unfilteredBeers;
+@property NSArray *unfilteredGroups;
 
 @end
 
 @implementation NormBeerTableViewController
 
-NSDictionary *unfilteredBeers;
-NSArray *unfilteredStyles;
+
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
     if (self) {
+        
     }
     return self;
 }
@@ -48,13 +50,23 @@ NSArray *unfilteredStyles;
 
 - (void)setBeers:(NSDictionary *)beers
 {
-    self.currentBeersGroupedByStyle = beers;
-    self.currentBeerStyles = [[beers allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+    self.currentBeersGrouped = beers;
+    
+    NSMutableArray *sortedGroups = [[NSMutableArray alloc] initWithArray:[[beers allKeys] sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
+    
+    
+    [sortedGroups removeObject:@"New"];
+    
+    if (((NSArray *)[self.currentBeersGrouped objectForKey:@"New"]).count > 0) {
+        [sortedGroups insertObject:@"New" atIndex:0];
+    }
+    
+    self.currentBeerGroups = sortedGroups;
     
     [self.tableView reloadData];
     self.tableView.hidden = NO;
     
-    if (self.currentBeersGroupedByStyle.count > 0) {
+    if (self.currentBeersGrouped.count > 0) {
         [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
     }
 }
@@ -62,13 +74,13 @@ NSArray *unfilteredStyles;
 // Table View Delegate
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return self.currentBeerStyles.count;
+    return self.currentBeerGroups.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [[self.currentBeersGroupedByStyle valueForKey:[self.currentBeerStyles objectAtIndex:section]] count];
+    return [[self.currentBeersGrouped valueForKey:[self.currentBeerGroups objectAtIndex:section]] count];
 }
 
 
@@ -85,8 +97,14 @@ NSArray *unfilteredStyles;
         cell = [[NormBeerTableCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:normTableCellIdentifier];
     }
     
-    beerStyle = [self.currentBeerStyles objectAtIndex:indexPath.section];
-    beer = [[self.currentBeersGroupedByStyle objectForKey: beerStyle] objectAtIndex:indexPath.row];
+    if ([_groupName isEqualToString:@"styleCategory"]) {
+        [cell setSecondaryLabelField:@"breweryName"];
+    } else {
+        [cell setSecondaryLabelField:@"style"];
+    }
+    
+    beerStyle = [self.currentBeerGroups objectAtIndex:indexPath.section];
+    beer = [[self.currentBeersGrouped objectForKey: beerStyle] objectAtIndex:indexPath.row];
     [cell setBeer:beer];
     
     return cell;
@@ -100,9 +118,9 @@ NSArray *unfilteredStyles;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *beerStyle = [self.currentBeerStyles objectAtIndex:indexPath.section];
+    NSString *beerStyle = [self.currentBeerGroups objectAtIndex:indexPath.section];
     
-    Beer *beer = [[self.currentBeersGroupedByStyle objectForKey: beerStyle] objectAtIndex:indexPath.row];
+    Beer *beer = [[self.currentBeersGrouped objectForKey: beerStyle] objectAtIndex:indexPath.row];
     
     
     if ([self.delegate respondsToSelector:@selector(didSelectBeer:)]) {
@@ -120,6 +138,19 @@ NSArray *unfilteredStyles;
     UIView* customView = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 35.0)];
     customView.backgroundColor = bgHeaderColor;
     
+    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 0.5)];
+    UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0, 34.5, 320.0, 0.5)];
+    
+    [topBorder.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    [topBorder.layer setBorderWidth:0.5];
+    [topBorder setClipsToBounds:YES];
+    bottomBorder.layer.borderColor = [UIColor lightGrayColor].CGColor;
+    bottomBorder.layer.borderWidth = 0.5;
+    bottomBorder.clipsToBounds = YES;
+    
+    [customView addSubview:topBorder];
+    [customView addSubview:bottomBorder];
+    
     // create the button object
     UILabel * headerLabel = [[UILabel alloc] initWithFrame:CGRectZero];
     headerLabel.opaque = NO;
@@ -128,27 +159,19 @@ NSArray *unfilteredStyles;
     headerLabel.font = [UIFont boldSystemFontOfSize:14];
     headerLabel.frame = CGRectMake(5.0, 0.0, 300.0, 35.0);
     
-    
-    headerLabel.text = [self.currentBeerStyles objectAtIndex:section];
+    headerLabel.text = [self.currentBeerGroups objectAtIndex:section];
     [customView addSubview:headerLabel];
-    
-    UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 0.5)];
-    UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0, 34.5, 320.0, 0.5)];
-    
-    topBorder.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    topBorder.layer.borderWidth = 1.0f;
-    bottomBorder.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    bottomBorder.layer.borderWidth = 1.0f;
-    
-    [customView addSubview:topBorder];
-    [customView addSubview:bottomBorder];
-    
+        
     return customView;
 }
 
 - (CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 35.0;
+    if ([((NSString *)[self.currentBeerGroups objectAtIndex:section]) isEqualToString: @"None"] ) {
+        return 0.0;
+    } else {
+        return 35.0;
+    }
 }
 
 
@@ -168,10 +191,8 @@ NSArray *unfilteredStyles;
 
 - (void) hideTableViewWithAnimate:(BOOL)animated completion:(void (^)(BOOL isComplete))completionAction
 {
-    [UIView animateWithDuration:0.5
+    [UIView animateWithDuration:0.3
                           delay:0.0
-         usingSpringWithDamping:0.6
-          initialSpringVelocity:4.0
                         options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
                      animations:^
      {
@@ -187,11 +208,11 @@ NSArray *unfilteredStyles;
 {
     
     if (searchString.length > 0) {
-        NSMutableDictionary *filteredBeersGroupedByStyle = [[NSMutableDictionary alloc] init];
-        for (NSString *style in unfilteredStyles)
+        NSMutableDictionary *filteredBeersGrouped = [[NSMutableDictionary alloc] init];
+        for (NSString *group in _unfilteredGroups)
         {
             NSMutableArray * matchingBeers = [[NSMutableArray alloc] init];
-            for (Beer *beer in [unfilteredBeers objectForKey:style]) {
+            for (Beer *beer in [_unfilteredBeers objectForKey:group]) {
                 
                 if ([beer.name rangeOfString:searchString options:NSCaseInsensitiveSearch].location != NSNotFound ) {
                     [matchingBeers addObject:beer];
@@ -199,13 +220,13 @@ NSArray *unfilteredStyles;
             }
             
             if (matchingBeers.count > 0) {
-                [filteredBeersGroupedByStyle setValue:matchingBeers forKey:style];
+                [filteredBeersGrouped setValue:matchingBeers forKey:group];
             }
         }
         
-        [self setBeers:filteredBeersGroupedByStyle];
+        [self setBeers:filteredBeersGrouped];
     } else {
-        [self setBeers:unfilteredBeers];
+        [self setBeers:_unfilteredBeers];
     }
     
     return YES;
@@ -213,18 +234,20 @@ NSArray *unfilteredStyles;
 
 - (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller
 {
-    unfilteredBeers = self.currentBeersGroupedByStyle;
-    unfilteredStyles = self.currentBeerStyles;
+    _unfilteredBeers = self.currentBeersGrouped;
+    _unfilteredGroups = self.currentBeerGroups;
     
     [TestFlight passCheckpoint:@"Searched Beers"];
 }
 
 //  Removes the filter from the menu
 - (void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller{
-    [self setBeers:unfilteredBeers];
+    [self setBeers:_unfilteredBeers];
     
-    unfilteredStyles = nil;
-    unfilteredBeers = nil;
+    _unfilteredGroups = nil;
+    _unfilteredBeers = nil;
+    
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:YES];
 }
 
 // Sets the cell height for the search results

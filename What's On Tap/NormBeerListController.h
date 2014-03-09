@@ -16,12 +16,17 @@
 #import "NormConnectionManager.h"
 #import "NormBeerTableViewController.h"
 #import "NormServeTypeMenu.h"
+#import "NormSearchBar.h"
+#import "NormSearchDisplayController.h"
 
 // Controller for view the list of all beers on a menu
 @interface NormBeerListController : UIViewController
 
 // Menu that contains all the beers
 @property Menu *beerMenu;
+
+// New beers since the last time visiting
+@property (retain, nonatomic) NSMutableArray *addedBeers;
 
 // Current serve type that is being displayed
 @property NSString *currentServeType;
@@ -39,10 +44,10 @@
 @property UIRefreshControl *refreshControl;
 
 // Search bar for filtering beers
-@property UISearchBar *beerSearchBar;
+@property NormSearchBar *beerSearchBar;
 
 // Search display controller for filtering beers
-@property UISearchDisplayController *beerSearchDisplayController;
+@property NormSearchDisplayController *beerSearchDisplayController;
 
 @property UILabel *errorLabel;
 

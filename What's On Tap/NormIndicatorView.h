@@ -15,7 +15,9 @@
 @property BOOL hidesWhenStopped;
 
 -(void) setMessage:(NSString *)message;
+- (void)setErrorMessage:(NSString *)errorMessage;
 -(void) startAnimating;
 -(void) stopAnimating;
+-(void) stopAnimatingWithSuccessMessage:(NSString *) successMessage withDelay:(float) delay;
 -(void) setHidesWhenStopped:(BOOL)hidesWhenStopped;
 @end

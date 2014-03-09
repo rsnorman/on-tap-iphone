@@ -26,5 +26,6 @@
 @dynamic summary;
 @dynamic menuID;
 @dynamic menu;
+@synthesize isNew;
 
 @end

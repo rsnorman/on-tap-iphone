@@ -21,39 +21,94 @@
 @synthesize serveTypeKeys;
 @synthesize serveTypes;
 
-NSMutableDictionary *beerStyles;
+NSMutableDictionary *beerGroups;
 NSMutableDictionary *groupedBeers;
 NSManagedObjectContext *managedObjectContext;
 
-+ (Menu *)getCurrentForLocation: (NSString *)location
++ (NSManagedObjectContext *) getObjectContext
 {
-    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-    managedObjectContext = [appDelegate managedObjectContext];
+    if (managedObjectContext != nil) {
+        id appDelegate = (id)[[UIApplication sharedApplication] delegate];
+        managedObjectContext = [appDelegate managedObjectContext];
+    }
     
+    return managedObjectContext;
+}
+
++ (NSArray *) all
+{
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Menu" inManagedObjectContext:managedObjectContext];
+                                   entityForName:@"Menu" inManagedObjectContext: [Menu getObjectContext]];
+    [fetchRequest setEntity:entity];
+
+    NSError *error;
+    NSArray *menus = [[self getObjectContext] executeFetchRequest:fetchRequest error:&error];
+    
+    return menus;
+}
+
++ (NSArray *) findAll:(NSPredicate *)predicate
+{
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    NSEntityDescription *entity = [NSEntityDescription
+                                   entityForName:@"Menu" inManagedObjectContext:[Menu getObjectContext]];
     [fetchRequest setEntity:entity];
     
+    [fetchRequest setPredicate:predicate];
+    
+    NSError *error;
+    NSArray *menus = [[self getObjectContext] executeFetchRequest:fetchRequest error:&error];
+    
+    return menus;
+}
+
++ (Menu *) find:(NSPredicate *)predicate
+{
+    return (Menu *)[[self findAll:predicate] objectAtIndex:0];
+}
+
++ (Menu *) last:(NSPredicate *)predicate
+{
+    NSArray *menus = [self findAll:predicate];
+    
+    if ([menus count] > 0) {
+        return (Menu *)[menus objectAtIndex:[menus count] - 1];
+    }
+    
+    return nil;
+}
+
++ (Menu *)getLastForLocation: (NSString *)location
+{
     NSDateComponents *components = [[NSCalendar currentCalendar]
                                     components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
                                     fromDate:[NSDate date]];
     NSDate *today = [[NSCalendar currentCalendar]
                      dateFromComponents:components];
     
-    //    NSDate *tomorrow = [NSDate dateWithTimeIntervalSinceNow: (60.0f*60.0f*24.0f)]; // For Test whether it refreshes correctly
+    Menu *menu = [self last:[NSPredicate predicateWithFormat:@"locationId == %@ AND createdOn < %@", location, today]];
     
-    NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"locationId == %@ AND createdOn >= %@", location, today];
-    [fetchRequest setPredicate:predicateID];
-    
-    NSError *error;
-    
-    NSArray *menus = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
-    
-    if ( [menus count] > 0) {
-        Menu * menu = [menus objectAtIndex:[menus count] - 1];
+    if ( menu != nil) {
         [menu setup];
-        
+        return menu;
+    } else {
+        return nil;
+    }
+}
+
++ (Menu *)getCurrentForLocation: (NSString *)location
+{
+    NSDateComponents *components = [[NSCalendar currentCalendar]
+                                    components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
+                                    fromDate:[NSDate date]];
+    NSDate *today = [[NSCalendar currentCalendar]
+                     dateFromComponents:components];
+    
+    Menu *menu = [self last:[NSPredicate predicateWithFormat:@"locationId == %@ AND createdOn >= %@", location, today]];
+    
+    if ( menu != nil) {
+        [menu setup];
         return menu;
     } else {
         return nil;
@@ -62,61 +117,31 @@ NSManagedObjectContext *managedObjectContext;
 
 + (void)fetchForLocation:(NSString *)location success:(void (^)(Menu *))action failedWithError:(void (^)(NSError *))errorAction
 {
-    id appDelegate = (id)[[UIApplication sharedApplication] delegate];
-    managedObjectContext = [appDelegate managedObjectContext];
+    NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
     
-    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-    NSEntityDescription *entity = [NSEntityDescription
-                                   entityForName:@"Menu" inManagedObjectContext:managedObjectContext];
-    [fetchRequest setEntity:entity];
+    // Local brewery
+    // NSString *urlAsString = @"http://whatisontap.herokuapp.com/locations/11580/menus/today";
     
-//    NSDateComponents *components = [[NSCalendar currentCalendar]
-//                                    components:NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit
-//                                    fromDate:[NSDate date]];
-//    NSDate *today = [[NSCalendar currentCalendar]
-//                         dateFromComponents:components];
-//    
-////    NSDate *tomorrow = [NSDate dateWithTimeIntervalSinceNow: (60.0f*60.0f*24.0f)]; // For Test whether it refreshes correctly
-//    
-//    NSPredicate *predicateID = [NSPredicate predicateWithFormat:@"locationId == %@ AND createdOn >= %@", location, today];
-//    [fetchRequest setPredicate:predicateID];
-//    
-//    NSError *error;
-//    
-//    NSArray *menus = [managedObjectContext executeFetchRequest:fetchRequest error:&error];
+    NSURL *url = [[NSURL alloc] initWithString:urlAsString];
+    NSLog(@"Grab From: %@", urlAsString);
     
-//    if ( [menus count] > 0) {
-//        Menu * menu = [menus objectAtIndex:[menus count] - 1];
-//        [menu setup];
-//
-//        action(menu);
-//    } else {
-        NSString *urlAsString = [NSString stringWithFormat:@"http://whatisontap.herokuapp.com/locations/%@/menus/today", location];
+    [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
         
-        // Local brewery
-//        NSString *urlAsString = @"http://whatisontap.herokuapp.com/locations/11580/menus/today";
-        
-        NSURL *url = [[NSURL alloc] initWithString:urlAsString];
-        NSLog(@"Grab From: %@", urlAsString);
-        
-        [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error) {
+            errorAction(error);
+        } else {                
+            NSError *localError = nil;
+            NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:1 error:&localError];
             
-            if (error) {
-                errorAction(error);
-            } else {                
-                NSError *localError = nil;
-                NSDictionary *results = [NSJSONSerialization JSONObjectWithData:data options:1 error:&localError];
+            if (localError != nil) {
+                errorAction(localError);
                 
-                if (localError != nil) {
-                    errorAction(localError);
-                    
-                    return;
-                }
-                
-                action([self menuFromJSON:results]);
+                return;
             }
-        }];
-//    }
+            
+            action([self menuFromJSON:results]);
+        }
+    }];
 }
 
 + (void)refreshForLocation:(NSString *)location success:(void (^)(Menu *))action failedWithError:(void (^)(NSError *))errorAction
@@ -149,23 +174,21 @@ NSManagedObjectContext *managedObjectContext;
 
 + (Menu *)menuFromJSON:(NSDictionary *)results
 {
-    
-    
     NSArray *jsonBeers = [results objectForKey:@"beers"];
     
     Menu *menu = [NSEntityDescription insertNewObjectForEntityForName:@"Menu"
-                                                       inManagedObjectContext:managedObjectContext];
+                                                       inManagedObjectContext:[Menu getObjectContext]];
     
     menu.mID = [results objectForKey:@"_id"];
     menu.locationId = (NSString *)[results objectForKey:@"locationId"];
     menu.location = [Location findByLocationId:menu.locationId];
     
     menu.createdOn = [NSDate date];
-    [managedObjectContext save:nil];
+    [menu save];
     
     for (NSDictionary *beerDic in jsonBeers) {
         Beer *beer = [NSEntityDescription insertNewObjectForEntityForName:@"Beer"
-                                                   inManagedObjectContext:managedObjectContext];
+                                                   inManagedObjectContext:[Menu getObjectContext]];
         
         beer.bID = [beerDic objectForKey:@"_id"];
         beer.menuID = menu.mID;
@@ -202,9 +225,13 @@ NSManagedObjectContext *managedObjectContext;
             beer.styleCategory = @"Special";
         }
         
+        if (beer.breweryName.length == 0) {
+            beer.breweryName = @"Unknown";
+        }
+        
         [menu addBeersObject:beer];
         
-        [managedObjectContext save:nil];
+        [menu save];
     }
     
     [menu setup];
@@ -212,12 +239,23 @@ NSManagedObjectContext *managedObjectContext;
     return menu;
 }
 
++ (Menu *) new
+{
+    return [NSEntityDescription insertNewObjectForEntityForName:@"Menu"
+                                  inManagedObjectContext:[Menu getObjectContext]];
+}
+
+- (void) save
+{
+    [[Menu getObjectContext] save:nil];
+}
+
 - (void)setup
 {
     self.serveTypeKeys = [[NSMutableArray alloc] init];
     self.serveTypes = [[NSMutableDictionary alloc] init];
     
-    beerStyles = [[NSMutableDictionary alloc] init];
+    beerGroups = [[NSMutableDictionary alloc] init];
     groupedBeers = [[NSMutableDictionary alloc] init];
     
     [self.serveTypes setObject:[[NSMutableArray alloc] init] forKey:@"On Tap"];
@@ -237,33 +275,50 @@ NSManagedObjectContext *managedObjectContext;
     if ([[self.serveTypes objectForKey:@"On Tap"] count] == 0) {
         [self.serveTypeKeys removeObject:@"On Tap"];
     }
-    
-    for (NSString *serveType in serveTypeKeys) {
-        NSSortDescriptor *sortByName = [NSSortDescriptor sortDescriptorWithKey:@"name"
-                                                                     ascending:YES];
-        NSArray *sortDescriptors = [NSArray arrayWithObject:sortByName];
-        
-        [self.serveTypes setObject:[(NSArray *)[self.serveTypes objectForKey:serveType] sortedArrayUsingDescriptors:sortDescriptors] forKey:serveType];
-    }
 }
 
 
-- (NSDictionary *)getBeersGroupedByStyleForServeType:(NSString *)serveType
+- (NSDictionary *)getBeersGrouped:(NSString *)group serveType:(NSString *)serveType sort:(NSString *)sort
 {
+    beerGroups = [[NSMutableDictionary alloc] init];
+    groupedBeers = [[NSMutableDictionary alloc] init];
+    
     NSMutableDictionary *groupedBeersForServeType;
+    
+    for (NSString *serveType in serveTypeKeys) {
+        NSSortDescriptor *beerSort;
+        if ([sort isEqualToString:@"abv"]) {
+            beerSort = [NSSortDescriptor sortDescriptorWithKey:sort
+                                          ascending:NO];
+        } else{
+            beerSort = [NSSortDescriptor sortDescriptorWithKey:sort
+                                          ascending:YES];
+        }
+        
+        NSArray *sortDescriptors = [NSArray arrayWithObject:beerSort];
+        
+        [self.serveTypes setObject:[(NSArray *)[self.serveTypes objectForKey:serveType] sortedArrayUsingDescriptors:sortDescriptors] forKey:serveType];
+    }
     
     if ([groupedBeers objectForKey:serveType] == nil) {
         groupedBeersForServeType = [[NSMutableDictionary alloc] init];
         
         NSArray *serveTypeBeers = [self.serveTypes objectForKey:serveType];
         
-        for (Beer* beer in serveTypeBeers)
-        {
-            if ([groupedBeersForServeType objectForKey:beer.styleCategory] == nil) {
-                [groupedBeersForServeType setObject:[[NSMutableArray alloc] init] forKey:beer.styleCategory];
+        if (![group isEqualToString:@"none"]) {
+            for (Beer* beer in serveTypeBeers)
+            {
+                    SEL groupAttributeSelector = NSSelectorFromString(group);
+                    IMP groupAttribute = [beer methodForSelector:groupAttributeSelector];
+                    
+                    if ([groupedBeersForServeType objectForKey:groupAttribute(beer, groupAttributeSelector)] == nil) {
+                        [groupedBeersForServeType setObject:[[NSMutableArray alloc] init] forKey:groupAttribute(beer, groupAttributeSelector)];
+                    }
+                    
+                    [[groupedBeersForServeType objectForKey:groupAttribute(beer, groupAttributeSelector)] addObject:beer];
             }
-            
-            [[groupedBeersForServeType objectForKey:beer.styleCategory] addObject:beer];
+        } else {
+            [groupedBeersForServeType setObject:serveTypeBeers forKey:@"None"];
         }
         
         [groupedBeers setObject:groupedBeersForServeType forKey:serveType];
@@ -272,33 +327,45 @@ NSManagedObjectContext *managedObjectContext;
         groupedBeersForServeType = [groupedBeers objectForKey:serveType];
     }
     
+    if (![group isEqualToString:@"none"]) {
+        // Add New Beers Since Last Visit
+        NSArray *serveTypeBeers = [self.serveTypes objectForKey:serveType];
+        NSArray *newBeersForServeType = [serveTypeBeers filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self.isNew == %hhd", YES]];
+        [groupedBeersForServeType setObject:newBeersForServeType forKey:@"New"];
+    }
+    
     return groupedBeersForServeType;
 }
 
-- (NSArray *)getBeerStylesForServeType:(NSString *)serveType
-{
-    NSArray *orderedBeerStyles;
-    
-    if ([beerStyles objectForKey:serveType] == nil) {
-        NSMutableArray * unOrderedStyleKeys = [[NSMutableArray alloc] init];
-        
-        for (Beer* beer in [self.serveTypes objectForKey:serveType])
-        {
-            if (![unOrderedStyleKeys containsObject:beer.styleCategory]){
-                [unOrderedStyleKeys addObject:beer.styleCategory];
-            }
-            
-        }
-        
-        orderedBeerStyles = [unOrderedStyleKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-        
-        [beerStyles setObject:orderedBeerStyles forKey:serveType];
-    } else {
-        orderedBeerStyles = [beerStyles objectForKey:serveType];
-    }
-    
-    return orderedBeerStyles;
-}
+//- (NSArray *)getBeerGroupsFrom:(NSString *)groupAttribute serveType:(NSString *)serveType
+//{
+//    NSArray *orderedBeerGroups;
+//    
+//    if ([beerGroups objectForKey:serveType] == nil) {
+//        NSMutableArray * unOrderedGroupKeys = [[NSMutableArray alloc] init];
+//        
+//        
+//        for (Beer* beer in [self.serveTypes objectForKey:serveType])
+//        {
+//            SEL groupAttributeSelector = NSSelectorFromString(groupAttribute);
+//            IMP groupAttribute = [beer methodForSelector:groupAttributeSelector];
+//            
+//            if (![unOrderedGroupKeys containsObject:groupAttribute(beer, groupAttributeSelector)]){
+//                [unOrderedGroupKeys addObject:groupAttribute(beer, groupAttributeSelector)];
+//            }
+//            
+//        }
+//        
+//        orderedBeerGroups = [unOrderedGroupKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
+//        
+//        [beerGroups setObject:orderedBeerGroups forKey:serveType];
+//    } else {
+//        orderedBeerGroups = [beerGroups objectForKey:serveType];
+//    }
+//    
+//    
+//    return orderedBeerGroups;
+//}
 
 - (NSArray *)getBeerCountsForServeTypes
 {
@@ -310,6 +377,33 @@ NSManagedObjectContext *managedObjectContext;
     }
     
     return beerCounts;
+}
+
+- (void)flagNewBeersSinceLastMenu:(Menu *)lastMenu
+{
+    NSArray *newBeers = [NSArray arrayWithArray:[self.beers allObjects]];
+    NSArray *oldBeers = [NSArray arrayWithArray:[lastMenu.beers allObjects]];
+    
+    
+    NSMutableArray *oldBeerNames = [[NSMutableArray alloc] init];
+    
+    for (Beer *beer in oldBeers) {
+        [oldBeerNames addObject:beer.name];
+    }
+    
+    //oldBeerNames = [[NSMutableArray alloc] init]; //For testing to make sure new beers are showing up
+    
+    for (Beer *beer in newBeers) {
+        if ([oldBeerNames filteredArrayUsingPredicate:[NSPredicate
+                                                  predicateWithFormat:@"self == %@", beer.name]].count == 0 ) {
+            [beer setIsNew:YES];
+        }
+    }
+}
+
+- (void)setSort:(NSString *)sort
+{
+    
 }
 
 @end

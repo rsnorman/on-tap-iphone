@@ -10,6 +10,7 @@
 
 @interface NormViewSnapshot : NSObject
 
++ (UIImage*)snapshotOfWindow:(UIView *)view;
 + (UIImage*)snapshotOfView:(UIView *) view;
 + (UIImage*)blurredSnapshotOfView:(UIView *) view;
 

@@ -20,7 +20,7 @@
 @property (nonatomic) UILabel *nameLabel;
 
 // Label for the name of the brewery that makes the beer
-@property (nonatomic) UILabel *breweryLabel;
+@property (nonatomic) UILabel *secondaryLabel;
 
 // Label for holding details about the beer like abv and serving container
 @property (nonatomic) UILabel *detailsLabel;
@@ -30,6 +30,8 @@
 
 // Image for holding beer label
 @property (nonatomic) NormImageView *imageView;
+
+@property (nonatomic) NSString *secondaryLabelField;
 
 // Sets the beer that will be displayed in the cell
 - (void)setBeer:(Beer *)beer;

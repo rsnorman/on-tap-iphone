@@ -14,6 +14,8 @@
 
 @dynamic name;
 @dynamic currentLocation;
+@dynamic groupPreference;
+@dynamic sortPreference;
 
 NSManagedObjectContext *managedObjectContext;
 

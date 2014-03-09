@@ -27,6 +27,7 @@
 @property (nonatomic, retain) NSString * thumbnailLabel;
 @property (nonatomic, retain) NSString * summary;
 @property (nonatomic, retain) NSString * menuID;
+@property BOOL isNew;
 @property (nonatomic, retain) Menu * menu;
 
 @end

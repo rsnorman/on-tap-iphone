@@ -32,7 +32,7 @@
     if (price != 0.0) {
         [self setText:[NSString stringWithFormat:@"$%g", price]];
     } else {
-        [self setText:@"?"];
+        [self setText:@"ask"];
     }
 }
 

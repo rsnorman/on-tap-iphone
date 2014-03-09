@@ -11,6 +11,8 @@
 #import "Location.h"
 #import "User.h"
 
+#import "NormSearchBar.h"
+
 #import "NormLocationFinderController.h"
 #import "NormModalTransitionDelegate.h"
 #import "NormLocationFinderDelegate.h"
@@ -20,23 +22,42 @@
 #import "TestFlight.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface NormBeerListController () <NormLocationFinderDelegate, NormConnectionManagerDelegate, NormBeerTableViewControllerDelegate, NormServeTypeMenuDelegate>
+@interface NormBeerListController () <NormLocationFinderDelegate, NormConnectionManagerDelegate, NormBeerTableViewControllerDelegate, NormServeTypeMenuDelegate, NormDropDownMenuDelegate>
+
+@property UILabel *locationNameLabel;
+@property NSString *group;
+@property NSString *sort;
+@property Location *currentLocation;
+@property User *currentUser;
+@property BOOL menuLoaded;
+@property BOOL menuIsLoading;
+@property (nonatomic, retain) NormDropDownMenu *groupMenu;
+@property (nonatomic, retain) NormDropDownMenu *sortMenu;
 @end
 
 @implementation NormBeerListController
 
 @synthesize managedObjectContext;
 
-Location *_currentLocation;
-User *_currentUser;
-BOOL menuLoaded;
-BOOL menuIsLoading;
 
-- (id)initWithStyle:(UITableViewStyle)style
+- (id)initWithCoder:(NSCoder*)aDecoder
 {
-    self = [self initWithStyle:style];
-    if (self) {
-        _currentLocation = [[Location alloc] init];
+    if(self = [super initWithCoder:aDecoder])
+    {
+        _currentUser = [User current];
+        _currentLocation = _currentUser.currentLocation;
+        _menuLoaded = NO;
+        _group = _currentUser.groupPreference;
+        if (_group == nil) {
+            _group = @"styleCategory";
+        }
+        
+        _sort = _currentUser.sortPreference;
+        if (_sort == nil) {
+            _sort = @"name";
+        }
+        
+        self.edgesForExtendedLayout = UIRectEdgeNone;
     }
     return self;
 }
@@ -47,8 +68,6 @@ BOOL menuIsLoading;
     
     [self setNeedsStatusBarAppearanceUpdate];
     
-    self.edgesForExtendedLayout = UIRectEdgeNone;
-    
     [self createNavigationController];
     
     [self createTableViewController];
@@ -56,10 +75,11 @@ BOOL menuIsLoading;
     [self createSpinner];
     
     [self createMenu];
+    [self.view setBackgroundColor:_DARK_COLOR];
+    [self.view addSubview:self.locationNameLabel];
+    [self.view bringSubviewToFront:self.locationNameLabel];
     
-    _currentUser = [User current];
-    _currentLocation = _currentUser.currentLocation;
-    menuLoaded = NO;
+    
     
     self.connectionManager = [[NormConnectionManager alloc] init];
     [self.connectionManager setDelegate:self];
@@ -71,6 +91,7 @@ BOOL menuIsLoading;
         [self showSelectLocationFinder];
     } else {
         [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
+        [self.spinnerView startAnimating];
     }
 }
 
@@ -83,11 +104,10 @@ BOOL menuIsLoading;
 {
     if (self.connectionManager.isCheckingConnection) {
         
-        [self.spinnerView setHidden:NO];
-        
         // Load users last location
         if (_currentLocation != nil) {
             [self.menu setLocation:_currentLocation];
+            
             [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
         }
     }
@@ -99,8 +119,9 @@ BOOL menuIsLoading;
 - (void) didConnectToNetwork
 {
     if (_currentLocation != nil) {
-        if (!menuLoaded) {
+        if (!_menuLoaded) {
             [self.menu setLocation:_currentLocation];
+            
             [self performSelectorOnMainThread:@selector(startFetchingAvailableMenu) withObject:nil waitUntilDone:NO];
         } else {
             [self performSelectorOnMainThread:@selector(setRefreshControlMenuText) withObject:nil waitUntilDone:NO];
@@ -111,15 +132,14 @@ BOOL menuIsLoading;
 }
 - (void) didDisconnectFromNetwork
 {
-    if (!menuLoaded) {
+    if (!_menuLoaded) {
         [self performSelectorOnMainThread:@selector(showNoInternetConnection) withObject:nil waitUntilDone:NO];
     }
 }
 
 - (void)showNoInternetConnection
 {
-    [self.spinnerView stopAnimating];
-    [self.spinnerView setMessage:@"Please connect to the Internet"];
+    [self.spinnerView setErrorMessage:@"Please connect to the Internet"];
 }
 
 - (void) didSelectBeer:(Beer *)beer
@@ -135,7 +155,7 @@ BOOL menuIsLoading;
     if (![self.currentServeType isEqualToString:serveType]){
         self.currentServeType = serveType;
         [self setMenuButton];
-        [self loadBeersIntoTableView: [self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType]];
+        [self loadBeersIntoTableView: [self.beerMenu getBeersGrouped:_group serveType:self.currentServeType sort:_sort]];
     }
 }
 
@@ -169,6 +189,9 @@ BOOL menuIsLoading;
         [self.menu setLocation:_currentLocation];
         
         if (_currentLocation != nil) {
+            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
+            [self.spinnerView startAnimating];
+            
             [self.beerTableViewController hideTableViewWithAnimate:YES completion:^(BOOL isComplete) {
                 [self startFetchingAvailableMenu];
             }];
@@ -184,11 +207,11 @@ BOOL menuIsLoading;
 
 - (void)startFetchingAvailableMenu
 {
-    if (menuIsLoading) {
+    if (_menuIsLoading) {
         return;
     }
     
-    menuLoaded = NO;
+    _menuLoaded = NO;
     
     if (_currentLocation == nil) {
         [self showErrorWithMessage:@"Select a location from the menu"];
@@ -197,10 +220,18 @@ BOOL menuIsLoading;
     
     self.beerMenu = [Menu getCurrentForLocation:_currentLocation.lID];
     
+    // Fetch beers from server
+    
     if (self.beerMenu != nil) {
         if (self.currentServeType == nil){
             self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
             [self performSelectorOnMainThread:@selector(setMenuButton) withObject:nil waitUntilDone:NO];
+        }
+        
+        Menu *lastMenu = [Menu getLastForLocation:_currentLocation.lID];
+        
+        if (lastMenu != nil) {
+            [self.beerMenu flagNewBeersSinceLastMenu: lastMenu];
         }
         
         [self didFinishReceivingMenu];
@@ -211,15 +242,18 @@ BOOL menuIsLoading;
             return;
         }
         
-        // Fetch beers from server
-        [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
-        [self.spinnerView startAnimating];
-        [self.spinnerView setHidden:NO];
+        [self.menu setServeTypes:@[] withBeerCounts:@[]];
         
         NSLog(@"Start fetching location");
-        menuIsLoading = YES;
+        _menuIsLoading = YES;
         [Menu fetchForLocation:_currentLocation.lID success: ^(Menu *beerMenu) {
             self.beerMenu = beerMenu;
+            
+            Menu *lastMenu = [Menu getLastForLocation:_currentLocation.lID];
+            
+            if (lastMenu != nil) {
+                [self.beerMenu flagNewBeersSinceLastMenu: lastMenu];
+            }
             
             if (self.currentServeType == nil){
                 self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
@@ -229,8 +263,9 @@ BOOL menuIsLoading;
             [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
         } failedWithError:^(NSError *error) {
             
-            NSString *errorMessage = [NSString stringWithFormat: @"Sorry, there was a problem grabbing the menu for \n%@. \nKegs must be busted.", _currentLocation.name];
+            NSString *errorMessage = [NSString stringWithFormat: @"Sorry, there was a problem grabbing the menu for \n%@. \n\nKegs must be busted.", _currentLocation.name];
             [self performSelectorOnMainThread:@selector(showErrorWithMessage:) withObject: errorMessage waitUntilDone:NO];
+            _menuIsLoading = NO;
             
             [TestFlight passCheckpoint:@"Error Grabbing Beer Menu"];
         }];
@@ -239,10 +274,8 @@ BOOL menuIsLoading;
 }
 
 - (void)showErrorWithMessage:(NSString *)errorMessage
-{
-    [self.spinnerView setMessage:errorMessage];
-    [self.spinnerView stopAnimating];
-    [self.spinnerView setHidden:NO];
+{   
+    [self.spinnerView setErrorMessage:errorMessage];
 }
 
 - (void)refreshMenu
@@ -280,16 +313,15 @@ BOOL menuIsLoading;
 
 - (void)loadBeersIntoTableView:(NSDictionary *)beers
 {
-    menuLoaded = YES;
-    menuIsLoading = NO;
+    _menuLoaded = YES;
+    _menuIsLoading = NO;
     
-    [self.spinnerView stopAnimating];
-    [self.spinnerView setHidden:YES];
     [self.refreshControl endRefreshing];
     
+    [self.beerTableViewController setGroupName:_group];
     [self.beerTableViewController setBeers:beers];
+    [self.spinnerView stopAnimatingWithSuccessMessage: @"Grabbed Menu Successfully!" withDelay: 0.5];
     [self.beerTableViewController showTableViewWithAnimate:YES completion:^(BOOL isComplete) {
-        
     }];
 }
 
@@ -304,7 +336,7 @@ BOOL menuIsLoading;
 {
     [self setRefreshControlMenuText];
     [self createFilterMenu];
-    [self loadBeersIntoTableView: [self.beerMenu getBeersGroupedByStyleForServeType:self.currentServeType]];
+    [self loadBeersIntoTableView: [self.beerMenu getBeersGrouped:_group serveType:self.currentServeType sort:_sort]];
 }
 
 
@@ -368,21 +400,58 @@ BOOL menuIsLoading;
     
     
     // Search Bar
-    _beerSearchBar = [[UISearchBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    _beerSearchBar = [[NormSearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
     _beerSearchBar.placeholder = @"Search Beers";
-    self.tableView.tableHeaderView = _beerSearchBar;
-    _beerSearchDisplayController = [[UISearchDisplayController alloc] initWithSearchBar:_beerSearchBar contentsController:self];
+    
+    UIView *listButtonsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 115, _beerSearchBar.searchBarTextField.frame.size.height)];
+    
+    NSString *selectedGroupItem = @"Style";
+    
+    if ([_group isEqualToString:@"none"]) {
+        selectedGroupItem = @"None";
+    } else if ([_group isEqualToString:@"breweryName"]) {
+        selectedGroupItem = @"Brewery";
+    }
+    _groupMenu = [[NormDropDownMenu alloc] initWithSelectedItem:selectedGroupItem items:@[@"None", @"Brewery", @"Style"]];
+    
+    NSString *selectedSortItem = @"Name";
+    if ([_sort isEqualToString:@"abv"]) {
+        selectedSortItem = @"ABV";
+    } else if ([_sort isEqualToString:@"price"]) {
+        selectedSortItem = @"Price";
+    }
+    _sortMenu = [[NormDropDownMenu alloc] initWithSelectedItem:selectedSortItem items:@[@"ABV", @"Price", @"Name"]];
+    
+    [_groupMenu setDelegate:self];
+    [_sortMenu setDelegate:self];
+    _groupMenu.frame = CGRectMake(0, 0, 55, _beerSearchBar.searchBarTextField.frame.size.height);
+    _sortMenu.frame = CGRectMake(60, 0, 55, _beerSearchBar.searchBarTextField.frame.size.height);
+    [_groupMenu setSlideUnderView:_beerSearchBar];
+    [_sortMenu setSlideUnderView:_beerSearchBar];
+    
+    [listButtonsView addSubview:_groupMenu];
+    [listButtonsView addSubview:_sortMenu];
+    
+    [_beerSearchBar setRightView:listButtonsView];
+    
+    self.tableView.tableHeaderView =  _beerSearchBar;
+    
+    _beerSearchDisplayController = [[NormSearchDisplayController alloc] initWithContentsController:self searchBar:_beerSearchBar];
+
     _beerSearchDisplayController.delegate = (id)self.beerTableViewController;
     _beerSearchDisplayController.searchResultsDataSource = self.beerTableViewController;
     _beerSearchDisplayController.searchResultsDelegate = self.beerTableViewController;
+    
+    
 }
 
 - (void)createSpinner
 {
-    self.spinnerView = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 200, 150)];
-    self.spinnerView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height  / 2 - 25);
+    self.spinnerView = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 200, 140)];
+    [self.spinnerView setCenter:CGPointMake(self.navigationController.view.frame.size.width / 2, self.navigationController.view.frame.size.height  / 2 - 25)];
     [self.spinnerView setHidesWhenStopped:YES];
     [self.view addSubview:self.spinnerView];
+    [self.view bringSubviewToFront:self.spinnerView];
 }
 
 -(void)createMenu
@@ -437,6 +506,29 @@ BOOL menuIsLoading;
     [self.menu showFromNavigationController:self.navigationController];
     
     [TestFlight passCheckpoint:@"Opened Menu"];
+}
+
+-(void)didSelectItem:(NSString *)selectedItem dropDownMenu:(NormDropDownMenu *)dropDownMenu
+{
+    
+    if (dropDownMenu == _sortMenu) {
+        _sort = [selectedItem lowercaseString];
+        _currentUser.sortPreference = _sort;
+    } else if (dropDownMenu == _groupMenu) {
+        if ([selectedItem isEqualToString:@"Style"]) {
+            _group = @"styleCategory";
+        } else if ([selectedItem isEqualToString:@"Brewery"]) {
+            _group = @"breweryName";
+        } else {
+            _group = [selectedItem lowercaseString];
+        }
+        _currentUser.groupPreference = _group;
+    }
+    
+    [_currentUser save];
+    
+    [self loadBeersIntoTableView: [self.beerMenu getBeersGrouped:_group serveType:self.currentServeType sort:_sort]];
+    [self.tableView scrollRectToVisible:CGRectMake(0, 0, 1, self.tableView.tableHeaderView.frame.size.height) animated:NO];
 }
 
 @end

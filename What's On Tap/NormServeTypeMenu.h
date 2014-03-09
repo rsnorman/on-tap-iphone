@@ -14,9 +14,11 @@
 @interface NormServeTypeMenu : REMenu
 
 @property NSArray *beerServeTypes;
+@property (readonly) NSInteger addedBeerCount;
 @property Location *currentLocation;
 @property id<NormServeTypeMenuDelegate> delegate;
 @property REMenuItem *locationMenuItem;
+@property (retain, nonatomic) REMenuItem *addedBeerMenuItem;
 
 - (void)setServeTypes:(NSArray *)serveTypes withBeerCounts:(NSArray *)beerCounts;
 - (void)setLocation:(Location *)location;

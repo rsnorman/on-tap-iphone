@@ -124,7 +124,6 @@ BOOL isDoneRendering;
             
             [self.mapView addAnnotation:barItem];
             [annotations addObject:barItem];
-            
         }
         
         if (self.locations.count == 1) {

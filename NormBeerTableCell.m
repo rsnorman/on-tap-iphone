@@ -12,7 +12,7 @@
 @implementation NormBeerTableCell
 
 @synthesize nameLabel = _nameLabel;
-@synthesize breweryLabel = _breweryLabel;
+@synthesize secondaryLabel = _secondaryLabel;
 @synthesize detailsLabel = _detailsLabel;
 @synthesize costLabel = _costLabel;
 @synthesize imageView = _imageView;
@@ -29,11 +29,12 @@
         [self.nameLabel setBackgroundColor:[UIColor whiteColor]];
         [self addSubview:self.nameLabel];
         
-        self.breweryLabel = [[UILabel alloc] initWithFrame:CGRectMake(73, 26, 204, 21)];
-        self.breweryLabel.font = [UIFont systemFontOfSize:14.0];
-        self.breweryLabel.textColor = [UIColor darkTextColor];
+        self.secondaryLabel = [[UILabel alloc] initWithFrame:CGRectMake(73, 26, 204, 21)];
+        self.secondaryLabel.font = [UIFont systemFontOfSize:14.0];
+        self.secondaryLabel.textColor = [UIColor darkTextColor];
         [self.nameLabel setBackgroundColor:[UIColor whiteColor]];
-        [self addSubview:self.breweryLabel];
+        [self addSubview:self.secondaryLabel];
+        _secondaryLabelField = @"breweryName";
         
         self.detailsLabel = [[UILabel alloc] initWithFrame:CGRectMake(73, 44, 204, 21)];
         self.detailsLabel.font = [UIFont systemFontOfSize:13.0];
@@ -43,6 +44,8 @@
     
         self.costLabel = [[NormPriceLabel alloc] initWithFrame:CGRectMake(285, 23, 31, 31)];
         [self addSubview:self.costLabel];
+        
+        [self setSeparatorInset:UIEdgeInsetsMake(0, 75, 0, 0)];
     }
     return self;
 }
@@ -50,17 +53,15 @@
 - (void)setBeer:(Beer *)beer
 {
     self.nameLabel.text = beer.name;
-    self.breweryLabel.text = beer.breweryName;
+    
+    SEL secondaryAttributeSelector = NSSelectorFromString(_secondaryLabelField);
+    IMP secondaryAttribute = [beer methodForSelector:secondaryAttributeSelector];
+    
+    self.secondaryLabel.text = secondaryAttribute(beer, secondaryAttributeSelector);
     [self.costLabel setPrice:[beer.price floatValue]];
     self.detailsLabel.text = [[NSArray arrayWithObjects:beer.servedIn, @" - ", [NSString stringWithFormat:@"%g%% ABV", [beer.abv floatValue]], nil] componentsJoinedByString:@" "];
     
     [self.imageView setURLForImage:beer.thumbnailLabel  defaultImage: [UIImage imageNamed: [beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
 }
-
-//-(void) prepareForReuse
-//{
-//    [super prepareForReuse];
-////    [self.imageView setImage: [UIImage imageNamed: @"glass.png"]];
-//}
 
 @end

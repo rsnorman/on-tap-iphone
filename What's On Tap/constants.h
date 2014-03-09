@@ -16,5 +16,7 @@
 #define _TERTIARY_FONT @"HelveticaNeue-Light"
 #define _MAX_IMAGE_RATIO 1.5
 #define METERS_PER_MILE 1609.344
+#define _DEFAULT_BEER_GROUP @"Style"
+#define _DEFAULT_BEER_SORT @"Name"
 
 #endif
