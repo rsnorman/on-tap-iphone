@@ -113,23 +113,25 @@ float maxDistanceRadius;
 
 - (void)didConnectToNetwork
 {
+    [self performSelectorOnMainThread:@selector(startLocationSearch) withObject:nil waitUntilDone:NO];
+}
+
+- (void)startLocationSearch
+{
     [self.locationSearchIndicator setMessage:@"Finding nearby locations"];
     [self.locationSearchIndicator startAnimating];
-//    [self.locationsTableView setHidden:NO];
     
     if ([CLLocationManager locationServicesEnabled]) {
         [self.myLocationManager startUpdatingLocation];
     } else {
         [self.locationSearchIndicator setErrorMessage:@"Please turn on location services in Settings"];
-//        [self.locationsTableView setHidden:YES];
     }
 }
 
 - (void)didDisconnectFromNetwork
 {
     if (!locationsLoaded) {
-        [self.locationSearchIndicator setErrorMessage:@"Please connect to the Internet"];
-//        [self.locationsTableView setHidden:YES];
+        [self.locationSearchIndicator performSelectorOnMainThread:@selector(setErrorMessage:) withObject:@"Please connect to the Internet" waitUntilDone:NO];
     }
 }
 

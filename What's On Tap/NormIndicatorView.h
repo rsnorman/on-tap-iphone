@@ -19,5 +19,6 @@
 -(void) startAnimating;
 -(void) stopAnimating;
 -(void) stopAnimatingWithSuccessMessage:(NSString *) successMessage withDelay:(float) delay;
+- (void)stopAnimatingWithSuccessMessage:(NSString *)successMessage withDelay:(float)delay hide:(void (^)(BOOL isComplete))hide;
 -(void) setHidesWhenStopped:(BOOL)hidesWhenStopped;
 @end

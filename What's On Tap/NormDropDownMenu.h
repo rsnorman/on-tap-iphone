@@ -20,6 +20,7 @@
 @interface NormDropDownMenu : UIView
 - (id) initWithSelectedItem:(NSString *) selectedItem items:(NSArray *)items;
 - (void) setSelectedItem:(NSString *)selectedItem;
+- (void) setMenuImage:(UIImage *)buttonImage;
 
 @property (nonatomic, retain, readonly) NSString *selectedItem;
 @property (nonatomic, retain, readonly) NSArray *items;

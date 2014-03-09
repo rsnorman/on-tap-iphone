@@ -197,7 +197,8 @@ NSManagedObjectContext *managedObjectContext;
         beer.styleCategory = [beerDic objectForKey:@"styleCategory"];
         beer.abv = [beerDic objectForKey:@"abv"];
         beer.breweryLink = [beerDic objectForKey:@"breweryLink"];
-        beer.breweryName = [beerDic objectForKey:@"breweryName"];
+        beer.breweryName = [[beerDic objectForKey:@"breweryName"] stringByTrimmingCharactersInSet:
+                                                                  [NSCharacterSet whitespaceCharacterSet]];
         
         @try
         {
@@ -337,35 +338,6 @@ NSManagedObjectContext *managedObjectContext;
     return groupedBeersForServeType;
 }
 
-//- (NSArray *)getBeerGroupsFrom:(NSString *)groupAttribute serveType:(NSString *)serveType
-//{
-//    NSArray *orderedBeerGroups;
-//    
-//    if ([beerGroups objectForKey:serveType] == nil) {
-//        NSMutableArray * unOrderedGroupKeys = [[NSMutableArray alloc] init];
-//        
-//        
-//        for (Beer* beer in [self.serveTypes objectForKey:serveType])
-//        {
-//            SEL groupAttributeSelector = NSSelectorFromString(groupAttribute);
-//            IMP groupAttribute = [beer methodForSelector:groupAttributeSelector];
-//            
-//            if (![unOrderedGroupKeys containsObject:groupAttribute(beer, groupAttributeSelector)]){
-//                [unOrderedGroupKeys addObject:groupAttribute(beer, groupAttributeSelector)];
-//            }
-//            
-//        }
-//        
-//        orderedBeerGroups = [unOrderedGroupKeys sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-//        
-//        [beerGroups setObject:orderedBeerGroups forKey:serveType];
-//    } else {
-//        orderedBeerGroups = [beerGroups objectForKey:serveType];
-//    }
-//    
-//    
-//    return orderedBeerGroups;
-//}
 
 - (NSArray *)getBeerCountsForServeTypes
 {
@@ -391,7 +363,6 @@ NSManagedObjectContext *managedObjectContext;
         [oldBeerNames addObject:beer.name];
     }
     
-    //oldBeerNames = [[NSMutableArray alloc] init]; //For testing to make sure new beers are showing up
     
     for (Beer *beer in newBeers) {
         if ([oldBeerNames filteredArrayUsingPredicate:[NSPredicate
@@ -399,11 +370,6 @@ NSManagedObjectContext *managedObjectContext;
             [beer setIsNew:YES];
         }
     }
-}
-
-- (void)setSort:(NSString *)sort
-{
-    
 }
 
 @end

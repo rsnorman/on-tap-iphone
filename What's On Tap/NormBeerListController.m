@@ -31,6 +31,7 @@
 @property User *currentUser;
 @property BOOL menuLoaded;
 @property BOOL menuIsLoading;
+@property BOOL loadingPreviousMenu;
 @property (nonatomic, retain) NormDropDownMenu *groupMenu;
 @property (nonatomic, retain) NormDropDownMenu *sortMenu;
 @end
@@ -44,8 +45,6 @@
 {
     if(self = [super initWithCoder:aDecoder])
     {
-        _currentUser = [User current];
-        _currentLocation = _currentUser.currentLocation;
         _menuLoaded = NO;
         _group = _currentUser.groupPreference;
         if (_group == nil) {
@@ -58,6 +57,8 @@
         }
         
         self.edgesForExtendedLayout = UIRectEdgeNone;
+        
+        _loadingPreviousMenu = NO;
     }
     return self;
 }
@@ -75,16 +76,20 @@
     [self createSpinner];
     
     [self createMenu];
+    
+    
     [self.view setBackgroundColor:_DARK_COLOR];
     [self.view addSubview:self.locationNameLabel];
     [self.view bringSubviewToFront:self.locationNameLabel];
     
-    
-    
+
     self.connectionManager = [[NormConnectionManager alloc] init];
     [self.connectionManager setDelegate:self];
     [self.connectionManager performSelectorInBackground:@selector(checkForConnection) withObject:nil];
     [self performSelector:@selector(stillCheckingForNetworkConnection) withObject:nil afterDelay:1.0];
+    
+    _currentUser = [User current];
+    _currentLocation = _currentUser.currentLocation;
     
     // Load users last location
     if (_currentLocation == nil) {
@@ -92,6 +97,38 @@
     } else {
         [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
         [self.spinnerView startAnimating];
+        [self setLocation:_currentLocation];
+        
+        _loadingPreviousMenu = YES;
+        if (![self loadCurrentMenu] ) {
+            _loadingPreviousMenu = NO;
+        }
+    }
+}
+
+- (BOOL) loadCurrentMenu
+{
+    self.beerMenu = [Menu getCurrentForLocation:_currentLocation.lID];
+    
+    // Fetch beers from server
+    
+    if (self.beerMenu != nil) {
+        if (self.currentServeType == nil){
+            self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
+            [self performSelectorOnMainThread:@selector(setMenuButton) withObject:nil waitUntilDone:NO];
+        }
+        
+        Menu *lastMenu = [Menu getLastForLocation:_currentLocation.lID];
+        
+        if (lastMenu != nil) {
+            [self.beerMenu flagNewBeersSinceLastMenu: lastMenu];
+        }
+        
+        [self didFinishReceivingMenu];
+        
+        return YES;
+    } else {
+        return NO;
     }
 }
 
@@ -105,10 +142,10 @@
     if (self.connectionManager.isCheckingConnection) {
         
         // Load users last location
-        if (_currentLocation != nil) {
-            [self.menu setLocation:_currentLocation];
+        if (_currentLocation != nil) {            
+            [self.menu performSelectorOnMainThread:@selector(setLocation:) withObject:_currentLocation waitUntilDone:NO];
             
-            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
+            [self.spinnerView performSelectorOnMainThread:@selector(setMessage:) withObject:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name] waitUntilDone:NO];
         }
     }
 }
@@ -120,8 +157,7 @@
 {
     if (_currentLocation != nil) {
         if (!_menuLoaded) {
-            [self.menu setLocation:_currentLocation];
-            
+            [self.menu performSelectorOnMainThread:@selector(setLocation:) withObject:_currentLocation waitUntilDone:NO];
             [self performSelectorOnMainThread:@selector(startFetchingAvailableMenu) withObject:nil waitUntilDone:NO];
         } else {
             [self performSelectorOnMainThread:@selector(setRefreshControlMenuText) withObject:nil waitUntilDone:NO];
@@ -186,8 +222,6 @@
         [_currentUser setCurrentLocation:location];
         [_currentUser save];
         
-        [self.menu setLocation:_currentLocation];
-        
         if (_currentLocation != nil) {
             [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
             [self.spinnerView startAnimating];
@@ -197,6 +231,8 @@
             }];
         }
     }
+    
+    [self.menu setLocation:_currentLocation]; // Make sure this menu is set
 }
 
 - (void)didReceiveMemoryWarning
@@ -218,24 +254,7 @@
         return;
     }
     
-    self.beerMenu = [Menu getCurrentForLocation:_currentLocation.lID];
-    
-    // Fetch beers from server
-    
-    if (self.beerMenu != nil) {
-        if (self.currentServeType == nil){
-            self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
-            [self performSelectorOnMainThread:@selector(setMenuButton) withObject:nil waitUntilDone:NO];
-        }
-        
-        Menu *lastMenu = [Menu getLastForLocation:_currentLocation.lID];
-        
-        if (lastMenu != nil) {
-            [self.beerMenu flagNewBeersSinceLastMenu: lastMenu];
-        }
-        
-        [self didFinishReceivingMenu];
-    } else {
+    if (![self loadCurrentMenu]) {
         
         if (!self.connectionManager.isConnectedToInternet) {
             [self showErrorWithMessage:@"Please connect to the Internet"];
@@ -320,9 +339,17 @@
     
     [self.beerTableViewController setGroupName:_group];
     [self.beerTableViewController setBeers:beers];
-    [self.spinnerView stopAnimatingWithSuccessMessage: @"Grabbed Menu Successfully!" withDelay: 0.5];
-    [self.beerTableViewController showTableViewWithAnimate:YES completion:^(BOOL isComplete) {
-    }];
+    
+    if (!_loadingPreviousMenu) {
+        [self.spinnerView stopAnimatingWithSuccessMessage: @"Grabbed Menu Successfully!" withDelay: 0.5 hide:^(BOOL isComplete) {
+            [self.beerTableViewController showTableViewWithAnimate:YES completion:^(BOOL isComplete) {
+            }];
+        }];
+    } else {
+        _loadingPreviousMenu = NO;
+        [self.beerTableViewController showTableViewWithAnimate:NO completion:^(BOOL isComplete) {
+        }];
+    }
 }
 
 - (void) setRefreshControlMenuText
@@ -403,7 +430,7 @@
     _beerSearchBar = [[NormSearchBar alloc] initWithFrame:CGRectMake(0, 0, self.tableView.frame.size.width, 44)];
     _beerSearchBar.placeholder = @"Search Beers";
     
-    UIView *listButtonsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 115, _beerSearchBar.searchBarTextField.frame.size.height)];
+    UIView *listButtonsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 153, _beerSearchBar.searchBarTextField.frame.size.height)];
     
     NSString *selectedGroupItem = @"Style";
     
@@ -424,8 +451,10 @@
     
     [_groupMenu setDelegate:self];
     [_sortMenu setDelegate:self];
-    _groupMenu.frame = CGRectMake(0, 0, 55, _beerSearchBar.searchBarTextField.frame.size.height);
-    _sortMenu.frame = CGRectMake(60, 0, 55, _beerSearchBar.searchBarTextField.frame.size.height);
+    _groupMenu.frame = CGRectMake(0, 0, 78, _beerSearchBar.searchBarTextField.frame.size.height);
+    _sortMenu.frame = CGRectMake(83, 0, 70, _beerSearchBar.searchBarTextField.frame.size.height);
+    [_groupMenu setMenuImage:[UIImage imageNamed:@"group-button"]];
+    [_sortMenu setMenuImage:[UIImage imageNamed:@"sort-button"]];
     [_groupMenu setSlideUnderView:_beerSearchBar];
     [_sortMenu setSlideUnderView:_beerSearchBar];
     
@@ -447,8 +476,8 @@
 
 - (void)createSpinner
 {
-    self.spinnerView = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 200, 140)];
-    [self.spinnerView setCenter:CGPointMake(self.navigationController.view.frame.size.width / 2, self.navigationController.view.frame.size.height  / 2 - 25)];
+    self.spinnerView = [[NormIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 200, 200)];
+    [self.spinnerView setCenter:CGPointMake(self.navigationController.view.frame.size.width / 2, self.navigationController.view.frame.size.height  / 2 - 44)];
     [self.spinnerView setHidesWhenStopped:YES];
     [self.view addSubview:self.spinnerView];
     [self.view bringSubviewToFront:self.spinnerView];
@@ -514,6 +543,8 @@
     if (dropDownMenu == _sortMenu) {
         _sort = [selectedItem lowercaseString];
         _currentUser.sortPreference = _sort;
+        
+        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Change sort to %@", _sort]];
     } else if (dropDownMenu == _groupMenu) {
         if ([selectedItem isEqualToString:@"Style"]) {
             _group = @"styleCategory";
@@ -523,6 +554,8 @@
             _group = [selectedItem lowercaseString];
         }
         _currentUser.groupPreference = _group;
+        
+        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Change group to %@", _group]];
     }
     
     [_currentUser save];

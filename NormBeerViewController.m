@@ -150,7 +150,7 @@
     self.descriptionText.frame = CGRectMake(self.descriptionText.frame.origin.x, self.descriptionText.frame.origin.y, self.descriptionText.frame.size.width, descriptionSize.height);
     
     UIScrollView * scrollView = [self.view.subviews objectAtIndex:0];
-    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, descriptionSize.height + 190);
+    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, descriptionSize.height + 220);
     
     [self.logoImage setURLForImage:self.beer.thumbnailLabel defaultImage: [UIImage imageNamed: [self.beer.serveType isEqual: @"Bottles"] ? @"bottle.png" : [self.beer.serveType isEqual: @"Bottles"] ? @"can.png" : @"glass.png"]];
     

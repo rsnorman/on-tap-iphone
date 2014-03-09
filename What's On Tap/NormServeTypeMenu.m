@@ -86,7 +86,9 @@
     }
     
     
-    [menuItems addObject:self.locationMenuItem];
+    if (self.locationMenuItem != nil) {
+        [menuItems addObject:self.locationMenuItem];
+    }
     
     [self setItems:menuItems];
 }
@@ -109,9 +111,7 @@
         [self setItems:menuItems];
     }
     
-    if (location != nil) {
-        [self.locationMenuItem setSubtitle:location.name];
-    }
+    [self.locationMenuItem setSubtitle:location.name];
 }
 
 @end

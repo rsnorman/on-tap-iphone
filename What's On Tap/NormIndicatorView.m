@@ -18,10 +18,9 @@
 
 - (id)initWithFrame:(CGRect)frame
 {
-    frame = CGRectOffset(frame, 0, -10);
     self = [super initWithFrame:frame];
     if (self) {
-        self.messageLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 10, frame.size.width - 20, frame.size.height - 10)];
+        self.messageLabel = [[UILabel alloc] initWithFrame:self.bounds];
         [self.messageLabel setText:@"Loading…"];
         [self.messageLabel setTextAlignment:NSTextAlignmentCenter];
         [self.messageLabel setFont:[UIFont systemFontOfSize:20.0f]];
@@ -46,6 +45,7 @@
 - (void)setCenter:(CGPoint)center
 {
     _startCenter = CGPointMake(center.x, center.y - 10);
+    
     [super setCenter:_startCenter];
     
 }
@@ -85,6 +85,11 @@
 
 - (void)stopAnimatingWithSuccessMessage:(NSString *)successMessage withDelay:(float)delay
 {
+    [self stopAnimatingWithSuccessMessage:successMessage withDelay:delay];
+}
+
+- (void)stopAnimatingWithSuccessMessage:(NSString *)successMessage withDelay:(float)delay hide:(void (^)(BOOL isComplete))hide
+{
     [self setMessage:successMessage];
     
     _shimmeringView.shimmering = NO;
@@ -95,24 +100,22 @@
                      animations:^{
                          self.layer.opacity = 0.0;
                      }
-                     completion:^(BOOL finished) {
-                         
-                     }];
+                     completion:hide];
 }
 
 - (void)setMessage:(NSString *)message
 {
-    self.messageLabel.frame = CGRectMake(10, 10, self.frame.size.width - 20, self.frame.size.height - 20);
+//    self.messageLabel.frame = CGRectMake(10, 10, self.frame.size.width - 20, self.frame.size.height - 20);
     [self.messageLabel setText:message];
-    [self.messageLabel sizeToFit];
-    self.shimmeringView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.messageLabel.frame.size.width + 20, self.messageLabel.frame.size.height + 20);
+//    [self.messageLabel sizeToFit];
+//    self.shimmeringView.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.messageLabel.frame.size.width + 20, self.messageLabel.frame.size.height + 20);
 
-    self.messageLabel.center = CGPointMake(self.frame.size.width / 2, self.messageLabel.center.y);
-    self.shimmeringView.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
-
-    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.messageLabel.frame.size.height + 20);
-    } completion:nil];
+//    self.messageLabel.center = CGPointMake(self.frame.size.width / 2, self.messageLabel.center.y);
+//    self.shimmeringView.center = CGPointMake(self.frame.size.width / 2, self.frame.size.height / 2);
+//
+//    [UIView animateWithDuration:0.3 delay:0.0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+//        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, self.frame.size.width, self.messageLabel.frame.size.height + 20);
+//    } completion:nil];
 }
 
 - (void)setErrorMessage:(NSString *)errorMessage

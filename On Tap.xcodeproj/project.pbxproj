@@ -49,6 +49,7 @@
 		9460833C1884DA27005EF155 /* NormModalShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460833B1884DA27005EF155 /* NormModalShowTransitioning.m */; };
 		946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */; };
 		946083471885B4BA005EF155 /* NormEnlargeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 946083461885B4BA005EF155 /* NormEnlargeImage.m */; };
+		946DE54718CD105B009E06C0 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94ADCD3D18CC291C00D7F321 /* libTestFlight.a */; };
 		94851F64186DD81D00668E77 /* NormImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F63186DD81D00668E77 /* NormImageView.m */; };
 		94851F6F1872578000668E77 /* bottle-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F651872578000668E77 /* bottle-button@2x.png */; };
 		94851F701872578000668E77 /* bottle-menu-item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F661872578000668E77 /* bottle-menu-item@2x.png */; };
@@ -62,6 +63,10 @@
 		94851F781872578000668E77 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6E1872578000668E77 /* icon@2x.png */; };
 		94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F8E1877B43B00668E77 /* NormDraggableImageView.m */; };
 		94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A91D66185E5F90006FEA65 /* NormImageCache.m */; };
+		94ADCD4418CC291C00D7F321 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 94ADCD3E18CC291C00D7F321 /* README.md */; };
+		94ADCD4518CC291C00D7F321 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 94ADCD3F18CC291C00D7F321 /* release_notes.md */; };
+		94ADCD4A18CCB3F400D7F321 /* group-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94ADCD4918CCB3F400D7F321 /* group-button@2x.png */; };
+		94ADCD4C18CCBC3E00D7F321 /* sort-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94ADCD4B18CCBC3E00D7F321 /* sort-button@2x.png */; };
 		94B73D8918CBF4B90056934E /* FBShimmeringLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94B73D8618CBF4B90056934E /* FBShimmeringLayer.m */; };
 		94B73D8A18CBF4B90056934E /* FBShimmeringView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94B73D8818CBF4B90056934E /* FBShimmeringView.m */; };
 		94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829D1847AC2100D60EDC /* Foundation.framework */; };
@@ -89,11 +94,8 @@
 		94F0345F18ABB40900D69526 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F0345E18ABB40900D69526 /* MapKit.framework */; };
 		94F0346218AD04F800D69526 /* NormBarLocationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F0346118AD04F800D69526 /* NormBarLocationView.m */; };
 		94F0346418ADA2E600D69526 /* map-marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F0346318ADA2E600D69526 /* map-marker@2x.png */; };
-		94F0346D18ADCCA000D69526 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 94F0346718ADCCA000D69526 /* README.md */; };
-		94F0346E18ADCCA000D69526 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 94F0346818ADCCA000D69526 /* release_notes.md */; };
 		94F0347018ADCD1100D69526 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F0346F18ADCD1100D69526 /* libz.dylib */; };
 		94F0347318AF4A3800D69526 /* NormBarLocationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F0347218AF4A3800D69526 /* NormBarLocationItem.m */; };
-		94F0347718B048CF00D69526 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F0347518B048B400D69526 /* libTestFlight.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -202,6 +204,14 @@
 		94A74BF5187C2E70009075E9 /* NormDraggableImageViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormDraggableImageViewDelegate.h; sourceTree = "<group>"; };
 		94A91D65185E5F90006FEA65 /* NormImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageCache.h; sourceTree = "<group>"; };
 		94A91D66185E5F90006FEA65 /* NormImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageCache.m; sourceTree = "<group>"; };
+		94ADCD3D18CC291C00D7F321 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
+		94ADCD3E18CC291C00D7F321 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		94ADCD3F18CC291C00D7F321 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
+		94ADCD4018CC291C00D7F321 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
+		94ADCD4118CC291C00D7F321 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
+		94ADCD4218CC291C00D7F321 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
+		94ADCD4918CCB3F400D7F321 /* group-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "group-button@2x.png"; path = "Images/group-button@2x.png"; sourceTree = SOURCE_ROOT; };
+		94ADCD4B18CCBC3E00D7F321 /* sort-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sort-button@2x.png"; path = "Images/sort-button@2x.png"; sourceTree = SOURCE_ROOT; };
 		94B73D8318CBF4B90056934E /* FBShimmering-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBShimmering-Prefix.pch"; sourceTree = "<group>"; };
 		94B73D8418CBF4B90056934E /* FBShimmering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBShimmering.h; sourceTree = "<group>"; };
 		94B73D8518CBF4B90056934E /* FBShimmeringLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBShimmeringLayer.h; sourceTree = "<group>"; };
@@ -246,15 +256,9 @@
 		94F0346018AD04F800D69526 /* NormBarLocationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBarLocationView.h; sourceTree = "<group>"; };
 		94F0346118AD04F800D69526 /* NormBarLocationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBarLocationView.m; sourceTree = "<group>"; };
 		94F0346318ADA2E600D69526 /* map-marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map-marker@2x.png"; path = "Images/map-marker@2x.png"; sourceTree = SOURCE_ROOT; };
-		94F0346718ADCCA000D69526 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		94F0346818ADCCA000D69526 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		94F0346918ADCCA000D69526 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
-		94F0346A18ADCCA000D69526 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		94F0346B18ADCCA000D69526 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
 		94F0346F18ADCD1100D69526 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		94F0347118AF4A3800D69526 /* NormBarLocationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBarLocationItem.h; sourceTree = "<group>"; };
 		94F0347218AF4A3800D69526 /* NormBarLocationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBarLocationItem.m; sourceTree = "<group>"; };
-		94F0347518B048B400D69526 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTestFlight.a; path = ../../../Downloads/TestFlightSDK2.2.1/libTestFlight.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,12 +267,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				94F0347018ADCD1100D69526 /* libz.dylib in Frameworks */,
+				946DE54718CD105B009E06C0 /* libTestFlight.a in Frameworks */,
 				94F0345F18ABB40900D69526 /* MapKit.framework in Frameworks */,
 				94BA82A01847AC2100D60EDC /* CoreGraphics.framework in Frameworks */,
 				94BA82A41847AC2100D60EDC /* CoreData.framework in Frameworks */,
 				94BA82A21847AC2100D60EDC /* UIKit.framework in Frameworks */,
 				94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */,
-				94F0347718B048CF00D69526 /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +414,8 @@
 		9488C0AD18675FB70038ED51 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				94ADCD4B18CCBC3E00D7F321 /* sort-button@2x.png */,
+				94ADCD4918CCB3F400D7F321 /* group-button@2x.png */,
 				9416AB1818B8F0DF00CFA651 /* settings@2x.png */,
 				94F0346318ADA2E600D69526 /* map-marker@2x.png */,
 				94851F651872578000668E77 /* bottle-button@2x.png */,
@@ -461,6 +467,20 @@
 			name = Delegates;
 			sourceTree = "<group>";
 		};
+		94ADCD3C18CC291C00D7F321 /* TestFlight */ = {
+			isa = PBXGroup;
+			children = (
+				94ADCD3D18CC291C00D7F321 /* libTestFlight.a */,
+				94ADCD3E18CC291C00D7F321 /* README.md */,
+				94ADCD3F18CC291C00D7F321 /* release_notes.md */,
+				94ADCD4018CC291C00D7F321 /* TestFlight+AsyncLogging.h */,
+				94ADCD4118CC291C00D7F321 /* TestFlight+ManualSessions.h */,
+				94ADCD4218CC291C00D7F321 /* TestFlight.h */,
+			);
+			name = TestFlight;
+			path = TestFlightSDK3.0.0;
+			sourceTree = "<group>";
+		};
 		94B73D8218CBF4B90056934E /* FBShimmering */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,8 +530,8 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
+				94ADCD3C18CC291C00D7F321 /* TestFlight */,
 				94B73D8218CBF4B90056934E /* FBShimmering */,
-				94F0346518ADCC7200D69526 /* TestFlight */,
 				94F0344318A9AFF300D69526 /* RefreshControl */,
 				5965603F189426A600ED2E9A /* DataModels */,
 				94851F8A187376FE00668E77 /* constants.h */,
@@ -567,19 +587,6 @@
 			children = (
 			);
 			name = RefreshControl;
-			sourceTree = "<group>";
-		};
-		94F0346518ADCC7200D69526 /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				94F0347518B048B400D69526 /* libTestFlight.a */,
-				94F0346718ADCCA000D69526 /* README.md */,
-				94F0346818ADCCA000D69526 /* release_notes.md */,
-				94F0346918ADCCA000D69526 /* TestFlight.h */,
-				94F0346A18ADCCA000D69526 /* TestFlight+AsyncLogging.h */,
-				94F0346B18ADCCA000D69526 /* TestFlight+ManualSessions.h */,
-			);
-			name = TestFlight;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -661,20 +668,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				94ADCD4518CC291C00D7F321 /* release_notes.md in Resources */,
 				5938104318861AC300D88215 /* chawp.otf in Resources */,
 				5938104418861AC300D88215 /* Hipster Viral  condensed thin.otf in Resources */,
 				5938104518861AC300D88215 /* Hipster Viral Blackletter condensed black.otf in Resources */,
 				5938104618861AC300D88215 /* Kraftstoff-Regular.otf in Resources */,
+				94ADCD4418CC291C00D7F321 /* README.md in Resources */,
 				5938104718861AC300D88215 /* Leatherwork-Regular.ttf in Resources */,
+				94ADCD4A18CCB3F400D7F321 /* group-button@2x.png in Resources */,
 				5938104818861AC300D88215 /* Rhino Forte.otf in Resources */,
 				5938104918861AC300D88215 /* Rhino Luz.otf in Resources */,
 				5938104A18861AC300D88215 /* Rhino Pata.otf in Resources */,
 				5938104B18861AC300D88215 /* Rhino Ponta.otf in Resources */,
+				94ADCD4C18CCBC3E00D7F321 /* sort-button@2x.png in Resources */,
 				5938104C18861AC300D88215 /* Rhino Raja.otf in Resources */,
 				9416AB1918B8F0DF00CFA651 /* settings@2x.png in Resources */,
 				94851F701872578000668E77 /* bottle-menu-item@2x.png in Resources */,
 				94851F751872578000668E77 /* glass-button@2x.png in Resources */,
-				94F0346D18ADCCA000D69526 /* README.md in Resources */,
 				94851F781872578000668E77 /* icon@2x.png in Resources */,
 				94851F731872578000668E77 /* can-menu-item@2x.png in Resources */,
 				94851F6F1872578000668E77 /* bottle-button@2x.png in Resources */,
@@ -686,7 +696,6 @@
 				94851F711872578000668E77 /* bottle@2x.png in Resources */,
 				94851F761872578000668E77 /* glass-menu-item@2x.png in Resources */,
 				94BA82B51847AC2200D60EDC /* Images.xcassets in Resources */,
-				94F0346E18ADCCA000D69526 /* release_notes.md in Resources */,
 				94851F771872578000668E77 /* glass@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -811,8 +820,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -852,8 +861,8 @@
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -874,21 +883,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
 				INFOPLIST_FILE = "What's On Tap/On Tap-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/ryan/iPhoneApps/Whats\\ On\\ Tap/Whats\\ On\\ Tap",
-					"/Users/rsnorman15/iPhoneApps/ontap/Whats\\ On\\ Tap",
-					"/Users/rsnorman15/iPhoneApps/ontap/Whats\\ On\\ Tap",
-					"/Users/ryan/iPhoneApps/What's\\ On\\ Tap/What's\\ On\\ Tap",
-					/Users/ryan/Downloads/TestFlightSDK2.2.1,
+					"/Users/ryan/iPhoneApps/Whats\\ On\\ Tap/Whats\\ On\\ Tap/TestFlightSDK3.0.0",
+					"/Users/ryan/iPhoneApps/What's\\ On\\ Tap/What's\\ On\\ Tap/TestFlightSDK3.0.0",
 				);
 				PRODUCT_NAME = "On Tap";
-				PROVISIONING_PROFILE = "207CF5D0-EC73-4F6C-BA5C-1C5ECDE28BD4";
+				PROVISIONING_PROFILE = "B8DD1814-ABB4-42A8-BE5C-C110DC3834EA";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -899,21 +905,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Ryan Norman (ZH7Q4VCUAY)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
 				INFOPLIST_FILE = "What's On Tap/On Tap-Info.plist";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/ryan/iPhoneApps/Whats\\ On\\ Tap/Whats\\ On\\ Tap",
-					"/Users/rsnorman15/iPhoneApps/ontap/Whats\\ On\\ Tap",
-					"/Users/rsnorman15/iPhoneApps/ontap/Whats\\ On\\ Tap",
-					"/Users/ryan/iPhoneApps/What's\\ On\\ Tap/What's\\ On\\ Tap",
-					/Users/ryan/Downloads/TestFlightSDK2.2.1,
+					"/Users/ryan/iPhoneApps/Whats\\ On\\ Tap/Whats\\ On\\ Tap/TestFlightSDK3.0.0",
+					"/Users/ryan/iPhoneApps/What's\\ On\\ Tap/What's\\ On\\ Tap/TestFlightSDK3.0.0",
 				);
 				PRODUCT_NAME = "On Tap";
-				PROVISIONING_PROFILE = "207CF5D0-EC73-4F6C-BA5C-1C5ECDE28BD4";
+				PROVISIONING_PROFILE = "B8DD1814-ABB4-42A8-BE5C-C110DC3834EA";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

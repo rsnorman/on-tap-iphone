@@ -91,7 +91,7 @@ NSManagedObjectContext *managedObjectContext;
         [locations addObject:location];
 //        [managedObjectContext save:nil];
         
-        [managedObjectContext obtainPermanentIDsForObjects:[[managedObjectContext insertedObjects] allObjects] error:nil];
+//        [managedObjectContext obtainPermanentIDsForObjects:[[managedObjectContext insertedObjects] allObjects] error:nil];
     }
     
     return locations;

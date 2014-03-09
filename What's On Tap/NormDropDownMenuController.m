@@ -55,9 +55,9 @@
         [itemButton.layer setOpacity:0.0];
         [itemButton.layer setBackgroundColor:[UIColor blackColor].CGColor];
         [itemButton.layer setCornerRadius:8.0];
-        [itemButton.titleLabel setFont:[UIFont systemFontOfSize:15.0]];
+        [itemButton.titleLabel setFont:[UIFont systemFontOfSize:18.0]];
         [itemButton sizeToFit];
-        itemButton.frame = CGRectMake(itemButton.frame.origin.x, itemButton.frame.origin.y, itemButton.frame.size.width + 20, itemButton.frame.size.height);
+        itemButton.frame = CGRectMake(itemButton.frame.origin.x, itemButton.frame.origin.y, itemButton.frame.size.width + 30, itemButton.frame.size.height + 10);
         [self.view addSubview:itemButton];
         
         if (true /*Align to right*/) {
@@ -75,13 +75,13 @@
     
     float delay = 0.0;
     float duration = 0.4;
-    float topMargin = (((UIButton *)[_itemButtons objectAtIndex:0]).frame.size.height + 8.0) * _itemButtons.count;
+    float topMargin = (((UIButton *)[_itemButtons objectAtIndex:0]).frame.size.height + 10.0) * _itemButtons.count;
 
     
     topMargin += _menuParentFrame.size.height;
     
     for (UIButton *itemButton in _itemButtons) {
-        topMargin -= itemButton.frame.size.height + 8.0;
+        topMargin -= itemButton.frame.size.height + 10.0;
         
         [itemButton.layer setOpacity:0.0];
         
@@ -92,7 +92,7 @@
                             options:UIViewAnimationOptionCurveLinear|UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              itemButton.frame = CGRectOffset(itemButton.frame, 0, topMargin);
-                             [itemButton.layer setOpacity:0.9];
+                             [itemButton.layer setOpacity:0.8];
                          }
                          completion:^(BOOL finished) {
                              

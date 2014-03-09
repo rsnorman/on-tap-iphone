@@ -59,6 +59,8 @@
     
     if (((NSArray *)[self.currentBeersGrouped objectForKey:@"New"]).count > 0) {
         [sortedGroups insertObject:@"New" atIndex:0];
+        
+        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Revisited location and displayed new %lu beers", (unsigned long)((NSArray *)[self.currentBeersGrouped objectForKey:@"New"]).count]];
     }
     
     self.currentBeerGroups = sortedGroups;
@@ -141,9 +143,12 @@
     UIView *topBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0, 0.0, 320.0, 0.5)];
     UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectMake(0.0, 34.5, 320.0, 0.5)];
     
-    [topBorder.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [topBorder.layer setBorderWidth:0.5];
-    [topBorder setClipsToBounds:YES];
+    if (section != 0) {
+        [topBorder.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [topBorder.layer setBorderWidth:0.5];
+        [topBorder setClipsToBounds:YES];
+    }
+    
     bottomBorder.layer.borderColor = [UIColor lightGrayColor].CGColor;
     bottomBorder.layer.borderWidth = 0.5;
     bottomBorder.clipsToBounds = YES;
@@ -177,16 +182,22 @@
 
 - (void) showTableViewWithAnimate:(BOOL)animated completion:(void (^)(BOOL isComplete))completionAction
 {
-    [UIView animateWithDuration:0.5
-                          delay:0.0
-         usingSpringWithDamping:0.6
-          initialSpringVelocity:4.0
-                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
-                     animations:^
-     {
-         self.tableView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.frame.size.height);
-     }
-                     completion:completionAction];
+    if (animated) {
+        [UIView animateWithDuration:0.5
+                              delay:0.0
+             usingSpringWithDamping:0.6
+              initialSpringVelocity:4.0
+                            options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseInOut
+                         animations:^
+         {
+             self.tableView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.frame.size.height);
+         }
+                         completion:completionAction];
+    } else {
+        self.tableView.frame = CGRectMake(0, 0, self.tableView.frame.size.width, self.tableView.frame.size.height);
+        completionAction(YES);
+    }
+    
 }
 
 - (void) hideTableViewWithAnimate:(BOOL)animated completion:(void (^)(BOOL isComplete))completionAction
