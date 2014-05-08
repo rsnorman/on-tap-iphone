@@ -46,15 +46,7 @@
     if(self = [super initWithCoder:aDecoder])
     {
         _menuLoaded = NO;
-        _group = _currentUser.groupPreference;
-        if (_group == nil) {
-            _group = @"styleCategory";
-        }
         
-        _sort = _currentUser.sortPreference;
-        if (_sort == nil) {
-            _sort = @"name";
-        }
         
         self.edgesForExtendedLayout = UIRectEdgeNone;
         
@@ -68,6 +60,19 @@
     [super viewDidLoad];
     
     [self setNeedsStatusBarAppearanceUpdate];
+    
+    _currentUser = [User current];
+    _currentLocation = _currentUser.currentLocation;
+    
+    _group = _currentUser.groupPreference;
+    if (_group == nil) {
+        _group = @"styleCategory";
+    }
+    
+    _sort = _currentUser.sortPreference;
+    if (_sort == nil) {
+        _sort = @"name";
+    }
     
     [self createNavigationController];
     
@@ -88,20 +93,21 @@
     [self.connectionManager performSelectorInBackground:@selector(checkForConnection) withObject:nil];
     [self performSelector:@selector(stillCheckingForNetworkConnection) withObject:nil afterDelay:1.0];
     
-    _currentUser = [User current];
-    _currentLocation = _currentUser.currentLocation;
+
     
     // Load users last location
     if (_currentLocation == nil) {
         [self showSelectLocationFinder];
     } else {
-        [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
-        [self.spinnerView startAnimating];
-        [self setLocation:_currentLocation];
         
         _loadingPreviousMenu = YES;
         if (![self loadCurrentMenu] ) {
             _loadingPreviousMenu = NO;
+            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
+            [self.spinnerView startAnimating];
+            [self setLocation:_currentLocation];
+        } else {
+            [self.spinnerView setHidden:YES];
         }
     }
 }
@@ -306,6 +312,12 @@
         [Menu refreshForLocation:_currentLocation.lID success: ^(Menu *beerMenu) {
             self.beerMenu = beerMenu;
             
+            Menu *lastMenu = [Menu getLastForLocation:_currentLocation.lID];
+            
+            if (lastMenu != nil) {
+                [self.beerMenu flagNewBeersSinceLastMenu: lastMenu];
+            }
+            
             if (self.currentServeType == nil){
                 self.currentServeType = [self.beerMenu.serveTypeKeys objectAtIndex:0];
                 [self performSelectorOnMainThread:@selector(setMenuButton) withObject:nil waitUntilDone:NO];
@@ -347,8 +359,10 @@
         }];
     } else {
         _loadingPreviousMenu = NO;
+        
         [self.beerTableViewController showTableViewWithAnimate:NO completion:^(BOOL isComplete) {
         }];
+        [self.menu setLocation:_currentLocation];
     }
 }
 

@@ -24,6 +24,14 @@
 @interface NormLocationFinderController () <NormModalControllerDelegate, CLLocationManagerDelegate, NormConnectionManagerDelegate, NormLocationTableViewControllerDelegate, NormLocationMapViewControllerDelegate>
 
 @property (retain, nonatomic, readonly) UILabel *titleLabel;
+@property (retain, nonatomic) UILabel *addressLabel;
+@property (retain, nonatomic) UIView *addressView;
+@property (retain, nonatomic) UIImageView *addressEditIcon;
+@property (retain, nonatomic) UITextField *addressTextField;
+@property (retain, nonatomic) CLGeocoder *geoCoder;
+
+@property BOOL isReversingGeocoding;
+
 @end
 
 @implementation NormLocationFinderController
@@ -86,13 +94,46 @@ float maxDistanceRadius;
         [bgFooterImageView setImage:flippedImage];
         
         
-        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -35, self.view.frame.size.width, 35)];
+        _titleLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, -55, self.view.frame.size.width, 35)];
         [self.titleLabel setFont:[UIFont fontWithName:_PRIMARY_FONT size:26.0f]];
         [self.titleLabel setText:@"Select Location"];
         [self.titleLabel setTextColor:[UIColor whiteColor]];
         [self.titleLabel setTextAlignment:NSTextAlignmentCenter];
         
         [self.view addSubview:self.titleLabel];
+        
+        _addressView = [[UIView alloc] initWithFrame:CGRectMake(0, -35, self.view.frame.size.width, 35)];
+        [self.view addSubview:_addressView];
+        
+        _addressLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 25)];
+        [self.addressLabel setFont:[UIFont fontWithName:_TERTIARY_FONT size:16.0f]];
+        [self.addressLabel setText:@""];
+        [self.addressLabel setTextColor:[UIColor whiteColor]];
+        [self.addressLabel setTextAlignment:NSTextAlignmentCenter];
+        
+//        [self.addressView addSubview:self.addressLabel];
+        
+        _addressEditIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"location-arrow"]];
+        [self.addressView addSubview:_addressEditIcon];
+        _addressEditIcon.frame = CGRectMake(270, 1, 10, 10);
+        
+        _addressTextField = [[UITextField alloc] initWithFrame:CGRectMake(75, 0, self.view.frame.size.width, 25)];
+        [_addressTextField setPlaceholder:@"Enter Location"];
+        [_addressTextField setTintColor:[UIColor whiteColor]];
+        [_addressTextField setTextColor:[UIColor whiteColor]];
+        _addressTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Enter Location" attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+        _addressTextField.clearButtonMode = UITextFieldViewModeWhileEditing;
+        [self.addressLabel setTextAlignment:NSTextAlignmentCenter];
+        
+        UITapGestureRecognizer *changeLocationTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editLocation)];
+        changeLocationTap.numberOfTapsRequired = 1;
+        
+        [_addressEditIcon setUserInteractionEnabled:YES];
+        [_addressLabel setUserInteractionEnabled:YES];
+        [_addressTextField addGestureRecognizer:changeLocationTap];
+        [_addressEditIcon addGestureRecognizer:changeLocationTap];
+        
+        [self.addressView addSubview:_addressTextField];
         
         
         self.viewAllLocationsButton = [[UIButton alloc] initWithFrame:CGRectMake(10, self.view.frame.size.height, 60, 60)];
@@ -199,11 +240,16 @@ float maxDistanceRadius;
                               delay:0.0
                             options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut
                          animations:^{
-                             self.titleLabel.frame = CGRectOffset(self.titleLabel.frame, 0, 50);
+                             self.titleLabel.frame = CGRectOffset(self.titleLabel.frame, 0, 70);
                          }
                          completion:^(BOOL finished) {
                              
                          }];
+        
+        if (!self.isReversingGeocoding) {
+            [self showAddressView];
+        }
+        
     } else {
         [self.locationSearchIndicator stopAnimating];
         [self.locationSearchIndicator setMessage:@"Couldn't find any nearby locations.\nAre you in a dry county?"];
@@ -265,6 +311,9 @@ float maxDistanceRadius;
     if (!self.isUpdatingLocations) {
         self.isUpdatingLocations = YES;
         self.currentLocation = newLocation;
+        
+        [self reverseGeocode:self.currentLocation];
+        
         [Location fetchFromServerForLat: newLocation.coordinate.latitude andLong: newLocation.coordinate.longitude success:^(NSArray *locations){
             
             NSPredicate *distancePredicate = [NSPredicate predicateWithFormat:@"SELF.distanceAway.floatValue <= %f", maxDistanceRadius];
@@ -279,6 +328,53 @@ float maxDistanceRadius;
             [self performSelectorOnMainThread:@selector(showError) withObject:error waitUntilDone:NO];
         }];
     }
+}
+
+- (void)reverseGeocode:(CLLocation *)location {
+    
+    self.isReversingGeocoding = YES;
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    [geocoder reverseGeocodeLocation:location completionHandler:^(NSArray *placemarks, NSError *error) {
+        NSLog(@"Finding address");
+        if (error) {
+            NSLog(@"Error %@", error.description);
+        } else {
+            CLPlacemark *placemark = [placemarks lastObject];
+
+            [self performSelectorOnMainThread:@selector(setAddress:) withObject:placemark.addressDictionary waitUntilDone:NO];
+            
+        }
+    }];
+}
+
+- (void)setAddress:(NSDictionary *)addressDictionary
+{
+    NSString *address = [NSString stringWithFormat:@"%@, %@", [addressDictionary objectForKey:@"City"], [addressDictionary objectForKey:@"State"]];
+    [self.addressLabel setText:address];
+    [self.addressLabel sizeToFit];
+    _addressLabel.frame = CGRectMake((self.addressView.frame.size.width / 2) - (self.addressLabel.frame.size.width / 2), self.addressLabel.frame.origin.y, self.addressLabel.frame.size.width, self.addressLabel.frame.size.height);
+    _addressEditIcon.frame = CGRectMake(_addressLabel.frame.origin.x + _addressLabel.frame.size.width + 5, _addressEditIcon.frame.origin.y, _addressEditIcon.frame.size.width, _addressEditIcon.frame.size.height);
+    
+    _addressTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:address attributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+    
+    self.isReversingGeocoding = NO;
+    
+    if (!self.isUpdatingLocations) {
+        [self showAddressView];
+    }
+}
+
+- (void)showAddressView
+{
+    [UIView animateWithDuration:0.4
+                          delay:0.0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationOptionCurveEaseOut
+                     animations:^{
+                         self.addressView.frame = CGRectOffset(self.addressView.frame, 0, 85);
+                     }
+                     completion:^(BOOL finished) {
+                         
+                     }];
 }
 
 - (void) showAllLocationsOnMap
@@ -311,5 +407,17 @@ float maxDistanceRadius;
     }];
 }
 
+- (void) editLocation
+{
+    [UIView animateWithDuration:0.7
+                     animations:^{
+                         _addressTextField.layer.opacity = 1.0;
+                         _addressEditIcon.layer.opacity = 0.0;
+                         _addressLabel.layer.opacity = 0.0;
+                     }
+                     completion:^(BOOL finished) {
+    
+                     }];
+}
 
 @end

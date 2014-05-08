@@ -41,6 +41,7 @@
 		943D938918977CB800634229 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938818977CB800634229 /* User.m */; };
 		943D938C189B02D200634229 /* NormIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938B189B02D200634229 /* NormIndicatorView.m */; };
 		943D938F189B25B400634229 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938E189B25B400634229 /* Reachability.m */; };
+		9459134D18DE2B0600111B6F /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94ADCD3D18CC291C00D7F321 /* libTestFlight.a */; };
 		9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */; };
 		9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832C187D8582005EF155 /* NormImageShowTransitioning.m */; };
 		94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832F187ECDCB005EF155 /* NormImageModalController.m */; };
@@ -49,7 +50,6 @@
 		9460833C1884DA27005EF155 /* NormModalShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460833B1884DA27005EF155 /* NormModalShowTransitioning.m */; };
 		946083441884E4A3005EF155 /* NormModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 946083431884E4A3005EF155 /* NormModalTransitionDelegate.m */; };
 		946083471885B4BA005EF155 /* NormEnlargeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 946083461885B4BA005EF155 /* NormEnlargeImage.m */; };
-		946DE54718CD105B009E06C0 /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94ADCD3D18CC291C00D7F321 /* libTestFlight.a */; };
 		94851F64186DD81D00668E77 /* NormImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F63186DD81D00668E77 /* NormImageView.m */; };
 		94851F6F1872578000668E77 /* bottle-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F651872578000668E77 /* bottle-button@2x.png */; };
 		94851F701872578000668E77 /* bottle-menu-item@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F661872578000668E77 /* bottle-menu-item@2x.png */; };
@@ -96,6 +96,7 @@
 		94F0346418ADA2E600D69526 /* map-marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F0346318ADA2E600D69526 /* map-marker@2x.png */; };
 		94F0347018ADCD1100D69526 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 94F0346F18ADCD1100D69526 /* libz.dylib */; };
 		94F0347318AF4A3800D69526 /* NormBarLocationItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 94F0347218AF4A3800D69526 /* NormBarLocationItem.m */; };
+		94F3FC3E18DDF61C00D73377 /* location-arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 94F3FC3D18DDF61C00D73377 /* location-arrow.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -259,6 +260,7 @@
 		94F0346F18ADCD1100D69526 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		94F0347118AF4A3800D69526 /* NormBarLocationItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBarLocationItem.h; sourceTree = "<group>"; };
 		94F0347218AF4A3800D69526 /* NormBarLocationItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBarLocationItem.m; sourceTree = "<group>"; };
+		94F3FC3D18DDF61C00D73377 /* location-arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "location-arrow.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,12 +269,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				94F0347018ADCD1100D69526 /* libz.dylib in Frameworks */,
-				946DE54718CD105B009E06C0 /* libTestFlight.a in Frameworks */,
 				94F0345F18ABB40900D69526 /* MapKit.framework in Frameworks */,
 				94BA82A01847AC2100D60EDC /* CoreGraphics.framework in Frameworks */,
 				94BA82A41847AC2100D60EDC /* CoreData.framework in Frameworks */,
 				94BA82A21847AC2100D60EDC /* UIKit.framework in Frameworks */,
 				94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */,
+				9459134D18DE2B0600111B6F /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -414,6 +416,7 @@
 		9488C0AD18675FB70038ED51 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				94F3FC3D18DDF61C00D73377 /* location-arrow.png */,
 				94ADCD4B18CCBC3E00D7F321 /* sort-button@2x.png */,
 				94ADCD4918CCB3F400D7F321 /* group-button@2x.png */,
 				9416AB1818B8F0DF00CFA651 /* settings@2x.png */,
@@ -684,6 +687,7 @@
 				5938104C18861AC300D88215 /* Rhino Raja.otf in Resources */,
 				9416AB1918B8F0DF00CFA651 /* settings@2x.png in Resources */,
 				94851F701872578000668E77 /* bottle-menu-item@2x.png in Resources */,
+				94F3FC3E18DDF61C00D73377 /* location-arrow.png in Resources */,
 				94851F751872578000668E77 /* glass-button@2x.png in Resources */,
 				94851F781872578000668E77 /* icon@2x.png in Resources */,
 				94851F731872578000668E77 /* can-menu-item@2x.png in Resources */,
