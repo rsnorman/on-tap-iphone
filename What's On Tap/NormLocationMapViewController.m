@@ -10,7 +10,6 @@
 #import "NormBarLocationView.h"
 #import "NormBarLocationItem.h"
 #import "constants.h"
-#import "TestFlight.h"
 
 @interface NormLocationMapViewController () <MKMapViewDelegate, NormDrawerControllerDelegate, NormLocationDetailsViewDelegate>
 
@@ -187,12 +186,9 @@ BOOL isDoneRendering;
     if (self.selectedLocation != [view getLocation]) {
         self.selectedLocation = [view getLocation];
         [self showMoreLocationDetails];
-        
-        [TestFlight passCheckpoint:@"Opened Drawer For Location"];
     } else {
         self.selectedLocation = nil;
         [self hideMoreLocationDetails];
-        [TestFlight passCheckpoint:@"Closed Drawer For Location"];
     }
 }
 
@@ -200,8 +196,6 @@ BOOL isDoneRendering;
 {
     self.selectedLocation = nil;
     [self.locationDetailsDrawerController close];
-    
-    [TestFlight passCheckpoint:@"Opened Drawer For Location By Deselecting"];
 }
 
 - (void) willCloseDrawer:(UIView *)drawer
@@ -224,7 +218,6 @@ BOOL isDoneRendering;
 
 - (void) didSelectViewLocationMenu
 {
-    [TestFlight passCheckpoint:@"Opened Menu From Map"];
     [self.delegate didSelectViewLocationMenu:self.selectedLocation];
     [[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
         

@@ -8,7 +8,6 @@
 
 #import "NormLocationDetailsView.h"
 #import "constants.h"
-#import "TestFlight.h"
 
 @implementation NormLocationDetailsView
 
@@ -98,7 +97,6 @@ UIButton *viewMenuButton;
 
 - (void) getDirections
 {
-    [TestFlight passCheckpoint:@"Got Directions for Location"];
     NSString* versionNum = [[UIDevice currentDevice] systemVersion];
     NSString *nativeMapScheme = @"maps.apple.com";
     if ([versionNum compare:@"6.0" options:NSNumericSearch] == NSOrderedAscending){

@@ -41,7 +41,6 @@
 		943D938918977CB800634229 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938818977CB800634229 /* User.m */; };
 		943D938C189B02D200634229 /* NormIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938B189B02D200634229 /* NormIndicatorView.m */; };
 		943D938F189B25B400634229 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 943D938E189B25B400634229 /* Reachability.m */; };
-		9459134D18DE2B0600111B6F /* libTestFlight.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 94ADCD3D18CC291C00D7F321 /* libTestFlight.a */; };
 		9460832A187D8546005EF155 /* NormImageModalTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 94608329187D8546005EF155 /* NormImageModalTransitionDelegate.m */; };
 		9460832D187D8582005EF155 /* NormImageShowTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832C187D8582005EF155 /* NormImageShowTransitioning.m */; };
 		94608330187ECDCB005EF155 /* NormImageModalController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9460832F187ECDCB005EF155 /* NormImageModalController.m */; };
@@ -63,8 +62,6 @@
 		94851F781872578000668E77 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94851F6E1872578000668E77 /* icon@2x.png */; };
 		94851F8F1877B43B00668E77 /* NormDraggableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 94851F8E1877B43B00668E77 /* NormDraggableImageView.m */; };
 		94A91D67185E5F90006FEA65 /* NormImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 94A91D66185E5F90006FEA65 /* NormImageCache.m */; };
-		94ADCD4418CC291C00D7F321 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 94ADCD3E18CC291C00D7F321 /* README.md */; };
-		94ADCD4518CC291C00D7F321 /* release_notes.md in Resources */ = {isa = PBXBuildFile; fileRef = 94ADCD3F18CC291C00D7F321 /* release_notes.md */; };
 		94ADCD4A18CCB3F400D7F321 /* group-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94ADCD4918CCB3F400D7F321 /* group-button@2x.png */; };
 		94ADCD4C18CCBC3E00D7F321 /* sort-button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 94ADCD4B18CCBC3E00D7F321 /* sort-button@2x.png */; };
 		94B73D8918CBF4B90056934E /* FBShimmeringLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 94B73D8618CBF4B90056934E /* FBShimmeringLayer.m */; };
@@ -82,8 +79,6 @@
 		94BA82BD1847AC2200D60EDC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA829D1847AC2100D60EDC /* Foundation.framework */; };
 		94BA82BE1847AC2200D60EDC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA82A11847AC2100D60EDC /* UIKit.framework */; };
 		94BA82BF1847AC2200D60EDC /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 94BA82A31847AC2100D60EDC /* CoreData.framework */; };
-		94BA82C71847AC2200D60EDC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 94BA82C51847AC2200D60EDC /* InfoPlist.strings */; };
-		94BA82C91847AC2200D60EDC /* What_s_On_TapTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82C81847AC2200D60EDC /* What_s_On_TapTests.m */; };
 		94BA82D31847B01200D60EDC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 94BA82D21847B01200D60EDC /* Main.storyboard */; };
 		94BA82D91847E80D00D60EDC /* NormBeerListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82D81847E80D00D60EDC /* NormBeerListController.m */; };
 		94BA82E61848FF9800D60EDC /* NormBeerTableCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 94BA82E51848FF9800D60EDC /* NormBeerTableCell.m */; };
@@ -205,12 +200,6 @@
 		94A74BF5187C2E70009075E9 /* NormDraggableImageViewDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NormDraggableImageViewDelegate.h; sourceTree = "<group>"; };
 		94A91D65185E5F90006FEA65 /* NormImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormImageCache.h; sourceTree = "<group>"; };
 		94A91D66185E5F90006FEA65 /* NormImageCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormImageCache.m; sourceTree = "<group>"; };
-		94ADCD3D18CC291C00D7F321 /* libTestFlight.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libTestFlight.a; sourceTree = "<group>"; };
-		94ADCD3E18CC291C00D7F321 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		94ADCD3F18CC291C00D7F321 /* release_notes.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = release_notes.md; sourceTree = "<group>"; };
-		94ADCD4018CC291C00D7F321 /* TestFlight+AsyncLogging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+AsyncLogging.h"; sourceTree = "<group>"; };
-		94ADCD4118CC291C00D7F321 /* TestFlight+ManualSessions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TestFlight+ManualSessions.h"; sourceTree = "<group>"; };
-		94ADCD4218CC291C00D7F321 /* TestFlight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestFlight.h; sourceTree = "<group>"; };
 		94ADCD4918CCB3F400D7F321 /* group-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "group-button@2x.png"; path = "Images/group-button@2x.png"; sourceTree = SOURCE_ROOT; };
 		94ADCD4B18CCBC3E00D7F321 /* sort-button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sort-button@2x.png"; path = "Images/sort-button@2x.png"; sourceTree = SOURCE_ROOT; };
 		94B73D8318CBF4B90056934E /* FBShimmering-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FBShimmering-Prefix.pch"; sourceTree = "<group>"; };
@@ -234,9 +223,6 @@
 		94BA82B41847AC2200D60EDC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		94BA82BA1847AC2200D60EDC /* On TapTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "On TapTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		94BA82BB1847AC2200D60EDC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		94BA82C41847AC2200D60EDC /* On TapTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "On TapTests-Info.plist"; sourceTree = "<group>"; };
-		94BA82C61847AC2200D60EDC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		94BA82C81847AC2200D60EDC /* What_s_On_TapTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = What_s_On_TapTests.m; sourceTree = "<group>"; };
 		94BA82D21847B01200D60EDC /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		94BA82D71847E80D00D60EDC /* NormBeerListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NormBeerListController.h; sourceTree = "<group>"; };
 		94BA82D81847E80D00D60EDC /* NormBeerListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NormBeerListController.m; sourceTree = "<group>"; };
@@ -274,7 +260,6 @@
 				94BA82A41847AC2100D60EDC /* CoreData.framework in Frameworks */,
 				94BA82A21847AC2100D60EDC /* UIKit.framework in Frameworks */,
 				94BA829E1847AC2100D60EDC /* Foundation.framework in Frameworks */,
-				9459134D18DE2B0600111B6F /* libTestFlight.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -470,20 +455,6 @@
 			name = Delegates;
 			sourceTree = "<group>";
 		};
-		94ADCD3C18CC291C00D7F321 /* TestFlight */ = {
-			isa = PBXGroup;
-			children = (
-				94ADCD3D18CC291C00D7F321 /* libTestFlight.a */,
-				94ADCD3E18CC291C00D7F321 /* README.md */,
-				94ADCD3F18CC291C00D7F321 /* release_notes.md */,
-				94ADCD4018CC291C00D7F321 /* TestFlight+AsyncLogging.h */,
-				94ADCD4118CC291C00D7F321 /* TestFlight+ManualSessions.h */,
-				94ADCD4218CC291C00D7F321 /* TestFlight.h */,
-			);
-			name = TestFlight;
-			path = TestFlightSDK3.0.0;
-			sourceTree = "<group>";
-		};
 		94B73D8218CBF4B90056934E /* FBShimmering */ = {
 			isa = PBXGroup;
 			children = (
@@ -501,7 +472,6 @@
 			isa = PBXGroup;
 			children = (
 				94BA82A51847AC2100D60EDC /* What's On Tap */,
-				94BA82C21847AC2200D60EDC /* What's On TapTests */,
 				94BA829C1847AC2100D60EDC /* Frameworks */,
 				94BA829B1847AC2100D60EDC /* Products */,
 			);
@@ -533,7 +503,6 @@
 		94BA82A51847AC2100D60EDC /* What's On Tap */ = {
 			isa = PBXGroup;
 			children = (
-				94ADCD3C18CC291C00D7F321 /* TestFlight */,
 				94B73D8218CBF4B90056934E /* FBShimmering */,
 				94F0344318A9AFF300D69526 /* RefreshControl */,
 				5965603F189426A600ED2E9A /* DataModels */,
@@ -563,24 +532,6 @@
 				94BA82A81847AC2100D60EDC /* InfoPlist.strings */,
 				94BA82AB1847AC2100D60EDC /* main.m */,
 				94BA82AD1847AC2100D60EDC /* On Tap-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		94BA82C21847AC2200D60EDC /* What's On TapTests */ = {
-			isa = PBXGroup;
-			children = (
-				94BA82C81847AC2200D60EDC /* What_s_On_TapTests.m */,
-				94BA82C31847AC2200D60EDC /* Supporting Files */,
-			);
-			path = "What's On TapTests";
-			sourceTree = "<group>";
-		};
-		94BA82C31847AC2200D60EDC /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				94BA82C41847AC2200D60EDC /* On TapTests-Info.plist */,
-				94BA82C51847AC2200D60EDC /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -637,7 +588,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = Norm;
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Ryan Norman";
 				TargetAttributes = {
 					94BA82991847AC2100D60EDC = {
@@ -671,12 +622,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94ADCD4518CC291C00D7F321 /* release_notes.md in Resources */,
 				5938104318861AC300D88215 /* chawp.otf in Resources */,
 				5938104418861AC300D88215 /* Hipster Viral  condensed thin.otf in Resources */,
 				5938104518861AC300D88215 /* Hipster Viral Blackletter condensed black.otf in Resources */,
 				5938104618861AC300D88215 /* Kraftstoff-Regular.otf in Resources */,
-				94ADCD4418CC291C00D7F321 /* README.md in Resources */,
 				5938104718861AC300D88215 /* Leatherwork-Regular.ttf in Resources */,
 				94ADCD4A18CCB3F400D7F321 /* group-button@2x.png in Resources */,
 				5938104818861AC300D88215 /* Rhino Forte.otf in Resources */,
@@ -708,7 +657,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94BA82C71847AC2200D60EDC /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,7 +721,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				94BA82C91847AC2200D60EDC /* What_s_On_TapTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -796,14 +743,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		94BA82C51847AC2200D60EDC /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				94BA82C61847AC2200D60EDC /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -811,7 +750,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -852,7 +790,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -892,11 +829,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
 				INFOPLIST_FILE = "What's On Tap/On Tap-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/ryan/iPhoneApps/Whats\\ On\\ Tap/Whats\\ On\\ Tap/TestFlightSDK3.0.0",
-					"/Users/ryan/iPhoneApps/What's\\ On\\ Tap/What's\\ On\\ Tap/TestFlightSDK3.0.0",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "On Tap";
 				PROVISIONING_PROFILE = "B8DD1814-ABB4-42A8-BE5C-C110DC3834EA";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -914,11 +847,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "What's On Tap/On Tap-Prefix.pch";
 				INFOPLIST_FILE = "What's On Tap/On Tap-Info.plist";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/ryan/iPhoneApps/Whats\\ On\\ Tap/Whats\\ On\\ Tap/TestFlightSDK3.0.0",
-					"/Users/ryan/iPhoneApps/What's\\ On\\ Tap/What's\\ On\\ Tap/TestFlightSDK3.0.0",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "On Tap";
 				PROVISIONING_PROFILE = "B8DD1814-ABB4-42A8-BE5C-C110DC3834EA";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -929,7 +858,6 @@
 		94BA82D01847AC2200D60EDC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/On Tap.app/On Tap";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -952,7 +880,6 @@
 		94BA82D11847AC2200D60EDC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/On Tap.app/On Tap";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",

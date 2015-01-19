@@ -9,7 +9,6 @@
 #import "NormEnlargeImage.h"
 #import "NormImageModalController.h"
 #import "NormImageModalTransitionDelegate.h"
-#import "TestFlight.h"
 
 @implementation UIView (EnlargeImage)
 
@@ -94,8 +93,6 @@ UIViewController *_enlargeDelegate;
                 [imageDownloadProgress stopAnimating];
             }
         }];
-        
-        [TestFlight passCheckpoint:@"Enlarged Beer Label"];
     }
 }
 
