@@ -73,6 +73,10 @@ float maxDistanceRadius;
         
         self.myLocationManager = [[CLLocationManager alloc] init];
         self.myLocationManager.delegate = self;
+        // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
+        if ([self.myLocationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [self.myLocationManager requestWhenInUseAuthorization];
+        }
         
         
         self.connectionManager = [[NormConnectionManager alloc] init];

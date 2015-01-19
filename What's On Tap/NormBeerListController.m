@@ -89,26 +89,6 @@
 
     self.connectionManager = [[NormConnectionManager alloc] init];
     [self.connectionManager setDelegate:self];
-    [self.connectionManager performSelectorInBackground:@selector(checkForConnection) withObject:nil];
-    [self performSelector:@selector(stillCheckingForNetworkConnection) withObject:nil afterDelay:1.0];
-    
-
-    
-    // Load users last location
-    if (_currentLocation == nil) {
-        [self showSelectLocationFinder];
-    } else {
-        
-        _loadingPreviousMenu = YES;
-        if (![self loadCurrentMenu] ) {
-            _loadingPreviousMenu = NO;
-            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
-            [self.spinnerView startAnimating];
-            [self setLocation:_currentLocation];
-        } else {
-            [self.spinnerView setHidden:YES];
-        }
-    }
 }
 
 - (BOOL) loadCurrentMenu
@@ -140,6 +120,22 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [self.connectionManager performSelectorInBackground:@selector(checkForConnection) withObject:nil];
+    [self performSelector:@selector(stillCheckingForNetworkConnection) withObject:nil afterDelay:1.0];
+    
+    // Load users last location
+    if (_currentLocation != nil) {
+        _loadingPreviousMenu = YES;
+        if (![self loadCurrentMenu] ) {
+            _loadingPreviousMenu = NO;
+            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
+            [self.spinnerView startAnimating];
+            [self setLocation:_currentLocation];
+        } else {
+            [self.spinnerView setHidden:YES];
+        }
+    }
 }
 
 - (void) stillCheckingForNetworkConnection

@@ -53,6 +53,7 @@ UIView *borderView;
                          completion:^(BOOL finished) {
                              [self didAnimateShowTransition];
                              [transitionContext completeTransition:YES];
+                            [[[UIApplication sharedApplication] keyWindow] addSubview: self.toVC.view];
                          }];
     } else {
         [self willAnimateHideTransition];
