@@ -16,7 +16,6 @@
 #import "NormLocationTableViewControllerDelegate.h"
 #import "NormBeerTableViewController.h"
 #import "NormLocationMapViewController.h"
-#import "TestFlight.h"
 
 #import <UIKit/UIKit.h>
 
@@ -74,6 +73,10 @@ float maxDistanceRadius;
         
         self.myLocationManager = [[CLLocationManager alloc] init];
         self.myLocationManager.delegate = self;
+        // Check for iOS 8. Without this guard the code will crash with "unknown selector" on iOS 7.
+        if ([self.myLocationManager respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+            [self.myLocationManager requestWhenInUseAuthorization];
+        }
         
         
         self.connectionManager = [[NormConnectionManager alloc] init];
@@ -181,8 +184,6 @@ float maxDistanceRadius;
     if (status == kCLAuthorizationStatusDenied) {
         [self.locationSearchIndicator setErrorMessage:@"Please turn on location services in Settings"];
         [self.locationsTableView setHidden:YES];
-        
-        [TestFlight passCheckpoint:@"Would Not Turn On Location Services"];
     }
 }
 
@@ -224,8 +225,6 @@ float maxDistanceRadius;
 {
     [self.locationSearchIndicator setErrorMessage:@"There was a problem finding nearby locations.\nAre you in a dry county?"];
     [self.locationsTableView setHidden:YES];
-    
-    [TestFlight passCheckpoint:@"Error Finding Locations"];
 }
 
 - (void) loadLocations:(NSArray *)locations
@@ -254,8 +253,6 @@ float maxDistanceRadius;
         [self.locationSearchIndicator stopAnimating];
         [self.locationSearchIndicator setMessage:@"Couldn't find any nearby locations.\nAre you in a dry county?"];
         [self.locationsTableView setHidden:YES];
-        
-        [TestFlight passCheckpoint:@"Could Not Find Locations"];
     }
 }
 
@@ -296,7 +293,6 @@ float maxDistanceRadius;
 
 - (void) didSelectLocationMap:(Location *)location
 {
-    [TestFlight passCheckpoint:@"Viewed Location on Map"];
     NormLocationMapViewController *locationMapController = [[NormLocationMapViewController alloc] init];
     [locationMapController setLocations:@[location]];
     [locationMapController setUserLocation:self.currentLocation];
@@ -379,7 +375,6 @@ float maxDistanceRadius;
 
 - (void) showAllLocationsOnMap
 {
-    [TestFlight passCheckpoint:@"Viewed All Locations on Map"];
     NormLocationMapViewController *locationMapController = [[NormLocationMapViewController alloc] init];
     [locationMapController setLocations:self.locations];
     [locationMapController setUserLocation:self.currentLocation];

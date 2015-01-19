@@ -10,7 +10,6 @@
 #import "NormBeerTableCell.h"
 #import "Beer.h"
 #import "NormBeerViewController.h"
-#import "TestFlight.h"
 
 @interface NormBeerTableViewController () <UISearchBarDelegate, UISearchDisplayDelegate>
 @property NSDictionary *unfilteredBeers;
@@ -59,8 +58,6 @@
     
     if (((NSArray *)[self.currentBeersGrouped objectForKey:@"New"]).count > 0) {
         [sortedGroups insertObject:@"New" atIndex:0];
-        
-        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Revisited location and displayed new %lu beers", (unsigned long)((NSArray *)[self.currentBeersGrouped objectForKey:@"New"]).count]];
     }
     
     self.currentBeerGroups = sortedGroups;
@@ -247,8 +244,6 @@
 {
     _unfilteredBeers = self.currentBeersGrouped;
     _unfilteredGroups = self.currentBeerGroups;
-    
-    [TestFlight passCheckpoint:@"Searched Beers"];
 }
 
 //  Removes the filter from the menu

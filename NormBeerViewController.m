@@ -11,7 +11,6 @@
 #import "NormEnlargeImage.h"
 #import <QuartzCore/QuartzCore.h>
 #import <CoreImage/CoreImage.h>
-#import "TestFlight.h"
 
 @interface NormBeerViewController ()
 @property Beer *beer;
@@ -111,8 +110,6 @@
         
         self.title = @"Details";
         self.navigationItem.title = @"Details";
-        
-        [TestFlight passCheckpoint:@"Viewed Beer"];
     }
     
     return self;

@@ -8,7 +8,6 @@
 
 #import "NormServeTypeMenu.h"
 #import "constants.h"
-#import "TestFlight.h"
 
 @implementation NormServeTypeMenu
 
@@ -74,8 +73,6 @@
                                                    highlightedImage:nil
                                                              action:^(REMenuItem *item) {
                                                                  [weakSelf didSelectServeType:item.title];
-                                                                 
-                                                                 [TestFlight passCheckpoint:[NSString stringWithFormat: @"Selected Serve Type: %@", item.title]];
                                                              }];
 
         NSNumber *beerCount = [beerCounts objectAtIndex:count];
@@ -102,7 +99,6 @@
                                                         highlightedImage:nil
                                                                   action:^(REMenuItem *item) {
                                                                       [weakSelf didSelectLocationFinder];
-                                                                      [TestFlight passCheckpoint:@"Viewed More Locations"];
                                                                   }];
         
         

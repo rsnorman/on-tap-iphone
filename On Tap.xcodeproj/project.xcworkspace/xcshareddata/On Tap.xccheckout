@@ -10,24 +10,36 @@
 	<string>On Tap</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>7E58F45A351BC1AE5214B0827FADAE9801A453E4</key>
+		<string>https://github.com/rsnorman/on-tap-iphone.git</string>
 		<key>97BC95CD-1B23-4081-9EC2-2FB5720BE958</key>
 		<string>file://localhost/Users/ryan/Dropbox/git/ontap.git/</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>On Tap.xcodeproj/project.xcworkspace</string>
+	<string>On Tap.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>97BC95CD-1B23-4081-9EC2-2FB5720BE958</key>
+		<key>7E58F45A351BC1AE5214B0827FADAE9801A453E4</key>
 		<string>../..</string>
+		<key>97BC95CD-1B23-4081-9EC2-2FB5720BE958</key>
+		<string>../../../What's On Tap</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>file://localhost/Users/ryan/Dropbox/git/ontap.git/</string>
+	<string>https://github.com/rsnorman/on-tap-iphone.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>97BC95CD-1B23-4081-9EC2-2FB5720BE958</string>
+	<string>7E58F45A351BC1AE5214B0827FADAE9801A453E4</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7E58F45A351BC1AE5214B0827FADAE9801A453E4</string>
+			<key>IDESourceControlWCCName</key>
+			<string>on-tap-iphone</string>
+		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>

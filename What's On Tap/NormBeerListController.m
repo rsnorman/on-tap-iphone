@@ -19,7 +19,6 @@
 #import "NormBeerTableViewControllerDelegate.h"
 #import "NormConnectionManagerDelegate.h"
 #import "NormStyleMenuDelegate.h"
-#import "TestFlight.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface NormBeerListController () <NormLocationFinderDelegate, NormConnectionManagerDelegate, NormBeerTableViewControllerDelegate, NormServeTypeMenuDelegate, NormDropDownMenuDelegate>
@@ -90,26 +89,6 @@
 
     self.connectionManager = [[NormConnectionManager alloc] init];
     [self.connectionManager setDelegate:self];
-    [self.connectionManager performSelectorInBackground:@selector(checkForConnection) withObject:nil];
-    [self performSelector:@selector(stillCheckingForNetworkConnection) withObject:nil afterDelay:1.0];
-    
-
-    
-    // Load users last location
-    if (_currentLocation == nil) {
-        [self showSelectLocationFinder];
-    } else {
-        
-        _loadingPreviousMenu = YES;
-        if (![self loadCurrentMenu] ) {
-            _loadingPreviousMenu = NO;
-            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
-            [self.spinnerView startAnimating];
-            [self setLocation:_currentLocation];
-        } else {
-            [self.spinnerView setHidden:YES];
-        }
-    }
 }
 
 - (BOOL) loadCurrentMenu
@@ -141,6 +120,22 @@
 - (void) viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [self.connectionManager performSelectorInBackground:@selector(checkForConnection) withObject:nil];
+    [self performSelector:@selector(stillCheckingForNetworkConnection) withObject:nil afterDelay:1.0];
+    
+    // Load users last location
+    if (_currentLocation != nil) {
+        _loadingPreviousMenu = YES;
+        if (![self loadCurrentMenu] ) {
+            _loadingPreviousMenu = NO;
+            [self.spinnerView setMessage:[NSString stringWithFormat:@"Grabbing menu for\n%@", _currentLocation.name]];
+            [self.spinnerView startAnimating];
+            [self setLocation:_currentLocation];
+        } else {
+            [self.spinnerView setHidden:YES];
+        }
+    }
 }
 
 - (void) stillCheckingForNetworkConnection
@@ -291,8 +286,6 @@
             NSString *errorMessage = [NSString stringWithFormat: @"Sorry, there was a problem grabbing the menu for \n%@. \n\nKegs must be busted.", _currentLocation.name];
             [self performSelectorOnMainThread:@selector(showErrorWithMessage:) withObject: errorMessage waitUntilDone:NO];
             _menuIsLoading = NO;
-            
-            [TestFlight passCheckpoint:@"Error Grabbing Beer Menu"];
         }];
     }
 
@@ -326,10 +319,7 @@
             [self performSelectorOnMainThread:@selector(didFinishReceivingMenu) withObject:nil waitUntilDone:NO];
         } failedWithError:^(NSError *error) {
             [self performSelectorOnMainThread:@selector(showErrorRefresh) withObject:nil waitUntilDone:NO];
-            [TestFlight passCheckpoint:@"Error Refreshing Menu"];
         }];
-        
-        [TestFlight passCheckpoint:@"Refreshed Menu"];
     } else {
         self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Please connect to the internet"];
         [self.refreshControl performSelector:@selector(endRefreshing) withObject:nil afterDelay:1.0];
@@ -537,7 +527,6 @@
 
 - (void)navigationTitleWasTouched
 {
-    [TestFlight passCheckpoint:@"Opened Menu From Navigation Title"];
     [self toggleMenu];
 }
 
@@ -547,8 +536,6 @@
         return [self.menu close];
     
     [self.menu showFromNavigationController:self.navigationController];
-    
-    [TestFlight passCheckpoint:@"Opened Menu"];
 }
 
 -(void)didSelectItem:(NSString *)selectedItem dropDownMenu:(NormDropDownMenu *)dropDownMenu
@@ -557,8 +544,6 @@
     if (dropDownMenu == _sortMenu) {
         _sort = [selectedItem lowercaseString];
         _currentUser.sortPreference = _sort;
-        
-        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Change sort to %@", _sort]];
     } else if (dropDownMenu == _groupMenu) {
         if ([selectedItem isEqualToString:@"Style"]) {
             _group = @"styleCategory";
@@ -568,8 +553,6 @@
             _group = [selectedItem lowercaseString];
         }
         _currentUser.groupPreference = _group;
-        
-        [TestFlight passCheckpoint:[NSString stringWithFormat:@"Change group to %@", _group]];
     }
     
     [_currentUser save];

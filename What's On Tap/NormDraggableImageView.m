@@ -8,7 +8,6 @@
 
 #import "NormDraggableImageView.h"
 #import "QuartzCore/CALayer.h"
-#import "TestFlight.h"
 
 @implementation NormDraggableImageView
 
@@ -126,14 +125,11 @@
              }
                              completion:nil];
         }
-        
-        [TestFlight passCheckpoint:@"Zoomed In/Out Beer Label With Pinch"];
     }
 }
 
 - (void)imageWasTapped
 {
-    [TestFlight passCheckpoint:@"Dismissed Beer Label With Tap"];
     [self.delegate imageShouldBeDismissed: self];
 }
 
@@ -155,8 +151,6 @@
          }
                          completion:nil];
         
-        [TestFlight passCheckpoint:@"Zoomed In Beer Label With Double Tap"];
-        
     } else if (self.zoomedIn) {
         
         self.zoomedIn = NO;
@@ -172,8 +166,6 @@
              
          }
                          completion:nil];
-        
-        [TestFlight passCheckpoint:@"Zoomed Out Beer Label With Double Tap"];
     } else {
         [UIView animateWithDuration:0.1
                               delay:0.0
@@ -194,8 +186,6 @@
                               completion:nil];
          }];
     }
-    
-    [TestFlight passCheckpoint:@"Tried Zooming In Small Beer Label With Double Tap"];
 }
 
 - (CGRect)getMaximumBounds
@@ -276,8 +266,6 @@
              {
                  [self.delegate imageShouldBeDismissed: self];
              }];
-            
-            [TestFlight passCheckpoint:@"Dismissed Beer Label with Throw"];
         } else {
             
             [UIView animateWithDuration:0.1
@@ -293,8 +281,6 @@
                  self.frame = frame;
              }
                              completion:nil];
-            
-            [TestFlight passCheckpoint:@"Failed Dismissing Beer Label with Throw"];
         }
         
         
